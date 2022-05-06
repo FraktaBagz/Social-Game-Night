@@ -14,9 +14,10 @@ export function AuthProvider({ children }) {
     auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
-    if (currentUser) {
-      console.log('display name: ' + JSON.stringify(currentUser.displayName))
-    }
+
+    // if (currentUser) {
+    //   console.log('display name: ' + JSON.stringify(currentUser.displayName))
+    // }
 
   }, [currentUser]);
 
@@ -31,7 +32,7 @@ export function AuthProvider({ children }) {
         console.log(err)
       });
   }
-  
+
   const value = {
     currentUser,
     signUp,
