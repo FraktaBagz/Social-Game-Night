@@ -1,7 +1,15 @@
 import React from 'react';
+import SignUp from './signUp.js';
+import { AuthProvider } from '../contexts/AuthContext.js';
 
 function App() {
-  return <div>wsup bb</div>
+  return (
+    <AuthProvider>
+      <div>
+        <SignUp />
+      </div>
+    </AuthProvider>
+  )
 }
 
 export default App;
