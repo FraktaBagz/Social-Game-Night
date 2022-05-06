@@ -10,6 +10,7 @@ import 'firebase/compat/auth'
 //   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 //   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 // })
+//change
 
 export const auth = app.auth()
-export default app
+export default app 
