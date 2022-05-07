@@ -15,18 +15,12 @@ import { useAuth } from '../firebase/contexts/AuthContext.js';
 
 const theme = createTheme();
 
-function SignUpPage() {
-  const { signUp, currentUser } = useAuth();
+function SignUpPage(props) {
+  const { signUp, currentUserID } = useAuth();
 
-  console.log('User info: ', useAuth(), useAuth().displayName);
-
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
     signUp(
       data.get('email'),
       data.get('password'),
@@ -34,15 +28,13 @@ function SignUpPage() {
       data.get('lastName')
     )
       .then((success) => {
-
+        props.handleLogState();
       })
       .catch((err) => {
         alert(err.message)
         console.log(err.code, err.message);
       });
   };
-
-  // onAuthStateChanged()
 
   return (
     <ThemeProvider theme={theme}>
