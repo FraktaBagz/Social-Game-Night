@@ -15,7 +15,7 @@ import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
 const theme = createTheme();
 
-function SignUpPage() {
+export default function SignInPage() {
   const { signUp, currentUser } = useAuth();
 
   console.log('User info: ', useAuth(), useAuth().displayName);
@@ -59,7 +59,7 @@ function SignUpPage() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign In
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -128,4 +128,3 @@ function SignUpPage() {
   );
 }
 
-export default SignUpPage;
