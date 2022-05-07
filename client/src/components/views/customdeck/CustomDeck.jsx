@@ -25,15 +25,15 @@ export default function CustomDeck({ setPageView }) {
   //   questions: [],
   // }
 
-  const onClick = (e) => {
-    e.preventDefault()
-    setPageView('HomePage')
-  }
+  // const onClick = (e) => {
+  //   e.preventDefault()
+  //   setPageView('Custom')
+  // }
 
   return (
     <div >
       <div>Custom deck</div>
-      <div>View All</div>
+
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -41,8 +41,9 @@ export default function CustomDeck({ setPageView }) {
         {decks.map(deck => (
           <Item>{deck}</Item>
         ))}
-        <Item onClick={onClick}>Custom</Item>
+        <Item onClick={() => (setPageView('Custom'))}>Custom</Item>
       </Stack>
+
     </div>
   )
 }

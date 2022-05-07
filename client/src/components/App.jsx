@@ -6,6 +6,8 @@ import JudgeView from './views/judgeview/JudgeView.jsx';
 import PlayerView from './views/playerview/PlayerView.jsx';
 import Lobby from './views/lobby/Lobby.jsx';
 import CustomDeck from './views/customdeck/CustomDeck.jsx';
+import Custom from './views/customdeck/Custom.jsx';
+import ViewCards from './views/customdeck/ViewCards.jsx';
 
 export default function App () {
   // const [pageView, setPageView] = useState('SignUp');
@@ -27,6 +29,8 @@ export default function App () {
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}
       {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'Custom' ? <Custom gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'ViewCards' ? <ViewCards gameState={gameState} setPageView={setPageView}/> : null}
     </>
   )
 }
