@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SignUpPage from './views/signup/SignUp.jsx';
 import { useAuth } from '../firebase/contexts/AuthContext.js';
 import HomePage from './views/homepage/HomePage.jsx';
@@ -12,19 +12,16 @@ export default function App () {
   const [gameState, setGameState] = useState({})
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
+  useEffect(()=>{
+    if (currentUser !== null) {
+      setPageView('HomePage')
+    }
+  }, [currentUser])
 
-  if (currentUser) {
-    return (
-      <>
-        <div>Hello user</div>
-        <button onClick={() => setCurrentUser(null)}>logout</button>
-      </>
-    );
-  }
   return (
     <>
       {pageView === 'SignUp' ? <SignUpPage gameState={gameState}/> : null}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState}/> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}/> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}
