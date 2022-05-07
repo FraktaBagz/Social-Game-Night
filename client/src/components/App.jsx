@@ -20,7 +20,9 @@ export default function App () {
 
   return (
     <>
-      {pageView === 'SignUp' ? <SignUpPage gameState={gameState}/> : null}
+      {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'SignIn' ? <SignUpPage gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'CustomDeck' ? <SignUpPage gameState={gameState} setPageView={setPageView}/> : null}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
