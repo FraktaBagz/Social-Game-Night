@@ -15,7 +15,7 @@ import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
 const theme = createTheme();
 
-function SignUpPage() {
+function SignUpPage({ setPageView }) {
   const { signUp, currentUser } = useAuth();
 
   console.log('User info: ', useAuth(), useAuth().displayName);
@@ -30,8 +30,7 @@ function SignUpPage() {
     signUp(
       data.get('email'),
       data.get('password'),
-      data.get('firstName'),
-      data.get('lastName')
+      data.get('name'),
     )
       .then((success) => {
 
@@ -63,25 +62,15 @@ function SignUpPage() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -116,8 +105,8 @@ function SignUpPage() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
+                <Link variant="body2" onClick={() => {setPageView('SignIn')}}>
+                  Back To Log In
                 </Link>
               </Grid>
             </Grid>
