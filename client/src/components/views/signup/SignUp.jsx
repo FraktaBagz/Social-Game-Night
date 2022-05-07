@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // our actual code
-import { useAuth } from '../contexts/AuthContext.js'
+import { useAuth } from '../../../contexts/AuthContext.js'
 
 const theme = createTheme();
 

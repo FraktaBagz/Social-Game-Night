@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-export default function HomePage () {
+export default function CustomDeck () {
 
   return (
     <>
