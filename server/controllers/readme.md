@@ -1,1 +1,0 @@
-put your controller methods (queries) here!
