@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SignUpPage from './signUp.js';
+import SignUpPage from './views/signup/SignUp.jsx';
 import { useAuth } from '../firebase/contexts/AuthContext.js';
 import HomePage from './views/homepage/HomePage.jsx';
 import JudgeView from './views/judgeview/JudgeView.jsx';
@@ -8,7 +8,7 @@ import Lobby from './views/lobby/Lobby.jsx';
 import CustomDeck from './views/customdeck/CustomDeck.jsx';
 
 export default function App () {
-  const [pageView, setPageView] = useState('HomePage');
+  const [pageView, setPageView] = useState('SignUp');
   const [gameState, setGameState] = useState({})
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
