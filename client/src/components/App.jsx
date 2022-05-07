@@ -12,12 +12,14 @@ export default function App () {
   const [gameState, setGameState] = useState({})
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
+  // useEffect(()=>{
+  //   if (currentUser !== null) {
+  //     setPageView('HomePage')
+  //   }
+  // }, [currentUser])
   useEffect(()=>{
-    if (currentUser !== null) {
-      setPageView('HomePage')
-    }
-  }, [currentUser])
-
+        setPageView('Lobby')
+    }, [])
   return (
     <>
       {pageView === 'SignUp' ? <SignUpPage gameState={gameState}/> : null}
