@@ -10,20 +10,22 @@ import CustomDeck from './views/customdeck/CustomDeck.jsx';
 export default function App () {
   const [pageView, setPageView] = useState('SignUp');
   const [gameState, setGameState] = useState({})
-
   const { signUp, currentUser, setCurrentUser } = useAuth();
-  // useEffect(()=>{
-  //   if (currentUser !== null) {
+
+  useEffect(()=>{
+    setPageView('Lobby')
+  }, [])
+
+  // useEffect(() => {
+  //   if (Object.keys(currentUser).length !== 0) {
   //     setPageView('HomePage')
   //   }
   // }, [currentUser])
-  useEffect(()=>{
-        setPageView('Lobby')
-    }, [])
+
   return (
     <>
       {pageView === 'SignUp' ? <SignUpPage gameState={gameState}/> : null}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}/> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}

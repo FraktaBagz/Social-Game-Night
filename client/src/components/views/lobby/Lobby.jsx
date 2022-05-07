@@ -72,31 +72,26 @@ export default function Lobby () {
               </Item>
               <Item>Raymond
                 <div>
-
                 The Wise
                 </div>
               </Item>
               <Item>Matthew
                 <div>
-
                 The Master
                 </div>
               </Item>
               <Item>Kim
                 <div>
-
                 The Wizard
                 </div>
               </Item>
               <Item>James
                 <div>
-
                 The Avenger
                 </div>
               </Item>
               <Item>Kieran
                 <div>
-
                 The Champion
                 </div>
               </Item>
