@@ -9,10 +9,26 @@ import CustomDeck from './views/customdeck/CustomDeck.jsx';
 import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
 
-export default function App () {
+const customDecksSample =
+  {
+    skips: {
+      questions: ['card1', 'card2'],
+      answers: ['answer1', 'answer2']
+    },
+    skipsgma: {
+      questions: ['card1', 'card2'],
+      answers: ['answer1', 'answer2']
+    }
+  }
+
+
+export default function App() {
   // const [pageView, setPageView] = useState('SignUp');
   const [pageView, setPageView] = useState('CustomDeck');
-  const [gameState, setGameState] = useState({})
+  const [gameState, setGameState] = useState({});
+  const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
+  const [customDecks, setCustomDecks] = useState(customDecksSample);
+  const [selectedCustomDeck, setSelectedCustomDeck] = useState({});
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
   // useEffect(()=>{
@@ -23,14 +39,14 @@ export default function App () {
 
   return (
     <>
-      {pageView === 'SignUp' ? <SignUpPage gameState={gameState}/> : null}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}/> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}
-      {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'Custom' ? <Custom gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'ViewCards' ? <ViewCards gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'SignUp' ? <SignUpPage gameState={gameState} /> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} /> : null}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} /> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} /> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} /> : null}
+      {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState} setPageView={setPageView} customDecks={customDecks} setSelectedCustomDeck={setSelectedCustomDeck}/> : null}
+      {pageView === 'Custom' ? <Custom gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'ViewCards' ? <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} /> : null}
     </>
   )
 }
