@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { AuthProvider } from './firebase/contexts/AuthContext.js';
 
 import App from './components/App.jsx';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// )
+ReactDOM.render(
+  <AuthProvider>
+    <App />
+  </AuthProvider>
+  , document.getElementById('root'));

@@ -11,13 +11,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // our actual code
+<<<<<<< HEAD:client/src/components/views/signup/SignUp.jsx
 import { useAuth } from '../../../contexts/AuthContext.js'
+=======
+import { useAuth } from '../firebase/contexts/AuthContext.js';
+>>>>>>> aac6042960e9eb6538658c43f88539fbb5a1e30c:client/src/components/signUp.js
 
 const theme = createTheme();
 
-export default function SignUp() {
-  const { signUp, currentUser } = useAuth()
-  console.log(useAuth())
+function SignUpPage() {
+  const { signUp, currentUser } = useAuth();
+
+  console.log('User info: ', useAuth(), useAuth().displayName);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,11 +37,16 @@ export default function SignUp() {
       data.get('firstName'),
       data.get('lastName')
     )
-      .then(res => console.log(res))
-      .catch(err => {
-        console.log(err);
+      .then((success) => {
+
+      })
+      .catch((err) => {
+        alert(err.message)
+        console.log(err.code, err.message);
       });
   };
+
+  // onAuthStateChanged()
 
   return (
     <ThemeProvider theme={theme}>
@@ -120,3 +131,5 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+
+export default SignUpPage;
