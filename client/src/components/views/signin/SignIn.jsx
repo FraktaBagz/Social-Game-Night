@@ -9,14 +9,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
 
 // our actual code
 import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
 const theme = createTheme();
 
-export default function SignInPage() {
+export default function SignInPage({ setPageView }) {
   const { signUp, currentUser } = useAuth();
+  const [isGuest, setIsGuest] = useState(false);
+  const [guestName, setGuestName] = useState('')
+
 
   console.log('User info: ', useAuth(), useAuth().displayName);
 
@@ -30,8 +34,8 @@ export default function SignInPage() {
     signUp(
       data.get('email'),
       data.get('password'),
-      data.get('firstName'),
-      data.get('lastName')
+      data.get('name'),
+
     )
       .then((success) => {
 
@@ -63,25 +67,15 @@ export default function SignInPage() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -108,16 +102,33 @@ export default function SignInPage() {
             </Grid>
             <Button
               type="submit"
+              value="user"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign In
             </Button>
+            <Button
+              value="guest"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => {setIsGuest(true)}}
+            >
+              Play as guest
+            </Button>
+            {isGuest ?
+              <TextField
+                label="Guest Name"
+                onChange={() => {setGuestName}}
+                value={guestName}
+              />
+            : <></>}
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
+                <Link variant="body2" onClick={() => {setPageView('SignUp')}}>
+                  Don't have an account? Sign Up Here!
                 </Link>
               </Grid>
             </Grid>

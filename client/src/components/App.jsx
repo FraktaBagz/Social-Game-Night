@@ -9,7 +9,7 @@ import Lobby from './views/lobby/Lobby.jsx';
 import CustomDeck from './views/customdeck/CustomDeck.jsx';
 
 export default function App () {
-  const [pageView, setPageView] = useState('SignUp');
+  const [pageView, setPageView] = useState('SignIn');
   const [gameState, setGameState] = useState({})
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
