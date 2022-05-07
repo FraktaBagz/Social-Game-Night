@@ -8,15 +8,16 @@ import Lobby from './views/lobby/Lobby.jsx';
 import CustomDeck from './views/customdeck/CustomDeck.jsx';
 
 export default function App () {
-  const [pageView, setPageView] = useState('SignUp');
+  // const [pageView, setPageView] = useState('SignUp');
+  const [pageView, setPageView] = useState('CustomDeck');
   const [gameState, setGameState] = useState({})
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
-  useEffect(()=>{
-    if (currentUser !== null) {
-      setPageView('HomePage')
-    }
-  }, [currentUser])
+  // useEffect(()=>{
+  //   if (currentUser !== null) {
+  //     setPageView('CustomDeck')
+  //   }
+  // }, [currentUser])
 
   return (
     <>
@@ -25,7 +26,7 @@ export default function App () {
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}
-      {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState}/> : null}
+      {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState} setPageView={setPageView}/> : null}
     </>
   )
 }

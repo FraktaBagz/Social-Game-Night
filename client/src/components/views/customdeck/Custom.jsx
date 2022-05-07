@@ -1,9 +1,6 @@
-// CUSTOM DECK PAGE VIEW
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-// import Item from '@mui/material/Stack';
-// import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
@@ -15,9 +12,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function CustomDeck({ setPageView }) {
-  const [decks, setDecks] = useState(['deck1', 'deck2', 'deck3']);
-
+export default function CustomDeck() {
   // should pass already customized decks in format below and send custom deck to database. with a post if deck doesn't exist or put request if deck exists already.
   // expected data per deck
   // {
@@ -25,24 +20,9 @@ export default function CustomDeck({ setPageView }) {
   //   questions: [],
   // }
 
-  const onClick = (e) => {
-    e.preventDefault()
-    setPageView('HomePage')
-  }
-
   return (
-    <div >
-      <div>Custom deck</div>
-      <div>View All</div>
-      <Stack
-        direction={{ xs: 'column', sm: 'row' }}
-        spacing={{ xs: 1, sm: 2, md: 4 }}
-      >
-        {decks.map(deck => (
-          <Item>{deck}</Item>
-        ))}
-        <Item onClick={onClick}>Custom</Item>
-      </Stack>
-    </div>
+    <>
+      <div>custom deck</div>
+    </>
   )
 }
