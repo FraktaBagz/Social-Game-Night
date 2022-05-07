@@ -21,21 +21,21 @@ export default function SignInPage({ setPageView }) {
   const [isGuest, setIsGuest] = useState(false);
   const [guestName, setGuestName] = useState('')
 
-
   console.log('User info: ', useAuth(), useAuth().displayName);
+
+  const submitGuestName = (event) => {
+    event.preventDefault();
+    console.log('test')
+    //firebase tings
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
     signUp(
       data.get('email'),
       data.get('password'),
       data.get('name'),
-
     )
       .then((success) => {
 
@@ -45,8 +45,6 @@ export default function SignInPage({ setPageView }) {
         console.log(err.code, err.message);
       });
   };
-
-  // onAuthStateChanged()
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,7 +65,7 @@ export default function SignInPage({ setPageView }) {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-            <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="given-name"
                   name="name"
@@ -109,22 +107,6 @@ export default function SignInPage({ setPageView }) {
             >
               Sign In
             </Button>
-            <Button
-              value="guest"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={() => {setIsGuest(true)}}
-            >
-              Play as guest
-            </Button>
-            {isGuest ?
-              <TextField
-                label="Guest Name"
-                onChange={() => {setGuestName}}
-                value={guestName}
-              />
-            : <></>}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link variant="body2" onClick={() => {setPageView('SignUp')}}>
@@ -133,6 +115,27 @@ export default function SignInPage({ setPageView }) {
               </Grid>
             </Grid>
           </Box>
+          <Button
+            value="guest"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={() => {setIsGuest(true)}}
+          >
+            Play as guest
+          </Button>
+          {
+          isGuest ?
+            <form onSubmit={submitGuestName}>
+              <TextField
+                label="Guest Name"
+                onChange={() => {setGuestName}}
+                value={guestName}
+              />
+              <Button type="submit">Submit Name</Button>
+            </form>
+          : <></>
+          }
         </Box>
       </Container>
     </ThemeProvider>
