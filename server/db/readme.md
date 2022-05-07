@@ -1,1 +1,0 @@
-this is for initializing the database and establishing connections to it
