@@ -24,14 +24,9 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
   //   questions: [],
   // }
 
-  // const onClick = (e) => {
-  //   e.preventDefault()
-  //   setPageView('Custom')
-  // }
-
   return (
     <div >
-      {console.log(customDecks)}
+      {/* {console.log(customDecks)} */}
       <div>Custom deck</div>
       <div onClick={() => (setPageView('HomePage'))}>back to homepage</div>
       <Stack
@@ -39,14 +34,14 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
         spacing={{ xs: 1, sm: 2, md: 4 }}
       >
         {decks.map(deck => (
-          <Item
+          <Item key={deck}
             onClick={() => (
               setPageView('ViewCards'),
               setSelectedCustomDeck({ [deck]: customDecks[deck] })
-        )}>{deck}</Item>
+            )}>{deck}</Item>
         ))}
-      <Item onClick={() => (setPageView('Custom'))}>Custom</Item>
-    </Stack>
+        <Item onClick={() => (setPageView('Custom'))}>Custom</Item>
+      </Stack>
     </div >
   )
 }

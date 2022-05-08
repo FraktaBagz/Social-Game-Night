@@ -10,25 +10,30 @@ import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
 
 const customDecksSample =
-  {
-    skips: {
-      questions: ['card1', 'card2'],
-      answers: ['answer1', 'answer2']
-    },
-    skipsgma: {
-      questions: ['card1', 'card2'],
-      answers: ['answer1', 'answer2']
-    }
+{
+  skips: {
+    questions: ['card1', 'card2'],
+    answers: ['answer1', 'answer2']
+  },
+  skipsgma: {
+    questions: ['card1', 'card2'],
+    answers: ['answer1', 'answer2']
   }
+}
 
 
 export default function App() {
   // const [pageView, setPageView] = useState('SignUp');
-  const [pageView, setPageView] = useState('CustomDeck');
+  const [pageView, setPageView] = useState('ViewCards');
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
-  const [selectedCustomDeck, setSelectedCustomDeck] = useState({});
+  const [selectedCustomDeck, setSelectedCustomDeck] = useState({
+    dummy: {
+      questions: ['card1', 'card2'],
+      answers: ['answer1', 'answer2']
+    }
+  });
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
   // useEffect(()=>{
@@ -44,7 +49,7 @@ export default function App() {
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} /> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState} /> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} /> : null}
-      {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState} setPageView={setPageView} customDecks={customDecks} setSelectedCustomDeck={setSelectedCustomDeck}/> : null}
+      {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState} setPageView={setPageView} customDecks={customDecks} setSelectedCustomDeck={setSelectedCustomDeck} /> : null}
       {pageView === 'Custom' ? <Custom gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'ViewCards' ? <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} /> : null}
     </>
