@@ -18,7 +18,7 @@ const theme = createTheme();
 function SignUpPage() {
   const { signUp, currentUser } = useAuth();
 
-  console.log('User info: ', useAuth(), useAuth().displayName);
+  // console.log('User info: ', useAuth(), useAuth().displayName);
 
   const handleSubmit = (event) => {
     event.preventDefault();
