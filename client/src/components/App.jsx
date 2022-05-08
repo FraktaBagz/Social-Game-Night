@@ -9,7 +9,18 @@ import CustomDeck from './views/customdeck/CustomDeck.jsx';
 
 export default function App () {
   const [pageView, setPageView] = useState('SignUp');
-  const [gameState, setGameState] = useState({})
+  const [gameState, setGameState] = useState({
+    currentDeck: 'deck', //deck should be a variable
+    judgeIndex: 0,
+    judging: false,
+    userInformation: {
+    },
+    questionCard: null,
+    hasPicked: [],
+    submittedCards: [],
+    finished: true,
+    winner: null,
+})
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
   useEffect(()=>{
