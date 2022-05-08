@@ -26,3 +26,5 @@ defaultRed.forEach((card) => {
       console.error('Error adding document: ', e);
     });
 });
+
+// enter node server/data/seed.js into terminal to seed data
