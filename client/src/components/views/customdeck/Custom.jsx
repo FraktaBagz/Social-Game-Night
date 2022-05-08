@@ -5,7 +5,6 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
 export default function Custom({ setPageView }) {
-
   // {
   //   answers: [],
   //   questions: [],

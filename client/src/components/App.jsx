@@ -12,26 +12,25 @@ import ViewCards from './views/customdeck/ViewCards.jsx';
 const customDecksSample =
 {
   skips: {
-    questions: ['card1', 'card2'],
-    answers: ['answer1', 'answer2']
+    questions: ['skipsq1', 'skipsq2'],
+    answers: ['skipsa1', 'skipsa2']
   },
   skipsgma: {
-    questions: ['card1', 'card2'],
-    answers: ['answer1', 'answer2']
+    questions: ['skipsgq1', 'skipsgq1'],
+    answers: ['skipsga1', 'skipsga1']
   }
 }
 
-
 export default function App() {
   // const [pageView, setPageView] = useState('SignUp');
-  const [pageView, setPageView] = useState('ViewCards');
+  const [pageView, setPageView] = useState('Custom');
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
-      questions: ['card1', 'card2'],
-      answers: ['answer1', 'answer2']
+      questions: ['dummyq1', 'dummyq2'],
+      answers: ['dummya1', 'dummya2']
     }
   });
 
