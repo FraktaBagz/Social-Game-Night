@@ -12,27 +12,33 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function ViewCards({ setPageView }) {
+export default function ViewCards({ setPageView, selectedCustomDeck }) {
+  const decks = Object.keys(selectedCustomDeck);
+  const deckName = decks[0]
+  const deck = selectedCustomDeck[deckName]
+
+
 
   return (
     <div >
       <div>AllCards in deck</div>
       <div onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</div>
+      <h1>{deckName}</h1>
       <div>Questions</div>
       <div>
       <Stack direction="row" spacing={2}>
-        <Item>Item 1</Item>
-        <Item>Item 2</Item>
-        <Item>Item 3</Item>
+        {deck.questions.map(question => (
+          <Item key={question}>{question}</Item>
+        ))}
       </Stack>
     </div>
 
       <div>Answers</div>
       <div>
       <Stack direction="row" spacing={2}>
-        <Item>Item 1</Item>
-        <Item>Item 2</Item>
-        <Item>Item 3</Item>
+        {deck.answers.map(answer => (
+          <Item key={answer}>{answer}</Item>
+        ))}
       </Stack>
     </div>
     </div>

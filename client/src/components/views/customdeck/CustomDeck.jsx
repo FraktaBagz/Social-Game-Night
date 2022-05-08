@@ -26,7 +26,6 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
 
   return (
     <div >
-      {/* {console.log(customDecks)} */}
       <div>Custom deck</div>
       <div onClick={() => (setPageView('HomePage'))}>back to homepage</div>
       <Stack
