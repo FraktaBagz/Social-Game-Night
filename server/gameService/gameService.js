@@ -1,6 +1,8 @@
 // assume deck format { noun: [], verb: [] }
 // assume users = [ { uid: 128731, name: 'Nathaniel' }, ... ]
 
+// not hooked up to anything -- need to work with server people
+
 // not used atm
 let Lobby = function (host) {
   this.host = host;
