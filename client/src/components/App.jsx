@@ -39,12 +39,12 @@ const theme = createTheme({
 });
 
 export default function App () {
-  const [pageView, setPageView] = useState('HomePage');
+  const [pageView, setPageView] = useState('Lobby');
   const [gameState, setGameState] = useState({})
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
   useEffect(()=>{
-    setPageView('SignIn')
+    setPageView('Lobby')
   }, [])
 
   // useEffect(() => {
@@ -60,7 +60,7 @@ export default function App () {
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} theme={theme}/> : null}
       {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState}/> : null}
       {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
     </ThemeProvider>
