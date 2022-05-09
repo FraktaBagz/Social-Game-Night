@@ -44,7 +44,7 @@ export default function App () {
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
   useEffect(()=>{
-    setPageView('SignIn')
+    setPageView('Lobby')
   }, [])
 
   // useEffect(() => {
@@ -53,8 +53,62 @@ export default function App () {
   //   }
   // }, [currentUser])
 
+  var handleSignUp = (event) => {
+    event.preventDefault();
+    setPageView('SignUp')
+  };
+
+  var handleSignIn = (event) => {
+    event.preventDefault();
+    setPageView('SignIn')
+  };
+
+  var handleHomePage = (event) => {
+    event.preventDefault();
+    setPageView('HomePage')
+  };
+
+  var handleJudgeView = (event) => {
+    event.preventDefault();
+    setPageView('JudgeView')
+  };
+
+  var handlePlayerView = (event) => {
+    event.preventDefault();
+    setPageView('PlayerView')
+  };
+
+  var handleLobby = (event) => {
+    event.preventDefault();
+    setPageView('Lobby')
+  };
+
+  var handleCustomDeck = (event) => {
+    event.preventDefault();
+    setPageView('CustomDeck')
+  };
+
+  var handleAvatarExample = (event) => {
+    event.preventDefault();
+    setPageView('avatarExample')
+  };
+
+  var handleResults = (event) => {
+    event.preventDefault();
+    setPageView('results')
+  };
+
   return (
     <ThemeProvider theme={theme}>
+      <button onClick={handleSignUp}>SignUp</button>
+      <button onClick={handleSignIn}>SignIn</button>
+      <button onClick={handleHomePage}>HomePage</button>
+      <button onClick={handleJudgeView}>JudgeView</button>
+      <button onClick={handlePlayerView}>PlayerView</button>
+      <button onClick={handleLobby}>Lobby</button>
+      <button onClick={handleCustomDeck}>CustomDeck</button>
+      <button onClick={handleAvatarExample}>avatarExample</button>
+      <button onClick={handleResults}>results</button>
       {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} theme={theme}/> : null}
