@@ -38,11 +38,7 @@ const theme = createTheme({
 });
 
 export default function App () {
-<<<<<<< HEAD
   const [pageView, setPageView] = useState('HomePage');
-=======
-  const [pageView, setPageView] = useState('avatarExample');
->>>>>>> 9f4eb18ef33668143da52384c660680f83959c4c
   const [gameState, setGameState] = useState({})
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
