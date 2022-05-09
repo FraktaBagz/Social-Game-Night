@@ -103,7 +103,7 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
                       backgroundColor: 'info.main',
                       '&:hover': {
                         backgroundColor: 'info.main',
-                        // opacity: [0.9, 0.8, 0.8],
+                        // opacity: [0.9, 0.8, 0.8],[]
                       },
                       borderRadius: 8,
                     }}
