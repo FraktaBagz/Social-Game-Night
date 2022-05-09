@@ -12,6 +12,7 @@ import { AvatarChipWaiting, AvatarChipPicking } from './views/common/AvatarChips
 import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
 import PlayingCard from './views/common/PlayingCard.jsx';
+import Results from './views/results/Results.jsx';
 
 /*
 black #2c2f3a
@@ -168,6 +169,8 @@ export default function App () {
           <PlayingCard type='answer' info='answer example'/>
         </div>
       : null}
+      {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView}/> : null}
     </ThemeProvider>
   )
 }
