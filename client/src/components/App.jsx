@@ -52,8 +52,8 @@ const customDecksSample =
 }
 
 export default function App () {
-  const [pageView, setPageView] = useState('SignUp');
-  // const [pageView, setPageView] = useState('Custom');
+  // const [pageView, setPageView] = useState('SignUp');
+  const [pageView, setPageView] = useState('Custom');
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
   const [customDecks, setCustomDecks] = useState(customDecksSample);

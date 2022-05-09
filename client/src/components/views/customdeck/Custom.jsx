@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import AddIcon from '@mui/icons-material/Add';
@@ -104,8 +105,8 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
   }
 
   return (
-    <Box>
-      <Button variant="outlined" onClick={() => (setPageView('CustomDeck'))}>back to customdeck page</Button>
+    <Container>
+      <Button variant="outlined" onClick={() => (setPageView('CustomDeck'), setCustomDecktitle(''))}>back to customdeck page</Button>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Box>
@@ -122,6 +123,6 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   )
 }

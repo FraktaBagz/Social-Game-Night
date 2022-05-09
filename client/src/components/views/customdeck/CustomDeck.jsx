@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -15,9 +16,14 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle }) {
-  const deckNames = Object.keys(customDecks);
-  const [decks, setDecks] = useState(deckNames);
+export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDecktitle }) {
+
+
+
+  // if (Object.keys(customDecks).length <= 0) {
+  // }
+    const deckNames = Object.keys(customDecks);
+    const [decks, setDecks] = useState(deckNames);
 
   // should pass already customized decks in format below and send custom deck to database. with a post if deck doesn't exist or put request if deck exists already.
   // expected data per deck
@@ -27,7 +33,7 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
   // }
 
   return (
-    <Box
+    <Container
       sx={{
         width: 300,
         height: 300,
@@ -48,14 +54,14 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
             <span>Total Cards: {(customDecks[deck].questions).length + (customDecks[deck].answers).length}</span>
             <Item
               onClick={() => (
-                setPageView('ViewCards'),
+                setPageView('Custom'),
                 setSelectedCustomDeck({ [deck]: customDecks[deck] }),
                 setCustomDecktitle(deck)
               )}>{deck}</Item>
           </div>
         ))}
-        <Item onClick={() => (setPageView('Custom'), setCustomDecktitle(''))}>+</Item>
+        <Item onClick={() => (setPageView('Custom'), setCustomDecktitle('') )}>+</Item>
       </Stack>
-    </Box>
+    </Container>
   )
 }
