@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useFormControl } from '@mui/material/FormControl';
 
 
-export default function HomePage ({ currentUser, setCurrentUser, setPageView }) {
+export default function HomePage ({ currentUser, setCurrentUser, setPageView, theme }) {
   const handleLogOut = (e) => {
     e.preventDefault();
     setCurrentUser({})
@@ -34,23 +34,22 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView }) 
     console.log(currentUser)
   }, [])
 
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: '#9CE774',
-      main: '#E95D70',
-      dark: '#2C2F3A',
-      contrastText: '#FFFFFF',
-    },
-    secondary: {
-      light: '#EA9E48',
-      main: '#9CE774',
-      dark: '#151515',
-      contrastText: '#000',
-    },
-  },
-});
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       light: '#9CE774',
+//       main: '#E95D70',
+//       dark: '#2C2F3A',
+//       contrastText: '#FFFFFF',
+//     },
+//     secondary: {
+//       light: '#EA9E48',
+//       main: '#9CE774',
+//       dark: '#151515',
+//       contrastText: '#000',
+//     },
+//   },
+// });
 
   return (
     <>
@@ -114,9 +113,9 @@ const theme = createTheme({
                       flexDirection: 'row',
                       justifyContent: "space-evenly",
                       alignItems: "center",
-                      backgroundColor: 'secondary.main',
+                      backgroundColor: 'info.main',
                       '&:hover': {
-                        backgroundColor: 'secondary.main',
+                        backgroundColor: 'info.main',
                         opacity: [0.9, 0.8, 0.8],
                       },
                       borderRadius: 8,
@@ -159,7 +158,10 @@ const theme = createTheme({
                     width: 500,
                     height: 75,
                     borderRadius: 6,
-                    backgroundColor: "secondary.light",
+                    backgroundColor: "secondary.main",
+                    '&:hover': {
+                      backgroundColor: 'primary.grey',
+                    },
                   }}
                 >
                   CREATE A GAME
@@ -177,7 +179,10 @@ const theme = createTheme({
                     width: 500,
                     height: 75,
                     borderRadius: 6,
-                    backgroundColor: "secondary.light",
+                    backgroundColor: "secondary.main",
+                    '&:hover': {
+                      backgroundColor: 'primary.grey',
+                    },
                   }}
                 >
                   JOIN A GAME

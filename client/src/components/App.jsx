@@ -24,6 +24,7 @@ const theme = createTheme({
     primary: {
       main: '#ea9e48',
       contrastText: '#ffffff',
+      grey: '#2c2f3a',
     },
     secondary: {
       main: '#e95d70',
@@ -50,9 +51,9 @@ export default function App () {
 
   return (
     <ThemeProvider theme={theme}>
-      {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
+      {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}
