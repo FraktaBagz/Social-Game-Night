@@ -39,12 +39,12 @@ const AvatarChipWaiting = ({ userInfo }) => {
   )
 }
 
-const AvatarChipPicking = ({ userInfo }) => {
+const AvatarChipPicking = ({ userInfo, picking }) => {
   let score = '00'; // change to props when avatar available
   let user = { name: 'Nathaniel', title: 'title', avatar: null, }
   // change src to fit avatar
 
-  const [isPicking, setIsPicking] = useState(false);
+  const [isPicking, setIsPicking] = useState(picking);
 
   return (
     <Box>
