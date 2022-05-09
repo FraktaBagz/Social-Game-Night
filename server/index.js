@@ -28,11 +28,11 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-//to join a new room, we will need to have a username and room
-//user can come from the react context and the room will have to be explicitly declared in a text box or something.
-  socket.on('joinRoom', ({user, room}) => {
+  //to join a new room, we will need to have a username and room
+  //user can come from the react context and the room will have to be explicitly declared in a text box or something.
+  socket.on('joinRoom', ({ user, room }) => {
     socket.join(room);
-    socket.broadcast.to(room).emit('chat message', {user: user, text: `${user} has joined the party`})
+    socket.broadcast.to(room).emit('chat message', { user: user, text: `${user} has joined the party` })
   })
 });
 
@@ -42,44 +42,3 @@ io.on('connection', (socket) => {
 http.listen(3001, () => {
   console.log('listening on *:3001');
 });
-// const firebase = require('firebase/compat/app');
-// const { getFirestore, collection, addDoc, doc, getDoc } = require('firebase/firestore');
-
-const application = firebase.initializeApp(firebaseConfig);
-const db = getFirestore(application);
-
-// // addDoc(collection(db, "users"), {
-// //   first: "Ada",
-// //   last: "Lovelace",
-// //   born: 1815
-// // })
-// //   .then(docRef => {
-// //     console.log("Document written with ID: ", docRef.id);
-// //   })
-// //   .catch(e => {
-// //     console.error("Error adding document: ", e);
-// //   });
-
-// const userRef = doc(db, 'users', 'O2wXmC6tp7pVm0Jvjoem');
-// getDoc(userRef)
-//   .then(doc => {
-//     if (doc) {
-//       console.log(doc.data());
-//     }
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
-
-const userRef = doc(db, 'users', 'O2wXmC6tp7pVm0Jvjoem');
-getDoc(userRef)
-  .then(doc => {
-    if (doc) {
-      console.log(doc.data());
-    }
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-module.exports.db = getFirestore(application);
