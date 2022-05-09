@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import SignUpPage from './views/signup/SignUp.jsx';
 import SignInPage from './views/signin/SignIn.jsx';
 import { useAuth } from '../firebase/contexts/AuthContext.js';
+import { auth } from '../firebase/firebase.js';
 import HomePage from './views/homepage/HomePage.jsx';
 import JudgeView from './views/judgeview/JudgeView.jsx';
 import PlayerView from './views/playerview/PlayerView.jsx';
@@ -11,6 +12,8 @@ import CustomDeck from './views/customdeck/CustomDeck.jsx';
 import { AvatarChipWaiting, AvatarChipPicking } from './views/common/AvatarChips.jsx';
 import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
+import PlayingCard from './views/common/PlayingCard.jsx';
+import Results from './views/results/Results.jsx';
 
 /*
 black #2c2f3a
@@ -52,9 +55,10 @@ const customDecksSample =
   }
 }
 
-export default function App () {
-  // const [pageView, setPageView] = useState('SignUp');
-  const [pageView, setPageView] = useState('Custom');
+export default function App() {
+  const { signUp, currentUser, setCurrentUser } = useAuth();
+  const [pageView, setPageView] = useState('SignIn');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
@@ -66,12 +70,23 @@ export default function App () {
   });
   const [customDeckTitle, setCustomDecktitle] = useState('');
 
+  // useEffect(() => {
+  //   setPageView('SignIn');
+  // }, [])
 
-  const { signUp, currentUser, setCurrentUser } = useAuth();
-
-  useEffect(()=>{
-    setPageView('Lobby')
-  }, [])
+  function handleLogState() {
+    if (isLoggedIn) {
+      auth.signOut()
+        .then(() => {
+          setIsLoggedIn(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setIsLoggedIn(true);
+    }
+  };
 
   // useEffect(() => {
   //   if (Object.keys(currentUser).length !== 0) {
@@ -124,6 +139,15 @@ export default function App () {
     setPageView('results')
   };
 
+  if (!isLoggedIn) {
+    return (
+      <ThemeProvider theme={theme}>
+        {pageView === 'SignUp' ? <SignUpPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+        {pageView === 'SignIn' ? <SignInPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <button onClick={handleSignUp}>SignUp</button>
@@ -135,19 +159,19 @@ export default function App () {
       <button onClick={handleCustomDeck}>CustomDeck</button>
       <button onClick={handleAvatarExample}>avatarExample</button>
       <button onClick={handleResults}>results</button>
-      {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView}/> : null}
+      {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'CustomDeck' ? <CustomDeck
         gameState={gameState}
         setPageView={setPageView}
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
         setCustomDecktitle={setCustomDecktitle}
-        /> : null}
+      /> : null}
       {pageView === 'Custom' ? <Custom
         gameState={gameState}
         setPageView={setPageView}
@@ -160,7 +184,15 @@ export default function App () {
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
         setCustomDecktitle={setCustomDecktitle} /> : null}
+      {pageView === 'avatarExample' ?
+        <div>
+          <AvatarChipPicking picking={true} /><br /><AvatarChipPicking picking={false} /><br /><AvatarChipWaiting /><br />
+          <PlayingCard type='question' info='question example' /><br />
+          <PlayingCard type='answer' info='answer example' />
+        </div>
+        : null}
       {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} /> : null}
     </ThemeProvider>
   )
 }
