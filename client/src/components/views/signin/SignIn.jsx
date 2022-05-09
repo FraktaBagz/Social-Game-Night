@@ -14,8 +14,6 @@ import { useState } from 'react';
 // our actual code
 import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
-const theme = createTheme();
-
 export default function SignInPage({ setPageView }) {
   const { signUp, currentUser } = useAuth();
   const [isGuest, setIsGuest] = useState(false);
