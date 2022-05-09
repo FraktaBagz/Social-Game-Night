@@ -54,7 +54,7 @@ export default function Lobby () {
     title: 'The Wizard',
     avatar: 'https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png'
   }])
-
+  var count = 0;
   return (
     <>
       <div className="lobbyContainer">
@@ -85,7 +85,7 @@ export default function Lobby () {
             <Stack spacing={2}>
             {connectedUsers.map((userObj)=>{
               return (
-                <Item>
+                <Item key={count+=1}>
                 <img src={`${userObj.avatar}`} height="50px"></img>
                 <div style={{display: 'inline-block'}}>{userObj.user}
                   <div>
