@@ -10,7 +10,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useFormControl } from '@mui/material/FormControl';
+import { useFormControl } from '@mui/material/FormControl';;
+import { motion } from 'framer-motion'
 
 
 export default function HomePage ({ currentUser, setCurrentUser, setPageView, theme }) {
@@ -33,23 +34,6 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
   useEffect(() => {
     console.log(currentUser)
   }, [])
-
-// const theme = createTheme({
-//   palette: {
-//     primary: {
-//       light: '#9CE774',
-//       main: '#E95D70',
-//       dark: '#2C2F3A',
-//       contrastText: '#FFFFFF',
-//     },
-//     secondary: {
-//       light: '#EA9E48',
-//       main: '#9CE774',
-//       dark: '#151515',
-//       contrastText: '#000',
-//     },
-//   },
-// });
 
   return (
     <>
@@ -74,6 +58,7 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
               alignItems="center"
             >
               <Grid item xs={12} sm={6}>
+                <motion.div whileHover={{scale: 1.02}}>
                 <Box
                   sx ={{
                     width: 500,
@@ -86,7 +71,7 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
                     backgroundColor: 'primary.main',
                     '&:hover': {
                       backgroundColor: 'primary.main',
-                      opacity: [0.9, 0.8, 0.8],
+                      // opacity: [0.9, 0.8, 0.8],
                     },
                     borderRadius: 15,
                   }}
@@ -102,9 +87,11 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
                     APPLES TO ORANGES
                   </Typography>
                 </Box>
+                </motion.div>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Box
+                <motion.div whileHover={{scale: 1.02}}>
+                  <Box
                     sx ={{
                       width: 500,
                       height: 100,
@@ -116,23 +103,23 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
                       backgroundColor: 'info.main',
                       '&:hover': {
                         backgroundColor: 'info.main',
-                        opacity: [0.9, 0.8, 0.8],
+                        // opacity: [0.9, 0.8, 0.8],
                       },
                       borderRadius: 8,
                     }}
                   >
-                  <Typography component="h1" variant="h5">
-                    Avatar
-                  </Typography>
-                  <Typography component="h1" variant="h5">
-                    Display Name
-                  </Typography>
-                  <Button sx={{color: "#000000"}} onClick={handleLogOut}>
-                    LOG OUT
-                  </Button>
-                </Box>
+                    <Typography component="h1" variant="h5">
+                      Avatar
+                    </Typography>
+                    <Typography component="h1" variant="h5">
+                      Display Name
+                    </Typography>
+                    <Button sx={{color: "#000000"}} onClick={handleLogOut}>
+                      LOG OUT
+                    </Button>
+                  </Box>
+                </motion.div>
               </Grid>
-
             </Grid>
           </Grid>
 {/* -----------------------------right side----------------------------------------- */}
@@ -145,48 +132,57 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
               justifyContent="space-around"
               alignItems="center"
             >
-
               <Grid item xs={12} sm={6}>
-                <Button
-                  onClick={() => {setPageView('SignUp')}}
-                  value="user"
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    mt: 3,
-                    mb: 2,
-                    width: 500,
-                    height: 75,
-                    borderRadius: 6,
-                    backgroundColor: "secondary.main",
-                    '&:hover': {
-                      backgroundColor: 'primary.grey',
-                    },
-                  }}
+                <motion.div
+                  whileHover={{scale: 1.1}}
+                  whileTap={{scale: 1}}
                 >
-                  CREATE A GAME
-                </Button>
+                  <Button
+                    onClick={() => {setPageView('SignIn')}}
+                    value="user"
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      mt: 3,
+                      mb: 2,
+                      width: 500,
+                      height: 75,
+                      borderRadius: 6,
+                      backgroundColor: "secondary.main",
+                      '&:hover': {
+                        backgroundColor: 'primary.grey',
+                      },
+                    }}
+                  >
+                    CREATE A GAME
+                  </Button>
+                </motion.div>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Button
-                  // type="submit"
-                  onClick={() => {setJoiningGame(true)}}
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    mt: 3,
-                    mb: 2,
-                    width: 500,
-                    height: 75,
-                    borderRadius: 6,
-                    backgroundColor: "secondary.main",
-                    '&:hover': {
-                      backgroundColor: 'primary.grey',
-                    },
-                  }}
+                <motion.div
+                  whileHover={{scale: 1.1}}
+                  whileTap={{scale: 1}}
                 >
-                  JOIN A GAME
-                </Button>
+                  <Button
+                    // type="submit"
+                    onClick={() => {setJoiningGame(true)}}
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      mt: 3,
+                      mb: 2,
+                      width: 500,
+                      height: 75,
+                      borderRadius: 6,
+                      backgroundColor: "secondary.main",
+                      '&:hover': {
+                        backgroundColor: 'primary.grey',
+                      },
+                    }}
+                  >
+                    JOIN A GAME
+                  </Button>
+                </motion.div>
               </Grid>
               {
                 joiningGame ?
@@ -200,24 +196,40 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView, th
                           name="joinCode"
                           type="joinCode"
                           sx={{width: 500}}
+                          InputProps={{
+                            classes: {
+                              notchedOutline: {
+                                borderWidth: "1px",
+                                borderColor: "yellow !important"
+                              }
+                            }
+                          }}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{
-                          mt: 3,
-                          mb: 2,
-                          width: 500,
-                          height: 75,
-                          borderRadius: 6,
-                          backgroundColor: "secondary.light",
-                        }}
+                        <motion.div
+                          whileHover={{scale: 1.1}}
+                          whileTap={{scale: 1}}
                         >
-                          Enter
-                        </Button>
+                          <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{
+                            mt: 3,
+                            mb: 2,
+                            width: 500,
+                            height: 75,
+                            borderRadius: 6,
+                            backgroundColor: "secondary.main",
+                            '&:hover': {
+                              backgroundColor: 'primary.grey',
+                            },
+                          }}
+                          >
+                            Enter
+                          </Button>
+                        </motion.div>
                       </Grid>
                     </Grid>
                   </Box>
