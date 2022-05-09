@@ -54,7 +54,7 @@ const customDecksSample =
 
 export default function App () {
   // const [pageView, setPageView] = useState('SignUp');
-  const [pageView, setPageView] = useState('Lobby');
+  const [pageView, setPageView] = useState('SignIn');
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
@@ -69,9 +69,9 @@ export default function App () {
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
-  useEffect(()=>{
-    setPageView('Lobby')
-  }, [])
+  // useEffect(()=>{
+  //   setPageView('Lobby')
+  // }, [])
 
   // useEffect(() => {
   //   if (Object.keys(currentUser).length !== 0) {

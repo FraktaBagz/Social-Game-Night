@@ -35,11 +35,11 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
       sx={{
         width: 300,
         height: 300,
-        backgroundColor: 'primary.dark',
-        '&:hover': {
-          backgroundColor: 'primary.main',
-          opacity: [0.9, 0.8, 0.7],
-        },
+        backgroundColor: 'info.main',
+        // '&:hover': {
+        //   backgroundColor: 'primary.main',
+        //   opacity: [0.9, 0.8, 0.7],
+        // },
       }} >
       {/* <Typography variant="h3">Custom deck</Typography> */}
       {/* <div onClick={() => (setPageView('HomePage'))}>back to homepage</div> */}
@@ -49,15 +49,45 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
       >
         {decks.map(deck => (
           <div key={deck}>
-            <span>Total Cards: {(customDecks[deck].questions).length + (customDecks[deck].answers).length}</span>
             <Item
-              >{deck}'s
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                width: 75,
+                height: 25,
+                borderRadius: 4,
+                backgroundColor: "primary.main",
+                '&:hover': {
+                  backgroundColor: 'primary.contrastText',
+                },
+              }}
+              onClick={() => (
+                setSelectedCustomDeck({ [deck]: customDecks[deck] }),
+                setCustomDecktitle(deck)
+                )}>{deck}'s
             </Item>
-            <Button onClick={() => (
-              setPageView('Custom'),
-              setSelectedCustomDeck({ [deck]: customDecks[deck] }),
-              setCustomDecktitle(deck)
-              )}>Edit Deck
+            <span>Total Cards: {(customDecks[deck].questions).length + (customDecks[deck].answers).length}</span>
+            <Button type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                width: 75,
+                height: 25,
+                borderRadius: 4,
+                backgroundColor: "secondary.main",
+                '&:hover': {
+                  backgroundColor: 'primary.grey',
+                },
+              }} onClick={() => (
+                setPageView('Custom'),
+                setSelectedCustomDeck({ [deck]: customDecks[deck] }),
+                setCustomDecktitle(deck)
+                )}>Edit
             </Button>
           </div>
         ))}
