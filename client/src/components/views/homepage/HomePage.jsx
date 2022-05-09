@@ -7,7 +7,7 @@ export default function HomePage ({ currentUser, setCurrentUser, setPageView }) 
     setCurrentUser({})
     setPageView('SignUp')
   }
-  
+
   return (
     <>
       <div>Hello user</div>
