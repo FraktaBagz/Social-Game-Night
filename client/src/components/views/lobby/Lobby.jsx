@@ -97,7 +97,9 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                   backgroundColor: 'primary.grey',
                 },
               }}
-            >
+              onClick={()=>{
+                setPageView('PlayerView')
+              }}>
               Start Game!
             </Button>
             <Button
@@ -115,7 +117,9 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                   backgroundColor: 'primary.grey',
                 },
               }}
-            >
+              onClick={()=>{
+                setPageView('HomePage')
+              }}>
               Leave Game
             </Button>
           </div>
