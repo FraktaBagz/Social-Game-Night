@@ -13,9 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // our actual code
 import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
-const theme = createTheme();
-
-function SignUpPage({ setPageView }) {
+function SignUpPage({ setPageView, theme }) {
   const { signUp, currentUser } = useAuth();
 
   // console.log('User info: ', useAuth(), useAuth().displayName);
