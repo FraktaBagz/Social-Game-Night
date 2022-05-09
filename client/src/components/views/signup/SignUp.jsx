@@ -13,33 +13,27 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // our actual code
 import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
-function SignUpPage({ setPageView, theme }) {
-  const { signUp, currentUser } = useAuth();
+const theme = createTheme();
 
-  // console.log('User info: ', useAuth(), useAuth().displayName);
-
-  const handleSubmit = (event) => {
+function SignUpPage({ handleLogState, setPageView }) {
+  const { signUp, currentUserID } = useAuth();
+  function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
     signUp(
       data.get('email'),
       data.get('password'),
       data.get('name'),
     )
       .then((success) => {
-
+        setPageView('HomePage');
+        handleLogState();
       })
       .catch((err) => {
         alert(err.message)
         console.log(err.code, err.message);
       });
   };
-
-  // onAuthStateChanged()
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,7 +97,7 @@ function SignUpPage({ setPageView, theme }) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link variant="body2" onClick={() => {setPageView('SignIn')}}>
+                <Link variant="body2" onClick={() => { setPageView('SignIn') }}>
                   Back To Log In
                 </Link>
               </Grid>

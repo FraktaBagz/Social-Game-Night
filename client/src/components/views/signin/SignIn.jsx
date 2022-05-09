@@ -14,8 +14,8 @@ import { useState } from 'react';
 // our actual code
 import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
-export default function SignInPage({ setPageView, theme }) {
-  const { signUp, currentUser } = useAuth();
+export default function SignInPage({ setPageView, theme, handleLogState }) {
+  const { signUp, login, currentUser, signInAsAnonymous } = useAuth();
   const [isGuest, setIsGuest] = useState(false);
   const [guestName, setGuestName] = useState('')
 
@@ -30,17 +30,15 @@ export default function SignInPage({ setPageView, theme }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signUp(
-      data.get('email'),
-      data.get('password'),
-      data.get('name'),
-    )
-      .then((success) => {
 
+
+    login(data.get('email'), data.get('password'))
+      .then(() => {
+        setPageView('HomePage');
+        handleLogState();
       })
       .catch((err) => {
-        alert(err.message)
-        console.log(err.code, err.message);
+        console.log(err);
       });
   };
 
@@ -63,17 +61,6 @@ export default function SignInPage({ setPageView, theme }) {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -107,7 +94,7 @@ export default function SignInPage({ setPageView, theme }) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link variant="body2" onClick={() => {setPageView('SignUp')}}>
+                <Link variant="body2" onClick={() => { setPageView('SignUp') }}>
                   Don't have an account? Sign Up Here!
                 </Link>
               </Grid>
@@ -118,21 +105,33 @@ export default function SignInPage({ setPageView, theme }) {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={() => {setIsGuest(true)}}
+            onClick={() => {
+              setIsGuest(true)
+            }}
           >
             Play as guest
           </Button>
           {
-          isGuest ?
-            <form onSubmit={submitGuestName}>
-              <TextField
-                label="Guest Name"
-                onChange={() => {setGuestName}}
-                value={guestName}
-              />
-              <Button type="submit">Submit Name</Button>
-            </form>
-          : <></>
+            isGuest ?
+              <div>
+                <TextField
+                  required
+                  fullWidth
+                  id="guestName"
+                  label="Guest Name"
+                  name="guestName"
+                  onChange={(e) => { setGuestName(e.target.value) }}
+                />
+                <Button type="submit" onClick={() => {
+                  handleLogState();
+                  setPageView('HomePage');
+                  signInAsAnonymous(guestName)
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}>Submit Name</Button>
+              </div>
+              : <></>
           }
         </Box>
       </Container>
