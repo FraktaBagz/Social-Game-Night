@@ -69,7 +69,9 @@ export default function App () {
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
-
+  useEffect(()=>{
+    setPageView('SignIn')
+  }, [])
 
   // useEffect(() => {
   //   if (Object.keys(currentUser).length !== 0) {
