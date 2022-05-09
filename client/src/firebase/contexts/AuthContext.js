@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth } from '../firebase.js';
+import { auth, db } from '../firebase.js';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { db } from '../firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -17,11 +16,13 @@ export function AuthProvider({ children }) {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         let user = userCredential.user;
-        setCurrentUser(user);
 
         return setDoc(doc(db, 'users', user.uid), {
           displayName: firstName
-        });
+        })
+          .then(res => {
+            
+          })
       })
       .catch((err) => {
         throw err;
