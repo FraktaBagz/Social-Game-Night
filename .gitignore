@@ -3,3 +3,4 @@
 .DS_Store
 client/public/bundle.js
 firebase.js
+/client/public/chat.html
