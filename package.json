@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "webpack --mode=development",
+    "start": "webpack --mode=development -w",
     "build": "webpack --mode=production",
     "dev": "webpack serve --open",
     "server": "nodemon server/index.js"
@@ -31,6 +31,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "socket.io": "^4.5.0",
+    "socket.io-client": "^4.5.0",
     "webpack-dev-server": "^4.9.0"
   },
   "devDependencies": {
