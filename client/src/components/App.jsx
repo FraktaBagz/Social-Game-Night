@@ -43,6 +43,10 @@ export default function App () {
   const [gameState, setGameState] = useState({})
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
+  useEffect(()=>{
+    setPageView('SignIn')
+  }, [])
+
   // useEffect(() => {
   //   if (Object.keys(currentUser).length !== 0) {
   //     setPageView('HomePage')

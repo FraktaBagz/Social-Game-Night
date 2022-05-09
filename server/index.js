@@ -16,7 +16,8 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', (msg, room) => {
     console.log('emitting message', msg)
-    io.to(room).emit('chat message', msg);
+    // io.to(room).emit('chat message', msg);
+    io.emit('chat message', msg);
   });
 
   socket.on('disconnect', () => {
@@ -36,33 +37,33 @@ io.on('connection', (socket) => {
 http.listen(3001, () => {
   console.log('listening on *:3001');
 });
-const firebase = require('firebase/compat/app');
-const { getFirestore, collection, addDoc, doc, getDoc } = require('firebase/firestore');
+// const firebase = require('firebase/compat/app');
+// const { getFirestore, collection, addDoc, doc, getDoc } = require('firebase/firestore');
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// const app = firebase.initializeApp(firebaseConfig);
+// const db = getFirestore(app);
 
-// addDoc(collection(db, "users"), {
-//   first: "Ada",
-//   last: "Lovelace",
-//   born: 1815
-// })
-//   .then(docRef => {
-//     console.log("Document written with ID: ", docRef.id);
+// // addDoc(collection(db, "users"), {
+// //   first: "Ada",
+// //   last: "Lovelace",
+// //   born: 1815
+// // })
+// //   .then(docRef => {
+// //     console.log("Document written with ID: ", docRef.id);
+// //   })
+// //   .catch(e => {
+// //     console.error("Error adding document: ", e);
+// //   });
+
+// const userRef = doc(db, 'users', 'O2wXmC6tp7pVm0Jvjoem');
+// getDoc(userRef)
+//   .then(doc => {
+//     if (doc) {
+//       console.log(doc.data());
+//     }
 //   })
-//   .catch(e => {
-//     console.error("Error adding document: ", e);
+//   .catch(err => {
+//     console.log(err);
 //   });
 
-const userRef = doc(db, 'users', 'O2wXmC6tp7pVm0Jvjoem');
-getDoc(userRef)
-  .then(doc => {
-    if (doc) {
-      console.log(doc.data());
-    }
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-module.exports.db = getFirestore(app);
+// module.exports.db = getFirestore(app);
