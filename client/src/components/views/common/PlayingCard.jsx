@@ -7,24 +7,31 @@ import Stack from '@mui/material/Stack';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const PlayingCard = () => {
+const PlayingCard = ({ type, info }) => {
+
+  let cardColor;
+  if (type === 'question') {
+    cardColor = 'info.main'
+  } else if (type === 'answer') {
+    cardColor = 'secondary.main'
+  }
 
   return (
     <Box>
-      <Paper sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }}>
-        <Box sx={{ p: 1 }}>
-          <Typography variant='h3'>sheesh</Typography>
+      <Paper sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }} elevation={4}>
+        <Box sx={{ pt: 1, pl: 1, pr: 1, pb: 0, overflow: 'hidden' }}>
+          <Typography variant='h4'>example</Typography>
         </Box>
-        <Card sx={{ m: 1 }}>
-          <Box component={Stack} direction="column" justifyContent="center">
+        <Card sx={{ mt: 0, ml: 1, mr: 1, height: 115,  bgcolor: cardColor }}>
+          <Box component={Stack} direction="column" justifyContent="center" sx={{ textAlign: "left" }}>
             <Typography variant='h6'>
-              words
+              {info}
             </Typography>
             <Typography variant='subtitle1'>
-              title
+              {info}
             </Typography>
             <Typography variant='subtitle1'>
-              title
+              {info}
             </Typography>
           </Box>
         </Card>

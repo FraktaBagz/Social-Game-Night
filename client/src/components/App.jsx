@@ -11,6 +11,7 @@ import CustomDeck from './views/customdeck/CustomDeck.jsx';
 import { AvatarChipWaiting, AvatarChipPicking } from './views/common/AvatarChips.jsx';
 import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
+import PlayingCard from './views/common/PlayingCard.jsx';
 
 /*
 black #2c2f3a
@@ -54,7 +55,7 @@ const customDecksSample =
 
 export default function App () {
   // const [pageView, setPageView] = useState('SignUp');
-  const [pageView, setPageView] = useState('Custom');
+  const [pageView, setPageView] = useState('avatarExample');
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
@@ -69,9 +70,9 @@ export default function App () {
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
-  useEffect(()=>{
-    setPageView('Lobby')
-  }, [])
+  // useEffect(()=>{
+  //   setPageView('Lobby')
+  // }, [])
 
   // useEffect(() => {
   //   if (Object.keys(currentUser).length !== 0) {
@@ -160,7 +161,13 @@ export default function App () {
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
         setCustomDecktitle={setCustomDecktitle} /> : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
+      {pageView === 'avatarExample' ?
+        <div>
+          <AvatarChipPicking picking={true} /><br /><AvatarChipPicking picking={false} /><br /><AvatarChipWaiting /><br />
+          <PlayingCard type='question' info='question example'/><br />
+          <PlayingCard type='answer' info='answer example'/>
+        </div>
+      : null}
     </ThemeProvider>
   )
 }
