@@ -29,7 +29,6 @@ export default function App () {
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState}/> : null}
       {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState}/> : null}
-      <Chat />
     </>
   )
 }
