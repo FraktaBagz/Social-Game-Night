@@ -3,7 +3,8 @@ const app = express();
 const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = require('socket.io')(http);
-const path = require('path')
+const path = require('path');
+const gameHandler = require('./gameService/gameHandlers.js')
 
 // app.get('/', (req, res) => {
 //   res.sendFile('/Users/grample/Desktop/repos/Social-Game-Night/client/public/chat.html');
@@ -18,6 +19,10 @@ io.on('connection', (socket) => {
     console.log('emitting message', msg)
     io.to(room).emit('chat message', msg);
   });
+  //when the server gets a 'game action' message, it will send the given obj to be processed by a game logic handler in the handlers file
+  socket.on('game action', (msg) => {
+    io.emit(gameHandler(msg))
+  })
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
@@ -39,8 +44,8 @@ http.listen(3001, () => {
 const firebase = require('firebase/compat/app');
 const { getFirestore, collection, addDoc, doc, getDoc } = require('firebase/firestore');
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const application = firebase.initializeApp(firebaseConfig);
+const db = getFirestore(application);
 
 // addDoc(collection(db, "users"), {
 //   first: "Ada",
@@ -65,4 +70,4 @@ getDoc(userRef)
     console.log(err);
   });
 
-module.exports.db = getFirestore(app);
+module.exports.db = getFirestore(application);

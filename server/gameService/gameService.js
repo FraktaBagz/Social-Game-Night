@@ -142,3 +142,5 @@ while (i < 500) {
 // start game and start a round
 let newGame = new Game(users, deck)
 newGame.startRound();
+
+module.exports = Game;
