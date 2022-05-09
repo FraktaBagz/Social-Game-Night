@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth } from '../firebase.js';
+import { auth, db } from '../firebase.js';
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, updateProfile } from 'firebase/auth';
-import { db } from '../firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -30,7 +29,10 @@ export function AuthProvider({ children }) {
 
         return setDoc(doc(db, 'users', user.uid), {
           displayName: firstName
-        });
+        })
+          .then(res => {
+
+          })
       })
       .catch((err) => {
         throw err;
@@ -44,13 +46,14 @@ export function AuthProvider({ children }) {
       });
   }
 
-  function signInAsAnonymous() {
+  function signInAsAnonymous(guestName) {
     return signInAnonymously(auth)
       .then((anonCredential) => {
         let anon = anonCredential.user;
 
+        console.log(guestName);
         return setDoc(doc(db, 'users', anon.uid), {
-          displayName: 'name'
+          displayName: guestName
         });
       })
       .catch((err) => {
