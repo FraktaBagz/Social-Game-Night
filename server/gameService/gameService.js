@@ -164,4 +164,4 @@ while (i < 500) {
 // let newGame1 = new Game(users, deck)
 // newGame1.startRound();
 
-module.exports = Game;
+exports = { Game };

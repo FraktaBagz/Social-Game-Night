@@ -13,7 +13,8 @@ judge chooses winning card
 winner gets a point
 next round starts
 */
-const Game = require('./gameService.js');
+
+const Game = require('./gameService');
 
 function gameHandler(msg) {
   //each socket will emit a 'game action' to send an object to this function.
@@ -57,10 +58,12 @@ function gameHandler(msg) {
   }
 
   return game;
-}
+};
 
 function newGame(msg) {
   const { users, deck } = msg
   let game = new Game(users, deck);
   return game;
-}
+};
+
+exports = {newGame, gameHandler};

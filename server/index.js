@@ -4,7 +4,7 @@ const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = require('socket.io')(http);
 const path = require('path');
-const gameHandler = require('./gameService/gameHandlers.js')
+const { newGame, gameHandler } = require('./gameService/gameHandlers.js')
 
 // app.get('/', (req, res) => {
 //   res.sendFile('/Users/grample/Desktop/repos/Social-Game-Night/client/public/chat.html');
