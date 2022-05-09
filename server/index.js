@@ -4,7 +4,7 @@ const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = require('socket.io')(http);
 const path = require('path');
-const gameHandler = require('./gameService/gameHandlers.js')
+const { newGame, gameHandler } = require('./gameService/gameHandlers.js')
 
 // app.get('/', (req, res) => {
 //   res.sendFile('/Users/grample/Desktop/repos/Social-Game-Night/client/public/chat.html');
@@ -21,8 +21,13 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg);
   });
   //when the server gets a 'game action' message, it will send the given obj to be processed by a game logic handler in the handlers file
+  //it will always only return a game object
   socket.on('game action', (msg) => {
-    io.emit(gameHandler(msg))
+    io.emit('game action', gameHandler(msg))
+  })
+
+  socket.on('new game', (msg) => {
+    io.emit('new game', newGame(msg))
   })
 
   socket.on('disconnect', () => {
