@@ -18,12 +18,10 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDecktitle }) {
 
-
-
   // if (Object.keys(customDecks).length <= 0) {
   // }
-    const deckNames = Object.keys(customDecks);
-    const [decks, setDecks] = useState(deckNames);
+  const deckNames = Object.keys(customDecks);
+  const [decks, setDecks] = useState(deckNames);
 
   // should pass already customized decks in format below and send custom deck to database. with a post if deck doesn't exist or put request if deck exists already.
   // expected data per deck
@@ -60,8 +58,8 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               )}>{deck}</Item>
           </div>
         ))}
-        <Item onClick={() => (setPageView('Custom'), setCustomDecktitle('') )}>+</Item>
-      </Stack>
-    </Container>
+        <Item onClick={() => (setPageView('Custom'), setCustomDecktitle(''), setSelectedCustomDeck({ 'title here': {questions:['question here'], answers:['answer here']}}))}>+</Item>
+    </Stack>
+    </Container >
   )
 }

@@ -34,7 +34,7 @@ export default function ViewCards({ setPageView, selectedCustomDeck }) {
         <Stack direction="row" spacing={2}>
           {deck.questions.map((question, key) => (
             <div key={key}>
-              <div onClick={ () => (deletecard('question', question))}>X</div>
+              <div onClick={() => (deletecard('question', question))}>X</div>
               <Item >{question}</Item>
             </div>
           ))}
@@ -45,7 +45,7 @@ export default function ViewCards({ setPageView, selectedCustomDeck }) {
         <Stack direction="row" spacing={2}>
           {deck.answers.map((answer, key) => (
             <div key={key}>
-              <div onClick={ () => (deletecard('answer', answer))}>X</div>
+              <div onClick={() => (deletecard('answer', answer))}>X</div>
               <Item>{answer}</Item>
             </div>
           ))}
