@@ -21,8 +21,13 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg);
   });
   //when the server gets a 'game action' message, it will send the given obj to be processed by a game logic handler in the handlers file
+  //it will always only return a game object
   socket.on('game action', (msg) => {
-    io.emit(gameHandler(msg))
+    io.emit('game action', gameHandler(msg))
+  })
+
+  socket.on('new game', (msg) => {
+    io.emit('new game', newGame(msg))
   })
 
   socket.on('disconnect', () => {
@@ -42,44 +47,3 @@ io.on('connection', (socket) => {
 http.listen(3001, () => {
   console.log('listening on *:3001');
 });
-// const firebase = require('firebase/compat/app');
-// const { getFirestore, collection, addDoc, doc, getDoc } = require('firebase/firestore');
-
-const application = firebase.initializeApp(firebaseConfig);
-const db = getFirestore(application);
-
-// // addDoc(collection(db, "users"), {
-// //   first: "Ada",
-// //   last: "Lovelace",
-// //   born: 1815
-// // })
-// //   .then(docRef => {
-// //     console.log("Document written with ID: ", docRef.id);
-// //   })
-// //   .catch(e => {
-// //     console.error("Error adding document: ", e);
-// //   });
-
-// const userRef = doc(db, 'users', 'O2wXmC6tp7pVm0Jvjoem');
-// getDoc(userRef)
-//   .then(doc => {
-//     if (doc) {
-//       console.log(doc.data());
-//     }
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
-
-const userRef = doc(db, 'users', 'O2wXmC6tp7pVm0Jvjoem');
-getDoc(userRef)
-  .then(doc => {
-    if (doc) {
-      console.log(doc.data());
-    }
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-module.exports.db = getFirestore(application);
