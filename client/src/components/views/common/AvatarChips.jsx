@@ -1,0 +1,76 @@
+import React, { useState, useEffect } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+const AvatarChipWaiting = ({ userInfo }) => {
+  let score = '00'; // change to props when avatar available
+  let user = { name: 'Nathaniel', title: 'title', avatar: null, }
+  // change src to fit avatar
+
+  return (
+    <Box>
+      <Card sx={{ p: 3, borderRadius: 9, width: 275, display: 'inline-flex', }}>
+        <Avatar
+          src={user.avatar}
+          sx={{ width: 56, height: 56 }}
+        />
+        <Box sx={{ width: '100%' }}>
+          <Box component={Stack} direction="column" justifyContent="center" sx={{ pl: 2 }}>
+            <Typography variant='h6'>
+              {user.name}
+            </Typography>
+            <Typography variant='subtitle1'>
+              <i>{user.title}</i>
+            </Typography>
+          </Box>
+        </Box>
+        <Box>
+          <Typography variant='h3'>{score}</Typography>
+        </Box>
+      </Card>
+    </Box>
+
+  )
+}
+
+const AvatarChipPicking = ({ userInfo }) => {
+  let score = '00'; // change to props when avatar available
+  let user = { name: 'Nathaniel', title: 'title', avatar: null, }
+  // change src to fit avatar
+
+  const [isPicking, setIsPicking] = useState(false);
+
+  return (
+    <Box>
+      <Card sx={{ p: 2.5, borderRadius: 9, width: 325, display: 'inline-flex', }}>
+        { isPicking ? <AccessTimeIcon sx={{ fontSize: '60px', pr: 1 }} color='secondary'/> : <CheckCircleOutlineIcon sx={{ fontSize: '60px', pr: 1 }} color='info' /> }
+        <Avatar
+          src={user.avatar}
+          sx={{ width: 56, height: 56 }}
+        />
+        <Box sx={{ width: '100%' }}>
+          <Box component={Stack} direction="column" justifyContent="center" sx={{ pl: 2 }}>
+            <Typography variant='h6'>
+              {user.name}
+            </Typography>
+            <Typography variant='subtitle1'>
+              <i>{user.title}</i>
+            </Typography>
+          </Box>
+        </Box>
+        <Box>
+          <Typography variant='h3'>{score}</Typography>
+        </Box>
+      </Card>
+    </Box>
+
+  )
+}
+
+export { AvatarChipPicking, AvatarChipWaiting, };
