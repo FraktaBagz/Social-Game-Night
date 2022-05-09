@@ -3,6 +3,8 @@ import Chat from '../chat/Chat.jsx'
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { io } from "socket.io-client";
 const socket = io();
@@ -74,6 +76,10 @@ export default function Lobby () {
               <input type="text"></input> secs</h2>
           </div>
           <div className="buttonsDiv" style={{float: 'left', width: '20%', borderStyle: 'solid', margin: '10px'}}>
+          <Button sx={{color: "#000000"}} onClick={()=>{alert('yahaha')}}>
+                      LOG OUT
+                    </Button>
+
             <button style={{...buttonStyle, ...BSG}}>Start Game</button>
             <br></br>
             <button style={{...buttonStyle, ...BSO}}>Leave Game</button>
