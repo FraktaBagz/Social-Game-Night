@@ -104,7 +104,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                       backgroundColor: 'info.main',
                       '&:hover': {
                         backgroundColor: 'info.main',
-                        // opacity: [0.9, 0.8, 0.8],
+                        // opacity: [0.9, 0.8, 0.8],[]
                       },
                       borderRadius: 8,
                     }}
@@ -139,7 +139,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   whileTap={{ scale: 1 }}
                 >
                   <Button
-                    onClick={() => { setPageView('SignIn') }}
+                    onClick={() => { setPageView('Lobby') }}
                     value="user"
                     fullWidth
                     variant="contained"
