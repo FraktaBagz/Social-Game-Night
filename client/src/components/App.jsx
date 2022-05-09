@@ -66,8 +66,8 @@ export default function App () {
     }
   });
   const [customDeckTitle, setCustomDecktitle] = useState('');
-
-
+  const [rounds, setRounds] = useState(5);
+  const [choosingTime, setChoosingTime] = useState(45);
   const { signUp, currentUser, setCurrentUser } = useAuth();
 
   // useEffect(()=>{
