@@ -1,7 +1,9 @@
 const { defaultGreen } = require('./defaultGreen.js');
 const { defaultRed } = require('./defaultRed.js');
-const { db } = require('../../server/index.js');
+const db = require('../firebase/firebase.js');
 const { getFirestore, collection, addDoc, doc, getDoc } = require('firebase/firestore');
+
+console.log(db);
 
 //seed default green cards
 defaultGreen.forEach((card) => {
