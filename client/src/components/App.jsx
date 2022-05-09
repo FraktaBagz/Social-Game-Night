@@ -55,7 +55,7 @@ const customDecksSample =
 
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
-  const [pageView, setPageView] = useState('SignUp');
+  const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
@@ -68,9 +68,9 @@ export default function App() {
   });
   const [customDeckTitle, setCustomDecktitle] = useState('');
 
-  useEffect(() => {
-    setPageView('HomePage')
-  }, [])
+  // useEffect(() => {
+  //   setPageView('SignIn');
+  // }, [])
 
   function handleLogState() {
     if (isLoggedIn) {
@@ -158,7 +158,7 @@ export default function App() {
       <button onClick={handleAvatarExample}>avatarExample</button>
       <button onClick={handleResults}>results</button>
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
-        {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
+      {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
