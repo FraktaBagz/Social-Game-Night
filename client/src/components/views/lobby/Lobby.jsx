@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Chat from '../chat/Chat.jsx'
 import CustomDeck from '../customdeck/CustomDeck.jsx';
 import Box from '@mui/material/Box';
@@ -35,7 +35,8 @@ const BSO = {
   backgroundColor: '#FFA500',
 }
 
-export default function Lobby ({theme}) {
+
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle }) {
   const [user, setUser] = useState('MrJoel');
   const [connectedUsers, setConnectedUsers] = useState([{
     user: 'Nathaniel',
@@ -61,12 +62,16 @@ export default function Lobby ({theme}) {
   return (
     <>
       <div className="lobbyContainer">
-        <div className="lobbyDiv" style={{float: 'left', width: '60%', borderStyle: 'solid', margin: '10px'}}>
+        <div className="lobbyDiv" style={{ float: 'left', width: '60%', borderStyle: 'solid', margin: '10px' }}>
           <h2>Welcome to the Lobby</h2>
-          <div className="sessionSettingsDiv" style={{float: 'left', width: '70%', border: 'solid', margin: '10px'}}>
+          <div className="sessionSettingsDiv" style={{ float: 'left', width: '70%', border: 'solid', margin: '10px' }}>
             <h1>Game code: 12345</h1>
             <h2>Choose Your Deck!</h2>
-            <CustomDeck/>
+            <CustomDeck gameState={gameState}
+              setPageView={setPageView}
+              customDecks={customDecks}
+              setSelectedCustomDeck={setSelectedCustomDeck}
+              setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
             {/* <img src="https://m.media-amazon.com/images/I/61R9e+OIEFS._AC_SY679_.jpg" height="200px"></img>
             <img src="https://m.media-amazon.com/images/I/61R9e+OIEFS._AC_SY679_.jpg" height="200px"></img> */}
 
@@ -76,63 +81,63 @@ export default function Lobby ({theme}) {
             <h2>Choosing Time:
               <input type="text"></input> secs</h2>
           </div>
-          <div className="buttonsDiv" style={{float: 'left', width: '20%', borderStyle: 'solid', margin: '10px'}}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              width: 150,
-              height: 50,
-              borderRadius: 4,
-              backgroundColor: "secondary.main",
-              '&:hover': {
-                backgroundColor: 'primary.grey',
-              },
-            }}
+          <div className="buttonsDiv" style={{ float: 'left', width: '20%', borderStyle: 'solid', margin: '10px' }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                width: 150,
+                height: 50,
+                borderRadius: 4,
+                backgroundColor: "secondary.main",
+                '&:hover': {
+                  backgroundColor: 'primary.grey',
+                },
+              }}
             >
               Start Game!
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              width: 150,
-              height: 50,
-              borderRadius: 4,
-              backgroundColor: "secondary.main",
-              '&:hover': {
-                backgroundColor: 'primary.grey',
-              },
-            }}
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                width: 150,
+                height: 50,
+                borderRadius: 4,
+                backgroundColor: "secondary.main",
+                '&:hover': {
+                  backgroundColor: 'primary.grey',
+                },
+              }}
             >
               Leave Game
-          </Button>
+            </Button>
           </div>
         </div>
-        <div className="playerListContainer" style={{float: 'left', width: '30%', borderStyle: 'solid', margin: '10px'}}>
+        <div className="playerListContainer" style={{ float: 'left', width: '30%', borderStyle: 'solid', margin: '10px' }}>
           <h2>Players Connected</h2>
           <div className="playerListDiv">
             <Stack spacing={2}>
-            {connectedUsers.map((userObj)=>{
-              return (
-                <Item key={count+=1}>
-                  <img src={`${userObj.avatar}`} height="50px"></img>
-                  <div style={{display: 'inline-block'}}>{userObj.user}
-                    <div>
-                      {userObj.title}
+              {connectedUsers.map((userObj) => {
+                return (
+                  <Item key={count += 1}>
+                    <img src={`${userObj.avatar}`} height="50px"></img>
+                    <div style={{ display: 'inline-block' }}>{userObj.user}
+                      <div>
+                        {userObj.title}
+                      </div>
                     </div>
-                  </div>
-                </Item>
-              )
-            })}
+                  </Item>
+                )
+              })}
             </Stack>
-            <Chat buttonStyle={buttonStyle}/>
+            <Chat buttonStyle={buttonStyle} />
           </div>
         </div>
       </div>
