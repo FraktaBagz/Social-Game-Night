@@ -11,6 +11,7 @@ import CustomDeck from './views/customdeck/CustomDeck.jsx';
 import { AvatarChipWaiting, AvatarChipPicking } from './views/common/AvatarChips.jsx';
 import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
+import Results from './views/results/Results.jsx';
 
 /*
 black #2c2f3a
@@ -161,6 +162,7 @@ export default function App () {
         customDeckTitle={customDeckTitle}
         setCustomDecktitle={setCustomDecktitle} /> : null}
       {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView}/> : null}
     </ThemeProvider>
   )
 }
