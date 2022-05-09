@@ -19,6 +19,7 @@ export default function ViewCards({ setPageView, selectedCustomDeck }) {
   const deck = selectedCustomDeck[deckName]
 
   const deletecard = (type, card) => {
+    // put request here
     console.log('delete', type, card)
   }
 

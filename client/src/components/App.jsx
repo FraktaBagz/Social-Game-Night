@@ -33,11 +33,13 @@ export default function App() {
       answers: ['dummya1', 'dummya2']
     }
   });
+  const [customDeckTitle, setCustomDecktitle] = useState('');
 
   const { signUp, currentUser, setCurrentUser } = useAuth();
+
   // useEffect(()=>{
   //   if (currentUser !== null) {
-  //     setPageView('CustomDeck')
+  //     setPageView('HomePage')
   //   }
   // }, [currentUser])
 
@@ -48,9 +50,25 @@ export default function App() {
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} /> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState} /> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} /> : null}
-      {pageView === 'CustomDeck' ? <CustomDeck gameState={gameState} setPageView={setPageView} customDecks={customDecks} setSelectedCustomDeck={setSelectedCustomDeck} /> : null}
-      {pageView === 'Custom' ? <Custom gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'ViewCards' ? <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} /> : null}
+      {pageView === 'CustomDeck' ? <CustomDeck
+        gameState={gameState}
+        setPageView={setPageView}
+        customDecks={customDecks}
+        setSelectedCustomDeck={setSelectedCustomDeck}
+        setCustomDecktitle={setCustomDecktitle}
+        /> : null}
+      {pageView === 'Custom' ? <Custom
+        gameState={gameState}
+        setPageView={setPageView}
+        selectedCustomDeck={selectedCustomDeck}
+        customDeckTitle={customDeckTitle}
+        setCustomDecktitle={setCustomDecktitle} /> : null}
+      {pageView === 'ViewCards' ? <ViewCards
+        gameState={gameState}
+        setPageView={setPageView}
+        selectedCustomDeck={selectedCustomDeck}
+        customDeckTitle={customDeckTitle}
+        setCustomDecktitle={setCustomDecktitle} /> : null}
     </>
   )
 }
