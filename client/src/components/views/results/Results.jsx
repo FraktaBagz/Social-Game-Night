@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Chat from '../chat/Chat.jsx'
 import { io } from "socket.io-client";
+import Typography from '@mui/material/Typography';
 const socket = io();
 
 import { AvatarChipWaiting } from '../common/AvatarChips.jsx';
@@ -22,7 +23,10 @@ export default function Results ({ user, chatHistory, setChatHistory }) {
   return (
     <div>
       <div>
-        <AvatarChipWaiting userInfo={user}/> IS THE WINNER!!!
+        <AvatarChipWaiting user={user}/>
+        <Typography variant='subtitle1'>
+          <i>IS THE WINNER!!!</i>
+        </Typography>
       </div>
       <Chat buttonStyle={buttonStyle} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
     </div>
