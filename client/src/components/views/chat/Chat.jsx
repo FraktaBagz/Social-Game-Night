@@ -291,7 +291,7 @@ const checkEmotes = (chatcontent) => {
   document.getElementById('inputChat').value = '';
 }
 
-export default function Chat({ chatHistory }) {
+export default function Chat({ chatHistory, setChatHistory }) {
   const [chatContent, setChatContent] = useState('');
   const [text, setText] = useState('');
   const [user, setUser] = useState('MrJoel');
@@ -322,6 +322,9 @@ export default function Chat({ chatHistory }) {
       e.preventDefault();
     }
     socket.emit('chat message', JSON.stringify({ user: user, text: chatContent }));
+    var chatHistoryCopy = chatHistory
+    chatHistoryCopy.push({user: `${user}`, text: `${chatContent}`})
+    setChatHistory(chatHistoryCopy)
   }
   var count = 0;
   return (

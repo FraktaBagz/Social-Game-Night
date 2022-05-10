@@ -204,7 +204,7 @@ export default function App() {
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState} chatHistory={chatHistory} name={name} host={host} connectedUsers={connectedUsers} setPageView={setPageView} theme={theme}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} chatHistory={chatHistory} setChatHistory={setChatHistory}name={name} host={host} connectedUsers={connectedUsers} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
         defaultDeck={defaultDeck}
         setSelectedCustomDeck={setSelectedCustomDeck}

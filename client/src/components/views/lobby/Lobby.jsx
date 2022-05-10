@@ -26,7 +26,7 @@ const sx = {
   }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, name, host, connectedUsers }) {
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers }) {
   var count = 0;
 
   function createGame(users, deck) {
@@ -92,7 +92,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                 )
               })}
             </Stack>
-            <Chat chatHistory={chatHistory}/>
+            <Chat chatHistory={chatHistory} setChatHistory={setChatHistory}/>
           </div>
         </div>
       </div>
