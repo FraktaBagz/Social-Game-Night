@@ -161,9 +161,9 @@ export default function App() {
       <button onClick={handleResults}>results</button>
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} handleLogState={handleLogState}/> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}  handleLogState={handleLogState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
@@ -174,6 +174,7 @@ export default function App() {
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
         setCustomDecktitle={setCustomDecktitle}
+        theme={theme}
       /> : null}
       {pageView === 'Custom' ? <Custom
         gameState={gameState}
@@ -181,22 +182,22 @@ export default function App() {
         previousView={'Lobby'}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} /> : null}
+        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
       {pageView === 'ViewCards' ? <ViewCards
         gameState={gameState}
         setPageView={setPageView}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} /> : null}
+        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
       {pageView === 'avatarExample' ?
         <div>
-          <AvatarChipPicking picking={true} /><br /><AvatarChipPicking picking={false} /><br /><AvatarChipWaiting /><br />
-          <PlayingCard type='question' info='question example' /><br />
-          <PlayingCard type='answer' info='answer example' />
+          <AvatarChipPicking picking={true} theme={theme}/><br /><AvatarChipPicking picking={false} theme={theme}/><br /><AvatarChipWaiting theme={theme}/><br />
+          <PlayingCard type='question' info='question example' theme={theme}/><br />
+          <PlayingCard type='answer' info='answer example' theme={theme}/>
         </div>
         : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
-      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'avatarExample' ? <div><AvatarChipPicking theme={theme}/><br /><AvatarChipWaiting theme={theme}/></div> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
     </ThemeProvider>
   )
 }
