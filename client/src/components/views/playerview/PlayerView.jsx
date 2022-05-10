@@ -14,7 +14,7 @@ import { styled } from '@mui/material/styles';
 import { io } from "socket.io-client";
 const socket = io();
 
-export default function PlayerView({ gameState }) {
+export default function PlayerView({ gameState, connectedUsers, chatHistory, setChatHistory }) {
 
   // this.gameState.userInformation[user.UID] = {
   //   cards: [],
@@ -35,52 +35,16 @@ export default function PlayerView({ gameState }) {
   }
 
   useEffect(() => {
-    console.log(gameState)
+    console.log('gameState: ', gameState);
+    console.log('connectedUsers: ', connectedUsers);
   }, [])
 
   return (
     <div className="PlayerViewContainer">
       <Stack direction="row" spacing={2} ml={2} sx={{ flexWrap: 'wrap', ml: 2 }}>
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
-        <AvatarChipPicking userInfo={{
-          name: 'Nathaniel',
-          title: 'The Brave',
-          avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-        }} />
+        {connectedUsers.map((user, index) =>
+          <AvatarChipPicking key={index} userInfo={user}/>
+        )}
       </Stack>
 
       <Grid container direction="row" sx={{ alignItems: 'flex-end'}} justifyContent="center">
@@ -114,7 +78,7 @@ export default function PlayerView({ gameState }) {
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
-          <Chat />
+          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory}/>
         </Grid>
         {/* -------------------------------------------------------------------- */}
       </Grid>
