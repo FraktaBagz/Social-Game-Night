@@ -9,7 +9,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useFormControl } from '@mui/material/FormControl';
 import { motion } from 'framer-motion';
 import { io } from "socket.io-client";
@@ -58,7 +57,6 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
 
   return (
     <>
-      <ThemeProvider theme={theme}>
         <Grid
           container
           alignSelf="center"
@@ -268,7 +266,6 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
           </Grid>
           {/* -------------------------------------------------------------------------------- */}
         </Grid>
-      </ThemeProvider>
     </>
   );
 }
