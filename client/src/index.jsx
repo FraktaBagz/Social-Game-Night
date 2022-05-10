@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AuthProvider } from './firebase/contexts/AuthContext.js';
+import { GameProvider } from './firebase/contexts/GameContext.js';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import App from './components/App.jsx';
 
@@ -34,8 +35,8 @@ const theme = createTheme({
 
 ReactDOM.render(
   <AuthProvider>
-    <ThemeProvider theme={theme}>
+    <GameProvider>
       <App />
-    </ThemeProvider>
-  </AuthProvider>
+    </GameProvider>
+  </AuthProvider >
   , document.getElementById('root'));
