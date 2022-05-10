@@ -80,6 +80,29 @@ export default function App() {
     }
   });
   const [customDeckTitle, setCustomDecktitle] = useState('');
+  const [chatHistory, setChatHistory] = useState([{ user: 'Bot', text: 'This is the beginning of the chat history' }]);
+  const [name, setName] = useState('MrJoel');
+  const [host, setHost] = useState(true);
+  const [connectedUsers, setConnectedUsers] = useState([{
+    name: 'Nathaniel',
+    title: 'The Brave',
+    avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+  },
+  {
+    name: 'Raymond',
+    title: 'The Wise',
+    avatar: 'https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png'
+  },
+  {
+    name: 'Matthew',
+    title: 'The Hell Raiser',
+    avatar: 'https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg'
+  },
+  {
+    name: 'Kim',
+    title: 'The Wizard',
+    avatar: 'https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png'
+  }])
 
   useEffect(() => {
     console.log('currentUser: ', currentUser);
@@ -108,12 +131,6 @@ export default function App() {
       setIsLoggedIn(true);
     }
   };
-
-  // useEffect(() => {
-  //   if (Object.keys(currentUser).length !== 0) {
-  //     setPageView('HomePage')
-  //   }
-  // }, [currentUser])
 
   useEffect(() => {
     getDeck()
@@ -188,16 +205,14 @@ export default function App() {
       <button onClick={handleCustomDeck}>CustomDeck</button>
       <button onClick={handleAvatarExample}>avatarExample</button>
       <button onClick={handleResults}>results</button>
-      {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}  handleLogState={handleLogState} setPageView={setPageView} theme={theme}/> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} chatHistory={chatHistory} setChatHistory={setChatHistory}name={name} host={host} connectedUsers={connectedUsers} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
         defaultDeck={defaultDeck}
         setSelectedCustomDeck={setSelectedCustomDeck}
-        setCustomDecktitle={setCustomDecktitle}/> : null}
+        setCustomDecktitle={setCustomDecktitle} /> : null}
       {pageView === 'CustomDeck' ? <CustomDeck
         gameState={gameState}
         setPageView={setPageView}
