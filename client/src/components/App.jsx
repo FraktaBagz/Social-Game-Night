@@ -201,7 +201,7 @@ export default function App() {
       <button onClick={handleCustomDeck}>CustomDeck</button>
       <button onClick={handleAvatarExample}>avatarExample</button>
       <button onClick={handleResults}>results</button>
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}  handleLogState={handleLogState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} chatHistory={chatHistory} setChatHistory={setChatHistory}name={name} host={host} connectedUsers={connectedUsers} setPageView={setPageView} theme={theme}

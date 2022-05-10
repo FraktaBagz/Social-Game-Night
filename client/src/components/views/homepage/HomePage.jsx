@@ -36,7 +36,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
 
   useEffect(() => {
     console.log(currentUser)
-  }, [])
+  }, [currentUser])
 
   return (
     <>
@@ -115,7 +115,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                       Avatar
                     </Typography>
                     <Typography component="h1" variant="h5">
-                      Display Name
+                      {currentUser ? currentUser.displayName : 'display name'}
                     </Typography>
                     <Button sx={{ color: "#000000" }} onClick={handleLogOut}>
                       LOG OUT
