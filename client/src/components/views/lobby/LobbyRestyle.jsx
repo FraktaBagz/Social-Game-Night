@@ -10,16 +10,18 @@ const LobbyRestyle = () => {
   // bgcolor="primary.main" sx={{ minHeight: '90vh' }}
   return (
   <Box bgcolor="primary.main">
-    <Grid container spacing={0} columns={3} columnSpacing={2} style={{ padding: 20 }} sx={{ bgcolor: '#e2e4f0', minHeight: '90vh' }}>
-      <Grid item xs={2}>
-        <Paper>
+    <Grid container spacing={0} style={{ padding: 20 }} sx={{ bgcolor: '#e2e4f0', minHeight: '90vh' }}>
+      <Grid item xs={8}>
+        <Box>
           body
-        </Paper>
+        </Box>
       </Grid>
-      <Grid item xs={1}>
-        <Paper sx={{ minHeight: '90vh' }}>
-          chat
-        </Paper>
+      <Grid item xs={4}>
+        <Box sx={{ minHeight: '90vh' }}>
+          <Paper>
+            chat
+          </Paper>
+        </Box>
       </Grid>
     </Grid>
   </Box>
