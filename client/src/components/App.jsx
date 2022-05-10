@@ -9,10 +9,7 @@ import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";
 import Lobby from "./views/lobby/Lobby.jsx";
 import CustomDeck from "./views/customdeck/CustomDeck.jsx";
-import {
-  AvatarChipWaiting,
-  AvatarChipPicking,
-} from "./views/common/AvatarChips.jsx";
+import { AvatarChipWaiting, AvatarChipPicking } from "./views/common/AvatarChips.jsx";
 import Custom from "./views/customdeck/Custom.jsx";
 import ViewCards from "./views/customdeck/ViewCards.jsx";
 import PlayingCard from "./views/common/PlayingCard.jsx";
