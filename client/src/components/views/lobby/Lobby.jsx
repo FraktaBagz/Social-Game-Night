@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Chat from '../chat/Chat.jsx'
+import { AvatarChipWaiting, AvatarChipPicking } from '../common/AvatarChips.jsx';
 import CustomDeck from '../customdeck/CustomDeck.jsx';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -28,33 +29,27 @@ const buttonStyle = {
   margin: '4px 2px',
   cursor: 'pointer',
 }
-const BSG = {
-  backgroundColor: '#4CAF50'
-}
-const BSO = {
-  backgroundColor: '#FFA500',
-}
-
 
 export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle }) {
-  const [user, setUser] = useState('MrJoel');
+  const [name, setName] = useState('MrJoel');
+  const [host, setHost] = useState(true);
   const [connectedUsers, setConnectedUsers] = useState([{
-    user: 'Nathaniel',
+    name: 'Nathaniel',
     title: 'The Brave',
     avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
   },
   {
-    user: 'Raymond',
+    name: 'Raymond',
     title: 'The Wise',
     avatar: 'https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png'
   },
   {
-    user: 'Matthew',
+    name: 'Matthew',
     title: 'The Hell Raiser',
     avatar: 'https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg'
   },
   {
-    user: 'Kim',
+    name: 'Kim',
     title: 'The Wizard',
     avatar: 'https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png'
   }])
@@ -66,22 +61,25 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
           <h2>Welcome to the Lobby</h2>
           <div className="sessionSettingsDiv" style={{ float: 'left', width: '70%', border: 'solid', margin: '10px' }}>
             <h1>Game code: 12345</h1>
+            {host
+            ? <>
             <h2>Choose Your Deck!</h2>
             <CustomDeck gameState={gameState}
               setPageView={setPageView}
               customDecks={customDecks}
               setSelectedCustomDeck={setSelectedCustomDeck}
               setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
-            {/* <img src="https://m.media-amazon.com/images/I/61R9e+OIEFS._AC_SY679_.jpg" height="200px"></img>
-            <img src="https://m.media-amazon.com/images/I/61R9e+OIEFS._AC_SY679_.jpg" height="200px"></img> */}
-
             <h2>Rounds:
               <input type="text"></input>
             </h2>
             <h2>Choosing Time:
               <input type="text"></input> secs</h2>
+              </>
+            : null
+            }
           </div>
           <div className="buttonsDiv" style={{ float: 'left', width: '20%', borderStyle: 'solid', margin: '10px' }}>
+            {host ?
             <Button
               type="submit"
               fullWidth
@@ -102,6 +100,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
               }}>
               Start Game!
             </Button>
+            : null}
             <Button
               type="submit"
               fullWidth
@@ -130,14 +129,16 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             <Stack spacing={2}>
               {connectedUsers.map((userObj) => {
                 return (
-                  <Item key={count += 1}>
-                    <img src={`${userObj.avatar}`} height="50px"></img>
-                    <div style={{ display: 'inline-block' }}>{userObj.user}
-                      <div>
-                        {userObj.title}
-                      </div>
-                    </div>
-                  </Item>
+
+                  <AvatarChipPicking userInfo={userObj}/>
+                  // <Item key={count += 1}>
+                  //   <img src={`${userObj.avatar}`} height="50px"></img>
+                  //   <div style={{ display: 'inline-block' }}>{userObj.name}
+                  //     <div>
+                  //       {userObj.title}
+                  //     </div>
+                  //   </div>
+                  // </Item>
                 )
               })}
             </Stack>
