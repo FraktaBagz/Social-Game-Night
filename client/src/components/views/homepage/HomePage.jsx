@@ -10,8 +10,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useFormControl } from '@mui/material/FormControl';;
-import { motion } from 'framer-motion'
+import { useFormControl } from '@mui/material/FormControl';
+import { motion } from 'framer-motion';
+import { io } from "socket.io-client";
+const socket = io();
 
 
 export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState }) {
@@ -34,7 +36,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
 
   useEffect(() => {
     console.log(currentUser)
-  }, [])
+  }, [currentUser])
 
   return (
     <>
@@ -113,7 +115,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                       Avatar
                     </Typography>
                     <Typography component="h1" variant="h5">
-                      Display Name
+                      {currentUser ? currentUser.displayName : 'display name'}
                     </Typography>
                     <Button sx={{ color: "#000000" }} onClick={handleLogOut}>
                       LOG OUT
@@ -166,7 +168,10 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                 >
                   <Button
                     // type="submit"
-                    onClick={() => { setJoiningGame(true) }}
+                    onClick={() => {
+                      setJoiningGame(true);
+                      console.log( currentUser );
+                      socket.emit('join game', JSON.stringify({user: 'Mr Kieran'})) }} //need to get currentUser defined here
                     fullWidth
                     variant="contained"
                     sx={{
@@ -226,6 +231,9 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                                 '&:hover': {
                                   backgroundColor: 'primary.grey',
                                 },
+                              }}
+                              onClick={(e)=>{
+                                socket.emit('join game')
                               }}
                             >
                               Enter

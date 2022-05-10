@@ -15,11 +15,9 @@ import { useState } from 'react';
 import { useAuth } from '../../../firebase/contexts/AuthContext.js'
 
 export default function SignInPage({ setPageView, theme, handleLogState }) {
-  const { signUp, login, currentUser, signInAsAnonymous } = useAuth();
+  const { signUp, login, signInAsAnonymous } = useAuth();
   const [isGuest, setIsGuest] = useState(false);
   const [guestName, setGuestName] = useState('')
-
-  console.log('User info: ', useAuth(), useAuth().displayName);
 
   const submitGuestName = (event) => {
     event.preventDefault();
