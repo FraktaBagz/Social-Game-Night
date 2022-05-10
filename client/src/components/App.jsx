@@ -7,6 +7,7 @@ import HomePage from "./views/homepage/HomePage.jsx";
 import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";
 import Lobby from "./views/lobby/Lobby.jsx";
+import LobbyRestyle from "./views/lobby/LobbyRestyle.jsx";
 import CustomDeck from "./views/customdeck/CustomDeck.jsx";
 import {
   AvatarChipWaiting,
@@ -122,49 +123,9 @@ export default function App() {
       .catch((e) => console.log(e));
   }, []);
 
-  var handleSignUp = (event) => {
-    event.preventDefault();
-    setPageView("SignUp");
-  };
-
-  var handleSignIn = (event) => {
-    event.preventDefault();
-    setPageView("SignIn");
-  };
-
-  var handleHomePage = (event) => {
-    event.preventDefault();
-    setPageView("HomePage");
-  };
-
-  var handleJudgeView = (event) => {
-    event.preventDefault();
-    setPageView("JudgeView");
-  };
-
-  var handlePlayerView = (event) => {
-    event.preventDefault();
-    setPageView("PlayerView");
-  };
-
-  var handleLobby = (event) => {
-    event.preventDefault();
-    setPageView("Lobby");
-  };
-
-  var handleCustomDeck = (event) => {
-    event.preventDefault();
-    setPageView("CustomDeck");
-  };
-
-  var handleAvatarExample = (event) => {
-    event.preventDefault();
-    setPageView("avatarExample");
-  };
-
-  var handleResults = (event) => {
-    event.preventDefault();
-    setPageView("results");
+  var handleViewClick = (e) => {
+    e.preventDefault();
+    setPageView(e.target.value);
   };
 
   if (!isLoggedIn) {
@@ -190,15 +151,16 @@ export default function App() {
 
   return (
     <>
-      <button onClick={handleSignUp}>SignUp</button>
-      <button onClick={handleSignIn}>SignIn</button>
-      <button onClick={handleHomePage}>HomePage</button>
-      <button onClick={handleJudgeView}>JudgeView</button>
-      <button onClick={handlePlayerView}>PlayerView</button>
-      <button onClick={handleLobby}>Lobby</button>
-      <button onClick={handleCustomDeck}>CustomDeck</button>
-      <button onClick={handleAvatarExample}>avatarExample</button>
-      <button onClick={handleResults}>results</button>
+      <button onClick={handleViewClick} value='SignUp'>SignUp</button>
+      <button onClick={handleViewClick} value='SignIn'>SignIn</button>
+      <button onClick={handleViewClick} value='HomePage'>HomePage</button>
+      <button onClick={handleViewClick} value='JudgeView'>JudgeView</button>
+      <button onClick={handleViewClick} value='PlayerView'>PlayerView</button>
+      <button onClick={handleViewClick} value='Lobby'>Lobby</button>
+      <button onClick={handleViewClick} value='LobbyRestyle'>LobbyRestyle</button>
+      <button onClick={handleViewClick} value='CustomDeck'>CustomDeck</button>
+      <button onClick={handleViewClick} value='avatarExample'>avatarExample</button>
+      <button onClick={handleViewClick} value='results'>results</button>
       {pageView === "HomePage" ? (
         <HomePage
           gameState={gameState}
@@ -222,6 +184,21 @@ export default function App() {
       ) : null}
       {pageView === "Lobby" ? (
         <Lobby
+          gameState={gameState}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
+          name={name}
+          host={host}
+          connectedUsers={connectedUsers}
+          setPageView={setPageView}
+          customDecks={customDecks}
+          defaultDeck={defaultDeck}
+          setSelectedCustomDeck={setSelectedCustomDeck}
+          setCustomDecktitle={setCustomDecktitle}
+        />
+      ) : null}
+      {pageView === "LobbyRestyle" ? (
+        <LobbyRestyle
           gameState={gameState}
           chatHistory={chatHistory}
           setChatHistory={setChatHistory}
