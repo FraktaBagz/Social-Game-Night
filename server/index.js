@@ -27,7 +27,12 @@ io.on('connection', (socket) => {
   })
 
   socket.on('new game', (msg) => {
-    io.emit('new game', newGame(msg))
+    io.emit('new game', JSON.stringify(newGame(msg)))
+  })
+
+  socket.on('join game', (msg) => {
+    console.log('msg', msg);
+    io.emit('join game', msg)
   })
 
   socket.on('disconnect', () => {
