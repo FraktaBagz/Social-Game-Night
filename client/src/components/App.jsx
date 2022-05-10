@@ -4,6 +4,7 @@ import SignUpPage from './views/signup/SignUp.jsx';
 import SignInPage from './views/signin/SignIn.jsx';
 import { useAuth } from '../firebase/contexts/AuthContext.js';
 import { auth } from '../firebase/firebase.js';
+import { useGame } from '../firebase/contexts/GameContext.js';
 import HomePage from './views/homepage/HomePage.jsx';
 import JudgeView from './views/judgeview/JudgeView.jsx';
 import PlayerView from './views/playerview/PlayerView.jsx';
@@ -56,7 +57,8 @@ const customDecksSample =
 }
 
 export default function App() {
-  const { signUp, currentUser, setCurrentUser } = useAuth();
+  const { signUp, currentUserID } = useAuth();
+  const { currentUser, setCurrentUser, getUser } = useGame();
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
@@ -93,6 +95,11 @@ export default function App() {
   //     setPageView('HomePage')
   //   }
   // }, [currentUser])
+
+  useEffect(() => {
+
+    // setDefaultDeck(getCollection())
+  }, []);
 
   var handleSignUp = (event) => {
     event.preventDefault();
@@ -161,7 +168,7 @@ export default function App() {
       <button onClick={handleResults}>results</button>
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} getUser={getUser} currentUserID={currentUserID} handleLogState={handleLogState} setPageView={setPageView} /> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} /> : null}

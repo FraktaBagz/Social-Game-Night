@@ -14,7 +14,7 @@ import { useFormControl } from '@mui/material/FormControl';;
 import { motion } from 'framer-motion'
 
 
-export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState }) {
+export default function HomePage({ currentUser, setCurrentUser, getUser, currentUserID, setPageView, theme, handleLogState }) {
   const handleLogOut = (e) => {
     e.preventDefault();
     // setCurrentUser({});
@@ -22,7 +22,8 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
     handleLogState();
   }
 
-  const [joiningGame, setJoiningGame] = useState(false)
+  const [joiningGame, setJoiningGame] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const joinGameWithCode = (e) => {
     e.preventDefault();
@@ -33,8 +34,27 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
   }
 
   useEffect(() => {
-    console.log(currentUser)
-  }, [])
+    getUser(currentUserID)
+      .then((user) => {
+        setCurrentUser(user.data());
+        setIsLoaded(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return () => {
+      setCurrentUser(null);
+    };
+  }, [currentUserID]);
+
+  if (!isLoaded) {
+    return (
+      <div>
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <>
@@ -113,7 +133,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                       Avatar
                     </Typography>
                     <Typography component="h1" variant="h5">
-                      Display Name
+                      {currentUser ? currentUser.displayName : 'Display Name'}
                     </Typography>
                     <Button sx={{ color: "#000000" }} onClick={handleLogOut}>
                       LOG OUT

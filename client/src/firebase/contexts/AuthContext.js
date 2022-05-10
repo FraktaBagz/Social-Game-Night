@@ -30,9 +30,9 @@ export function AuthProvider({ children }) {
         return setDoc(doc(db, 'users', user.uid), {
           displayName: firstName
         })
-          .then(res => {
+        // .then(res => {
 
-          })
+        // })
       })
       .catch((err) => {
         throw err;
@@ -65,6 +65,7 @@ export function AuthProvider({ children }) {
     signUp,
     login,
     signInAsAnonymous,
+    currentUserID,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
