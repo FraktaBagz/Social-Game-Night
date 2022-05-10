@@ -49,13 +49,54 @@ const theme = createTheme({
 const customDecksSample =
 {
   skips: {
-    questions: ['skipsq1', 'skipsq2'],
-    answers: ['skipsa1', 'skipsa2']
+    questions:  [
+  {
+    label: 'some prompt',
+    extra: '(ridiculous, senseless, foolish) ',
+    sets: 'default green',
   },
-  skipsgma: {
-    questions: ['skipsgq1', 'skipsgq1'],
-    answers: ['skipsga1', 'skipsga1']
-  }
+  {
+    label: 'some prompt',
+    extra: '(plentiful, ample, numerous) ',
+    sets: 'default green',
+  },
+  {
+    label: 'some prompt',
+    extra: '(obsessive, consuming, captivating) ',
+    sets: 'default green',
+  },],
+    answers: [
+      {
+        label: 'Absurd',
+        extra: '(ridiculous, senseless, foolish) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Abundant',
+        extra: '(plentiful, ample, numerous) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Absurd',
+        extra: '(ridiculous, senseless, foolish) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Abundant',
+        extra: '(plentiful, ample, numerous) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },]
+  },
 }
 
 const customUserInfo = {
@@ -207,7 +248,7 @@ export default function App() {
       <button onClick={handleResults}>results</button>
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}  handleLogState={handleLogState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView chatHistory={chatHistory} setChatHistory={setChatHistory} connectedUsers={connectedUsers} gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'PlayerView' ? <PlayerView customDecksSample={customDecksSample} chatHistory={chatHistory} setChatHistory={setChatHistory} connectedUsers={connectedUsers} gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} chatHistory={chatHistory} setChatHistory={setChatHistory}name={name} host={host} connectedUsers={connectedUsers} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
         defaultDeck={defaultDeck}

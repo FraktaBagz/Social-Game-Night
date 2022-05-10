@@ -14,7 +14,7 @@ import { styled } from '@mui/material/styles';
 import { io } from "socket.io-client";
 const socket = io();
 
-export default function PlayerView({ gameState, connectedUsers, chatHistory, setChatHistory }) {
+export default function PlayerView({ gameState, connectedUsers, chatHistory, setChatHistory, customDecksSample }) {
 
   // this.gameState.userInformation[user.UID] = {
   //   cards: [],
@@ -22,16 +22,20 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
   // }
 
   const fakeGameState = {
-      currentDeck: [],
-      judgeIndex: 0,
-      judging: false,
-      userInformation: {
-      },
-      questionCard: null,
-      hasPicked: [],
-      submittedCards: [],
-      finished: true,
-      winner: null,
+    currentDeck: [],
+    judgeIndex: 0,
+    judging: false,
+    userInformation: {
+    },
+    questionCard: {
+      label: 'some prompt',
+      extra: '(ridiculous, senseless, foolish) ',
+      sets: 'default green',
+    },
+    hasPicked: [],
+    submittedCards: [],
+    finished: true,
+    winner: null,
   }
 
   useEffect(() => {
@@ -41,18 +45,19 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
 
   return (
     <div className="PlayerViewContainer">
-      <Stack direction="row" spacing={2} ml={2} sx={{ flexWrap: 'wrap', ml: 2 }}>
+      <Stack direction="row" spacing={2} mt={2} mb={40} sx={{ flexWrap: 'wrap', ml: 2 }}>
         {connectedUsers.map((user, index) =>
-          <AvatarChipPicking key={index} userInfo={user}/>
+          <AvatarChipPicking key={index} userInfo={user} />
         )}
       </Stack>
 
-      <Grid container direction="row" sx={{ alignItems: 'flex-end'}} justifyContent="center">
+      <Grid container direction="row" alignSelf="flex-end" sx={{ alignItems: 'flex-end'}}>
         {/* ---------------------------- LEFT SIDE ---------------------------- */}
-        <Grid item xs={2}>
-          <Grid container direction="column">
-            <Grid item xs={12}>
-              <PlayingCard color='green' card={{}} /><br />
+        <Grid item xs={3}>
+          <Grid container direction="column" sx={{alignItems: 'center', justifyContent: 'center'}}>
+            {/* Prompt Card */}
+            <Grid item xs={12} mb={10}>
+              <PlayingCard color='green' card={fakeGameState.questionCard} />
             </Grid>
             <Grid item xs={12}>
               {/* Judge avatar */}
@@ -65,20 +70,20 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
           </Grid>
         </Grid>
         {/* ---------------------------- MIDDLE -------------------------------- */}
-        <Grid item xs={7}>
-          <Stack direction="row" spacing={2} sx={{ flexWrap: 'wrap' }}>
-            <PlayingCard color='red' card={{}} /><br />
-            <PlayingCard color='red' card={{}} /><br />
-            <PlayingCard color='red' card={{}} /><br />
-            <PlayingCard color='red' card={{}} /><br />
-            <PlayingCard color='red' card={{}} /><br />
-            <PlayingCard color='red' card={{}} /><br />
-            <PlayingCard color='red' card={{}} /><br />
+        <Grid item xs={6}>
+          <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: 'wrap' }}>
+            {customDecksSample.skips.answers.map((answer) =>
+              <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
+                e.preventDefault();
+                //answer is whatever card that gets clicked on
+                console.log(answer);
+              }}/>
+            )}
           </Stack>
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory}/>
+          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} />
         </Grid>
         {/* -------------------------------------------------------------------- */}
       </Grid>
