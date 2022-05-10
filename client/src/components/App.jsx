@@ -277,7 +277,7 @@ export default function App() {
         </div>
       ) : null}
       {pageView === "results" ? (
-        <Results gameState={gameState} setPageView={setPageView} />
+        <Results gameState={gameState} setPageView={setPageView} user={customUserInfo} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
       ) : null}
     </>
   );

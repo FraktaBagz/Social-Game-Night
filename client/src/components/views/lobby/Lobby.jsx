@@ -88,7 +88,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             <Stack spacing={2}>
               {connectedUsers.map((userObj) => {
                 return (
-                  <AvatarChipPicking userInfo={userObj} />
+                  <AvatarChipPicking user={userObj} />
                 )
               })}
             </Stack>
