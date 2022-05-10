@@ -3,7 +3,7 @@ import Chat from '../chat/Chat.jsx'
 import { io } from "socket.io-client";
 const socket = io();
 
-import { AvatarChipWaiting } from 'react';
+import { AvatarChipWaiting } from '../common/AvatarChips.jsx';
 
 const buttonStyle = {
   border: 'none',
