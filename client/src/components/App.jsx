@@ -161,7 +161,7 @@ export default function App() {
       <button onClick={handleResults}>results</button>
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} handleLogState={handleLogState}/> : null}
       {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
       {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}

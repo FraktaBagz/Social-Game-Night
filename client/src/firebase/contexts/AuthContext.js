@@ -26,8 +26,18 @@ export function AuthProvider({ children }) {
       } else {
         setCurrentUserID(null);
       }
+      if (currentUserID) {
+        getDoc(doc(db, 'users', currentUserID))
+          .then((client) => {
+            setCurrentUser(client.data());
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      }
     });
-  }, [user]);
+
+  }, [currentUserID]);
 
   function signUp(email, password, name) {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -54,7 +64,6 @@ export function AuthProvider({ children }) {
       .then((anonCredential) => {
         let anon = anonCredential.user;
 
-        console.log(guestName);
         return setDoc(doc(db, "users", anon.uid), {
           displayName: guestName,
         });
@@ -66,6 +75,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     signUp,
+    currentUser,
     login,
     signInAsAnonymous,
   };
