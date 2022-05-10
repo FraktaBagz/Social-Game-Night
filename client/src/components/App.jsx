@@ -161,10 +161,13 @@ export default function App() {
       <button onClick={handleResults}>results</button>
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState}  handleLogState={handleLogState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}
+        customDecks={customDecks}
+        setSelectedCustomDeck={setSelectedCustomDeck}
+        setCustomDecktitle={setCustomDecktitle}/> : null}
       {pageView === 'CustomDeck' ? <CustomDeck
         gameState={gameState}
         setPageView={setPageView}
@@ -175,6 +178,7 @@ export default function App() {
       {pageView === 'Custom' ? <Custom
         gameState={gameState}
         setPageView={setPageView}
+        previousView={'Lobby'}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
         setCustomDecktitle={setCustomDecktitle} /> : null}

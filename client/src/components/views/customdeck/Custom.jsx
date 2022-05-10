@@ -12,7 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ViewCards from './ViewCards.jsx'
 
 
-export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle }) {
+export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView }) {
   const [customAnswer, setCustomAnswer] = useState('');
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState('');
@@ -106,7 +106,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
 
   return (
     <Container>
-      <Button variant="outlined" onClick={() => (setPageView('CustomDeck'), setCustomDecktitle(''))}>back to customdeck page</Button>
+      <Button variant="outlined" onClick={() => (setPageView(`${previousView}`), setCustomDecktitle(''))}>back to {previousView} page</Button>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Box>
