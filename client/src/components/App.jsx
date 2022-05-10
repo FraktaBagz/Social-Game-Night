@@ -3,6 +3,7 @@ import SignUpPage from "./views/signup/SignUp.jsx";
 import SignInPage from "./views/signin/SignIn.jsx";
 import { useAuth } from "../firebase/contexts/AuthContext.js";
 import { auth } from "../firebase/firebase.js";
+import { useGame } from "../firebase/contexts/GameContext.js";
 import HomePage from "./views/homepage/HomePage.jsx";
 import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";

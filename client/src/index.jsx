@@ -35,14 +35,8 @@ const theme = createTheme({
 
 ReactDOM.render(
   <AuthProvider>
-<<<<<<< HEAD
-  <GameProvider>
-    <App />
-  </GameProvider>
-=======
-    <ThemeProvider theme={theme}>
+    <GameProvider>
       <App />
-    </ThemeProvider>
->>>>>>> main
+    </GameProvider>
   </AuthProvider >
   , document.getElementById('root'));
