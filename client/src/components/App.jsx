@@ -3,15 +3,13 @@ import SignUpPage from "./views/signup/SignUp.jsx";
 import SignInPage from "./views/signin/SignIn.jsx";
 import { useAuth } from "../firebase/contexts/AuthContext.js";
 import { auth } from "../firebase/firebase.js";
+import { useGame } from "../firebase/contexts/GameContext.js";
 import HomePage from "./views/homepage/HomePage.jsx";
 import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";
 import Lobby from "./views/lobby/Lobby.jsx";
 import CustomDeck from "./views/customdeck/CustomDeck.jsx";
-import {
-  AvatarChipWaiting,
-  AvatarChipPicking,
-} from "./views/common/AvatarChips.jsx";
+import { AvatarChipWaiting, AvatarChipPicking } from "./views/common/AvatarChips.jsx";
 import Custom from "./views/customdeck/Custom.jsx";
 import ViewCards from "./views/customdeck/ViewCards.jsx";
 import PlayingCard from "./views/common/PlayingCard.jsx";
@@ -21,22 +19,22 @@ const socket = io();
 
 const customDecksSample = {
   skips: {
-    questions:  [
-  {
-    label: 'some prompt',
-    extra: '(ridiculous, senseless, foolish) ',
-    sets: 'default green',
-  },
-  {
-    label: 'some prompt',
-    extra: '(plentiful, ample, numerous) ',
-    sets: 'default green',
-  },
-  {
-    label: 'some prompt',
-    extra: '(obsessive, consuming, captivating) ',
-    sets: 'default green',
-  },],
+    questions: [
+      {
+        label: 'some prompt',
+        extra: '(ridiculous, senseless, foolish) ',
+        sets: 'default green',
+      },
+      {
+        label: 'some prompt',
+        extra: '(plentiful, ample, numerous) ',
+        sets: 'default green',
+      },
+      {
+        label: 'some prompt',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default green',
+      },],
     answers: [
       {
         label: 'Absurd',
@@ -79,9 +77,9 @@ const customUserInfo = {
 };
 
 export default function App() {
-  //currentUser currently not getting defined
-  const { signUp, currentUser, setCurrentUser, getDeck } = useAuth();
-  const [pageView, setPageView] = useState("SignIn");
+  const { signUp, currentUser, setCurrentUser } = useAuth();
+  const { getUser, getDeck } = useGame();
+  const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
   //want to set the default deck from a db query
@@ -322,7 +320,7 @@ export default function App() {
         </div>
       ) : null}
       {pageView === "results" ? (
-        <Results gameState={gameState} setPageView={setPageView} user={customUserInfo} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
+        <Results gameState={gameState} setPageView={setPageView} user={customUserInfo} chatHistory={chatHistory} setChatHistory={setChatHistory} />
       ) : null}
     </>
   );
