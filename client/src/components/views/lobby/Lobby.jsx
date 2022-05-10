@@ -19,11 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 const sx = {
-  mt: 3,
-  mb: 2,
-  width: 150,
-  height: 50,
-  borderRadius: 4,
+  mt: 3, mb: 2, width: 150, height: 50, borderRadius: 4,
   backgroundColor: "secondary.main",
   '&:hover': {
     backgroundColor: 'primary.grey',
@@ -32,6 +28,18 @@ const sx = {
 
 export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, name, host, connectedUsers }) {
   var count = 0;
+
+  function createGame(users, deck) {
+    socket.emit('new game', JSON.stringify({users: users, deck: deck}))
+  }
+
+  socket.on('join game', (msg) => {
+    console.log('new player entered room')
+    msg = JSON.parse(msg);
+    console.log(msg)
+    setConnectedUsers([...connectedUsers, msg.user])
+  })
+
   return (
     <>
       <div className="lobbyContainer">
@@ -60,6 +68,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             {host ?
               <Button type="submit" fullWidth variant="contained" sx={sx}
                 onClick={() => {
+                  createGame(connectedUsers, defaultDeck);
                   setPageView('PlayerView')
                 }}>
                 Start Game!
