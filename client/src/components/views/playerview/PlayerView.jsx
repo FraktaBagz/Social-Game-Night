@@ -14,24 +14,33 @@ import { styled } from '@mui/material/styles';
 import { io } from "socket.io-client";
 const socket = io();
 
-export default function PlayerView() {
+export default function PlayerView({ gameState }) {
+
+  // this.gameState.userInformation[user.UID] = {
+  //   cards: [],
+  //   points: 0,
+  // }
+
   const fakeGameState = {
-    currentDeck: [],
-    judgeIndex: 0,
-    judging: false,
-    userInformation: {
-    },
-    questionCard: null,
-    hasPicked: [],
-    submittedCards: [],
-    finished: true,
-    winner: null,
+      currentDeck: [],
+      judgeIndex: 0,
+      judging: false,
+      userInformation: {
+      },
+      questionCard: null,
+      hasPicked: [],
+      submittedCards: [],
+      finished: true,
+      winner: null,
   }
+
+  useEffect(() => {
+    console.log(gameState)
+  }, [])
 
   return (
     <div className="PlayerViewContainer">
-      <Stack direction="row" spacing={2} sx={{ flexWrap: 'wrap', ml: 2 }}>
-      
+      <Stack direction="row" spacing={2} ml={2} sx={{ flexWrap: 'wrap', ml: 2 }}>
         <AvatarChipPicking userInfo={{
           name: 'Nathaniel',
           title: 'The Brave',
@@ -74,7 +83,7 @@ export default function PlayerView() {
         }} />
       </Stack>
 
-      <Grid container direction="row" sx={{ alignItems: 'flex-end'}} >
+      <Grid container direction="row" sx={{ alignItems: 'flex-end'}} justifyContent="center">
         {/* ---------------------------- LEFT SIDE ---------------------------- */}
         <Grid item xs={2}>
           <Grid container direction="column">
@@ -83,11 +92,16 @@ export default function PlayerView() {
             </Grid>
             <Grid item xs={12}>
               {/* Judge avatar */}
+              <AvatarChipPicking userInfo={{
+                name: 'Nathaniel',
+                title: 'Judge',
+                avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+              }} />
             </Grid>
           </Grid>
         </Grid>
         {/* ---------------------------- MIDDLE -------------------------------- */}
-        <Grid item xs={6}>
+        <Grid item xs={7}>
           <Stack direction="row" spacing={2} sx={{ flexWrap: 'wrap' }}>
             <PlayingCard color='red' card={{}} /><br />
             <PlayingCard color='red' card={{}} /><br />
@@ -99,7 +113,7 @@ export default function PlayerView() {
           </Stack>
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <Chat />
         </Grid>
         {/* -------------------------------------------------------------------- */}
