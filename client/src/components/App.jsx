@@ -21,14 +21,55 @@ const socket = io();
 
 const customDecksSample = {
   skips: {
-    questions: ["skipsq1", "skipsq2"],
-    answers: ["skipsa1", "skipsa2"],
+    questions:  [
+  {
+    label: 'some prompt',
+    extra: '(ridiculous, senseless, foolish) ',
+    sets: 'default green',
   },
-  skipsgma: {
-    questions: ["skipsgq1", "skipsgq1"],
-    answers: ["skipsga1", "skipsga1"],
+  {
+    label: 'some prompt',
+    extra: '(plentiful, ample, numerous) ',
+    sets: 'default green',
   },
-};
+  {
+    label: 'some prompt',
+    extra: '(obsessive, consuming, captivating) ',
+    sets: 'default green',
+  },],
+    answers: [
+      {
+        label: 'Absurd',
+        extra: '(ridiculous, senseless, foolish) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Abundant',
+        extra: '(plentiful, ample, numerous) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Absurd',
+        extra: '(ridiculous, senseless, foolish) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Abundant',
+        extra: '(plentiful, ample, numerous) ',
+        sets: 'default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },]
+  },
+}
 
 const customUserInfo = {
   name: "Raymond",
@@ -218,6 +259,10 @@ export default function App() {
         <PlayerView
           gameState={gameState}
           setPageView={setPageView}
+          customDecksSample={customDecksSample}
+          connectedUsers={connectedUsers}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
         />
       ) : null}
       {pageView === "Lobby" ? (
