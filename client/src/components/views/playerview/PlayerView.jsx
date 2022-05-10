@@ -77,6 +77,7 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
                 e.preventDefault();
                 //answer is whatever card that gets clicked on
                 console.log(answer);
+
               }}/>
             )}
           </Stack>

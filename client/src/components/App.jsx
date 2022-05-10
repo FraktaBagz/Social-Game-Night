@@ -259,6 +259,10 @@ export default function App() {
         <PlayerView
           gameState={gameState}
           setPageView={setPageView}
+          customDecksSample={customDecksSample}
+          connectedUsers={connectedUsers}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
         />
       ) : null}
       {pageView === "Lobby" ? (

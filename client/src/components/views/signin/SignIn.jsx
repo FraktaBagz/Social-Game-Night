@@ -79,34 +79,56 @@ export default function SignInPage({ setPageView, handleLogState }) {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-            />
+          <Button
+            type="submit"
+            value="user"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link variant="body2" onClick={() => { setPageView('SignUp') }}>
+                Don't have an account? Sign Up Here!
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
         <Button
-          type="submit"
-          value="user"
+          value="guest"
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          onClick={() => {
+            setIsGuest(true)
+          }}
         >
-          Sign In
+          Play as guest
         </Button>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Link variant="body2" onClick={() => { setPageView('SignUp') }}>
-              Don't have an account? Sign Up Here!
-            </Link>
-          </Grid>
-        </Grid>
+        {
+          isGuest ?
+            <div>
+              <TextField
+                required
+                fullWidth
+                id="guestName"
+                label="Guest Name"
+                name="guestName"
+                onChange={(e) => { setGuestName(e.target.value) }}
+              />
+              <Button type="submit" onClick={() => {
+                handleLogState();
+                setPageView('HomePage');
+                signInAsAnonymous(guestName)
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}>Submit Name</Button>
+            </div>
+            : <></>
+        }
       </Box>
     </Container>
   );
