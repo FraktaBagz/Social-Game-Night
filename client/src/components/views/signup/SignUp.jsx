@@ -8,12 +8,9 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // our actual code
 import { useAuth } from '../../../firebase/contexts/AuthContext.js'
-
-const theme = createTheme();
 
 function SignUpPage({ handleLogState, setPageView }) {
   const { signUp, currentUserID } = useAuth();
@@ -36,7 +33,6 @@ function SignUpPage({ handleLogState, setPageView }) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -105,7 +101,6 @@ function SignUpPage({ handleLogState, setPageView }) {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }
 
