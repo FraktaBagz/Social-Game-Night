@@ -11,7 +11,6 @@ const {
 } = require("firebase/firestore");
 
 function addToCustomDeck(userId, deckName, greenCards, redCards) {
-  let customDeckRef = doc
   setDoc(doc(db, userId, deckName), {
     greenCards: greenCards,
     redCards: redCards
