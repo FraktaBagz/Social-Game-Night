@@ -51,28 +51,12 @@ export function GameProvider({ children }) {
       });
   }
 
-  function addCustomDeck(redDeck, greenDeck, deckName) {
-    greenDeck.forEach((card) => {
-      addDoc(collection(db, deckName + ' green'), {
-        label: card.label,
-        extra: card.extra,
-        sets: card.sets
-      })
-        .catch(e => {
-          console.error('Error adding document: ', e);
-        });
-    });
-
-    redDeck.forEach((card) => {
-      addDoc(collection(db, deckName + ' red'), {
-        label: card.label,
-        extra: card.extra,
-        sets: card.sets
-      })
-        .catch(e => {
-          console.error('Error adding document: ', e);
-        });
-    });
+  //adds card to deck collection
+  function addToCustomDeck(card, color, deckName) {
+    addDoc(collection(db, `${deckName} ${color}`), card)
+      .catch(e => {
+        console.error('Error adding document: ', e);
+      });
   }
 
   const value = {
@@ -80,6 +64,7 @@ export function GameProvider({ children }) {
     setCurrentUser,
     getUser,
     getDeck,
+    addToCustomDeck,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
