@@ -13,9 +13,9 @@ let Game = function (users, deck) {
   this.users = users;
   this.deck = deck;
   this.gameState = {
-      currentDeck: deck,
+      currentDeck: deck, // {questions: [], answers: []}
       judgeIndex: 0,
-      judge: this.users[judgeIndex],
+      // judge: this.users[this.gameState.judgeIndex],
       judging: false,
       userInformation: { //UID: {cards: [], points:0}
       },
@@ -164,4 +164,4 @@ while (i < 500) {
 // let newGame1 = new Game(users, deck)
 // newGame1.startRound();
 
-exports = { Game };
+module.exports = { Game: Game };

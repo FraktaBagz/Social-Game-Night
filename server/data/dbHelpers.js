@@ -4,7 +4,7 @@ const { getFirestore, collection, addDoc, doc, getDoc, getDocs } = require('fire
 // helper functions
 
 // get an entire collection from firestore database
-const getCollection = (collectionName) => {
+module.exports.getCollection = (collectionName) => {
   let container = [];
   return getDocs(collection(db, 'defaultRed'))
     .then((snapShot) => {
@@ -19,3 +19,10 @@ const getCollection = (collectionName) => {
       console.log(err);
     });
 };
+
+
+// // how to use getCollection example
+// getCollection('defaultRed')
+//   .then(redDeck => {
+//     console.log(redDeck);
+//   });
