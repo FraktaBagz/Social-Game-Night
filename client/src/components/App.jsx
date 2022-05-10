@@ -58,7 +58,11 @@ const customDecksSample =
   }
 }
 
-
+const customUserInfo = {
+  name: 'Raymond',
+  title: 'The Wise',
+  avatar: 'https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png'
+}
 
 export default function App() {
   //currentUser currently not getting defined
@@ -167,8 +171,8 @@ export default function App() {
   if (!isLoggedIn) {
     return (
       <ThemeProvider theme={theme}>
-        {pageView === 'SignUp' ? <SignUpPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
-        {pageView === 'SignIn' ? <SignInPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+        {pageView === 'SignUp' ? <SignUpPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} /> : null}
+        {pageView === 'SignIn' ? <SignInPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} /> : null}
       </ThemeProvider>
     );
   }
@@ -187,9 +191,9 @@ export default function App() {
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}  handleLogState={handleLogState} setPageView={setPageView} theme={theme}/> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView}
         customDecks={customDecks}
         defaultDeck={defaultDeck}
         setSelectedCustomDeck={setSelectedCustomDeck}
@@ -200,7 +204,7 @@ export default function App() {
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
         setCustomDecktitle={setCustomDecktitle}
-        theme={theme}
+
       /> : null}
       {pageView === 'Custom' ? <Custom
         gameState={gameState}
@@ -208,22 +212,21 @@ export default function App() {
         previousView={'Lobby'}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
+        setCustomDecktitle={setCustomDecktitle}/> : null}
       {pageView === 'ViewCards' ? <ViewCards
         gameState={gameState}
         setPageView={setPageView}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
+        setCustomDecktitle={setCustomDecktitle}/> : null}
       {pageView === 'avatarExample' ?
         <div>
-          <AvatarChipPicking picking={true} theme={theme}/><br /><AvatarChipPicking picking={false} theme={theme}/><br /><AvatarChipWaiting theme={theme}/><br />
-          <PlayingCard type='question' info='question example' theme={theme}/><br />
-          <PlayingCard type='answer' info='answer example' theme={theme}/>
+          <AvatarChipPicking picking={true} user={customUserInfo} /><br /><AvatarChipPicking picking={false} user={customUserInfo} /><br /><AvatarChipWaiting user={customUserInfo} /><br />
+          <PlayingCard type='question' info='question example'/><br />
+          <PlayingCard type='answer' info='answer example'/>
         </div>
         : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking theme={theme}/><br /><AvatarChipWaiting theme={theme}/></div> : null}
-      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView}/> : null}
     </ThemeProvider>
   )
 }
