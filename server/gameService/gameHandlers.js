@@ -15,7 +15,7 @@ next round starts
 */
 
 const { Game } = require('./gameService');
-const { getCollection } = require('../data/dbhelpers')
+const { getCollection } = require('../data/dbHelpers')
 
 function gameHandler(msg) {
   //each socket will emit a 'game action' to send an object to this function.
