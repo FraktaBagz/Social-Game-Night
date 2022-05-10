@@ -15,7 +15,7 @@ import { io } from "socket.io-client";
 const socket = io();
 
 
-export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState }) {
+export default function HomePage({ currentUser , setCurrentUser, setPageView, theme, handleLogState, setConnectedUsers, connectedUsers }) {
   const handleLogOut = (e) => {
     e.preventDefault();
     // setCurrentUser({});
@@ -139,7 +139,9 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   whileTap={{ scale: 1 }}
                 >
                   <Button
-                    onClick={() => { setPageView('Lobby') }}
+                    onClick={() => {
+                      setPageView('Lobby')
+                      setConnectedUsers([...connectedUsers, currentUser]) }}
                     value="user"
                     fullWidth
                     variant="contained"
@@ -169,7 +171,8 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                     onClick={() => {
                       // setJoiningGame(true);
                       setPageView('Lobby')
-                      socket.emit('join game', JSON.stringify({user: currentUser.displayName})) }}
+                      console.log('joining game')
+                      socket.emit('join game', JSON.stringify({ user: currentUser.displayName })) }}
                       //later it should be just 'currentUser'
                     fullWidth
                     variant="contained"

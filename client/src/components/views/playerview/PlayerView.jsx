@@ -62,6 +62,7 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
             <Grid item xs={12}>
               {/* Judge avatar */}
               <AvatarChipPicking userInfo={{
+                //this can come from 
                 name: 'Nathaniel',
                 title: 'Judge',
                 avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'

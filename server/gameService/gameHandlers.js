@@ -28,7 +28,7 @@ function gameHandler(msg) {
   //everyone draws a card
   if (action === 'new round') {
     users.forEach((user) => {
-      game.gameState.userInformation[user.UID].cards.push(drawRandomCard(currentDeck.answers))
+      game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
     })
     //the question card is drawn
     game.gameState.questionCard = drawRandomCard(currentDeck.questions)

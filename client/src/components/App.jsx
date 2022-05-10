@@ -254,6 +254,8 @@ export default function App() {
           setCurrentUser={setCurrentUser}
           handleLogState={handleLogState}
           setPageView={setPageView}
+          connectedUsers={connectedUsers}
+          setConnectedUsers={setConnectedUsers}
         />
       ) : null}
       {pageView === "JudgeView" ? (
