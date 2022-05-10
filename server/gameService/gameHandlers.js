@@ -21,8 +21,8 @@ function gameHandler(msg) {
   //each socket will emit a 'game action' to send an object to this function.
   //each object must have an 'action' and 'game' property
   //depending on the action, it might also need a user and card property
-  const { action, game, user, card } = msg
-  const { gameState: { currentDeck, judgeIndex, judge, judging, userInformation, questionCard, submittedCards, finished, winner }, users, drawRandomCard } = game
+  const { action, game, user, card } = msg;
+  const { gameState: { currentDeck, judgeIndex, judge, judging, userInformation, questionCard, submittedCards, finished, winner }, users, drawRandomCard } = game;
 
   //start a round
   //everyone draws a card

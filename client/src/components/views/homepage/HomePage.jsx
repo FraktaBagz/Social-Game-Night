@@ -23,18 +23,18 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
     handleLogState();
   }
 
-  const [joiningGame, setJoiningGame] = useState(false)
+  // const [joiningGame, setJoiningGame] = useState(false)
 
-  const joinGameWithCode = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget)
-    console.log(data.get('joinCode'));
-    //Add logic here to verify the code
-    //then switch view using setPageView('') to the lobby
-  }
+  // const joinGameWithCode = (e) => {
+  //   e.preventDefault();
+  //   const data = new FormData(e.currentTarget)
+  //   console.log(data.get('joinCode'));
+  //   //Add logic here to verify the code
+  //   //then switch view using setPageView('') to the lobby
+  // }
 
   useEffect(() => {
-    console.log(currentUser)
+    console.log('current user: ', currentUser)
   }, [currentUser])
 
   return (
@@ -167,9 +167,10 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   <Button
                     // type="submit"
                     onClick={() => {
-                      setJoiningGame(true);
-                      console.log( currentUser );
-                      socket.emit('join game', JSON.stringify({user: 'Mr Kieran'})) }} //need to get currentUser defined here
+                      // setJoiningGame(true);
+                      setPageView('Lobby')
+                      socket.emit('join game', JSON.stringify({user: currentUser.displayName})) }}
+                      //later it should be just 'currentUser'
                     fullWidth
                     variant="contained"
                     sx={{
@@ -188,7 +189,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   </Button>
                 </motion.div>
               </Grid>
-              {
+              {/* {
                 joiningGame ?
                   <Grid item xs={12} sm={6}>
                     <Box component="form" noValidate onSubmit={joinGameWithCode}>
@@ -242,7 +243,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                     </Box>
                   </Grid>
                   : <></>
-              }
+              } */}
             </Grid>
           </Grid>
           {/* -------------------------------------------------------------------------------- */}

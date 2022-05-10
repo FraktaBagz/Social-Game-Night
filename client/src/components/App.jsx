@@ -94,6 +94,13 @@ export default function App() {
     setGameState(gameObj);
   });
 
+  socket.on('join game', (msg) => {
+    console.log('new player entered room')
+    msg = JSON.parse(msg);
+    console.log(msg)
+    setConnectedUsers([...connectedUsers, msg.user])
+  })
+
   socket.on("game action", (gameObj) => {
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);

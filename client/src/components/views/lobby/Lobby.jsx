@@ -26,19 +26,12 @@ const sx = {
   }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers }) {
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck }) {
   var count = 0;
 
   function createGame(users, deck) {
-    socket.emit('new game', JSON.stringify({users: users, deck: deck}))
+    socket.emit('new game', JSON.stringify({users: connectedUsers, deck: defaultDeck}))
   }
-
-  socket.on('join game', (msg) => {
-    console.log('new player entered room')
-    msg = JSON.parse(msg);
-    console.log(msg)
-    setConnectedUsers([...connectedUsers, msg.user])
-  })
 
   return (
     <>
