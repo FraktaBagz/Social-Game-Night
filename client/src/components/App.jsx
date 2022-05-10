@@ -58,7 +58,11 @@ const customDecksSample =
   }
 }
 
-
+const customUserInfo = {
+  name: 'Raymond',
+  title: 'The Wise',
+  avatar: 'https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png'
+}
 
 export default function App() {
   //currentUser currently not getting defined
@@ -184,8 +188,8 @@ export default function App() {
   if (!isLoggedIn) {
     return (
       <ThemeProvider theme={theme}>
-        {pageView === 'SignUp' ? <SignUpPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
-        {pageView === 'SignIn' ? <SignInPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+        {pageView === 'SignUp' ? <SignUpPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} /> : null}
+        {pageView === 'SignIn' ? <SignInPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} /> : null}
       </ThemeProvider>
     );
   }
@@ -215,7 +219,7 @@ export default function App() {
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
         setCustomDecktitle={setCustomDecktitle}
-        theme={theme}
+
       /> : null}
       {pageView === 'Custom' ? <Custom
         gameState={gameState}
@@ -223,42 +227,21 @@ export default function App() {
         previousView={'Lobby'}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
+        setCustomDecktitle={setCustomDecktitle}/> : null}
       {pageView === 'ViewCards' ? <ViewCards
         gameState={gameState}
         setPageView={setPageView}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
+        setCustomDecktitle={setCustomDecktitle}/> : null}
       {pageView === 'avatarExample' ?
         <div>
-          <AvatarChipPicking userInfo={{
-            name: 'Nathaniel',
-            title: 'The Brave',
-            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-          }} picking={true} /><br /><AvatarChipPicking userInfo={{
-            name: 'Nathaniel',
-            title: 'The Brave',
-            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-          }} picking={false} /><br /><AvatarChipWaiting userInfo={{
-            name: 'Nathaniel',
-            title: 'The Brave',
-            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-          }} /><br />
-          <PlayingCard type='question' info='question example' /><br />
-          <PlayingCard type='answer' info='answer example' />
+          <AvatarChipPicking picking={true} user={customUserInfo} /><br /><AvatarChipPicking picking={false} user={customUserInfo} /><br /><AvatarChipWaiting user={customUserInfo} /><br />
+          <PlayingCard type='question' info='question example'/><br />
+          <PlayingCard type='answer' info='answer example'/>
         </div>
         : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking userInfo={{
-        name: 'Bilbo Swaggins',
-        title: 'The Brave',
-        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-      }} /><br /><AvatarChipWaiting userInfo={{
-        name: 'Nathaniel',
-        title: 'The Brave',
-        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-      }} /></div> : null}
-      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView}/> : null}
     </ThemeProvider>
   )
 }
