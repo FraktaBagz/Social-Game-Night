@@ -32,9 +32,9 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
     //then switch view using setPageView('') to the lobby
   }
 
-  // useEffect(() => {
-  //   console.log(currentUser)
-  // }, [currentUser])
+  useEffect(() => {
+    console.log(currentUser)
+  }, [currentUser])
 
   return (
     <>

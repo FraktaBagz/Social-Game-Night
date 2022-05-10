@@ -56,21 +56,3 @@ const addCustomDeck = (redDeck, greenDeck, deckName) => {
     });
   });
 };
-
-addCustomDeck(
-  [
-    {
-      label: "Absurd",
-      extra: "(ridiculous, senseless, foolish) ",
-      sets: "default red",
-    },
-  ],
-  [
-    {
-      label: "Absurd",
-      extra: "(ridiculous, senseless, foolish) ",
-      sets: "default red",
-    },
-  ],
-  "test"
-);
