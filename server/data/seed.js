@@ -1,13 +1,27 @@
 const { defaultGreen } = require("./defaultGreen.js");
 const { defaultRed } = require("./defaultRed.js");
-const { db } = require("../firebase/firebase.js");
+const db = require("../firebase/firebase.js");
 const {
   getFirestore,
   collection,
   addDoc,
+  setDoc,
   doc,
   getDoc,
 } = require("firebase/firestore");
+
+function addToCustomDeck(userId, deckName, greenCards, redCards) {
+  let customDeckRef = doc
+  setDoc(doc(db, userId, deckName), {
+    greenCards: greenCards,
+    redCards: redCards
+  })
+    .catch(e => {
+      console.error('Error adding document: ', e);
+    });
+}
+
+// addToCustomDeck('1', 'for skip grandma', defaultGreen, defaultRed);
 
 //seed default green cards
 // defaultGreen.forEach((card) => {
@@ -34,25 +48,3 @@ const {
 // });
 
 // enter node server/data/seed.js into terminal to seed data
-
-const addCustomDeck = (redDeck, greenDeck, deckName) => {
-  greenDeck.forEach((card) => {
-    addDoc(collection(db, deckName + " green"), {
-      label: card.label,
-      extra: card.extra,
-      sets: card.sets,
-    }).catch((e) => {
-      console.error("Error adding document: ", e);
-    });
-  });
-
-  redDeck.forEach((card) => {
-    addDoc(collection(db, deckName + " red"), {
-      label: card.label,
-      extra: card.extra,
-      sets: card.sets,
-    }).catch((e) => {
-      console.error("Error adding document: ", e);
-    });
-  });
-};

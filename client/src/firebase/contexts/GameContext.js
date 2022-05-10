@@ -10,24 +10,24 @@ export function useGame() {
 }
 
 export function GameProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
 
-  function getUser(currentUserID) {
-    return getDoc(doc(db, 'users', currentUserID))
-      // .then((client) => {
-      //   setCurrentUser(client.data());
-      // })
-      .catch((err) => {
-        // console.log(err);
-        throw err;
-      })
-  }
+  // function getUser(currentUserID) {
+  //   return getDoc(doc(db, 'users', currentUserID))
+  //     // .then((client) => {
+  //     //   setCurrentUser(client.data());
+  //     // })
+  //     .catch((err) => {
+  //       // console.log(err);
+  //       throw err;
+  //     })
+  // }
 
-  function getDeck(deck) {
+  function getDeck(deck, uid) {
     let redContainer = [];
     let greenContainer = [];
 
-    getDocs(collection(db, 'defaultRed'))
+    return getDocs(collection(db, 'defaultRed'))
       .then((snapShot) => {
         snapShot.forEach((doc) => {
           redContainer.push(doc.data());
@@ -52,7 +52,7 @@ export function GameProvider({ children }) {
   }
 
   //adds card to deck collection
-  function addToCustomDeck(card, color, deckName) {
+  function addToCustomDeck(card, color, deckName, userId) {
     addDoc(collection(db, `${deckName} ${color}`), card)
       .catch(e => {
         console.error('Error adding document: ', e);
@@ -60,9 +60,6 @@ export function GameProvider({ children }) {
   }
 
   const value = {
-    currentUser,
-    setCurrentUser,
-    getUser,
     getDeck,
     addToCustomDeck,
   };

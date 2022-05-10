@@ -16,10 +16,9 @@ import { io } from "socket.io-client";
 const socket = io();
 
 
-export default function HomePage({ currentUser, setCurrentUser, currentUserID, setPageView, theme, handleLogState }) {
+export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState }) {
   const handleLogOut = (e) => {
     e.preventDefault();
-    // setCurrentUser({});
     setPageView('SignIn');
     handleLogState();
   }
@@ -44,9 +43,10 @@ export default function HomePage({ currentUser, setCurrentUser, currentUserID, s
     //   .catch((err) => {
     //     console.log(err);
     //   });
+    console.log('here in homepage', currentUser)
 
     setIsLoaded(true);
-  }, [currentUserID]);
+  }, [currentUser]);
 
   if (!isLoaded) {
     return (
@@ -133,7 +133,7 @@ export default function HomePage({ currentUser, setCurrentUser, currentUserID, s
                       Avatar
                     </Typography>
                     <Typography component="h1" variant="h5">
-                      {currentUser ? currentUser.displayName : 'Display Name'}
+                      {currentUser ? currentUser.name : 'Display Name'}
                     </Typography>
                     <Button sx={{ color: "#000000" }} onClick={handleLogOut}>
                       LOG OUT

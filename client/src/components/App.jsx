@@ -66,8 +66,8 @@ const customUserInfo = {
 }
 
 export default function App() {
-  const { signUp, currentUserID } = useAuth();
-  const { currentUser, setCurrentUser, getUser } = useGame();
+  const { signUp, currentUser, setCurrentUser } = useAuth();
+  const { getUser, getDeck } = useGame();
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
