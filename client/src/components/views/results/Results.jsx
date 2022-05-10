@@ -3,6 +3,8 @@ import Chat from '../chat/Chat.jsx'
 import { io } from "socket.io-client";
 const socket = io();
 
+import { AvatarChipWaiting } from 'react';
+
 const buttonStyle = {
   border: 'none',
   color: 'white',
@@ -15,10 +17,13 @@ const buttonStyle = {
   cursor: 'pointer',
 }
 
-export default function Results () {
+export default function Results (winnerName) {
 
   return (
     <div>
+      <div>
+        <AvatarChipWaiting userInfo={winnerName}/> IS THE WINNER!!!
+      </div>
       <Chat buttonStyle={buttonStyle}/>
     </div>
   )

@@ -15,6 +15,9 @@ import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
 import PlayingCard from './views/common/PlayingCard.jsx';
 import Results from './views/results/Results.jsx';
+import { io } from "socket.io-client";
+const socket = io();
+
 
 /*
 black #2c2f3a
@@ -56,13 +59,16 @@ const customDecksSample =
   }
 }
 
+
+
 export default function App() {
   const { signUp, currentUserID } = useAuth();
   const { currentUser, setCurrentUser, getUser } = useGame();
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
-  const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
+  //want to set the default deck from a db query
+  const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skips);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
@@ -72,9 +78,19 @@ export default function App() {
   });
   const [customDeckTitle, setCustomDecktitle] = useState('');
 
-  // useEffect(() => {
-  //   setPageView('SignIn');
-  // }, [])
+  useEffect(() => {
+    console.log('currentUser: ', currentUser);
+  }, [])
+
+  socket.on('new game', (gameObj) => {
+    gameObj = JSON.parse(gameObj);
+    setGameState(gameObj);
+  })
+
+  socket.on('game action', (gameObj) => {
+    gameObj = JSON.parse(gameObj);
+    setGameState(gameObj);
+  })
 
   function handleLogState() {
     if (isLoggedIn) {
@@ -97,9 +113,12 @@ export default function App() {
   // }, [currentUser])
 
   useEffect(() => {
-
-    // setDefaultDeck(getCollection())
-  }, []);
+    getDeck()
+      .then((deck) => {
+        setDefaultDeck(deck)
+      })
+      .catch(e => console.log(e))
+  }, [])
 
   var handleSignUp = (event) => {
     event.preventDefault();
@@ -168,38 +187,52 @@ export default function App() {
       <button onClick={handleResults}>results</button>
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} getUser={getUser} currentUserID={currentUserID} handleLogState={handleLogState} setPageView={setPageView} /> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'CustomDeck' ? <CustomDeck
-        gameState={gameState}
-        setPageView={setPageView}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} handleLogState={handleLogState} setPageView={setPageView} theme={theme} /> : null}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
+        defaultDeck={defaultDeck}
         setSelectedCustomDeck={setSelectedCustomDeck}
-        setCustomDecktitle={setCustomDecktitle}
-      /> : null}
-      {pageView === 'Custom' ? <Custom
-        gameState={gameState}
-        setPageView={setPageView}
-        selectedCustomDeck={selectedCustomDeck}
-        customDeckTitle={customDeckTitle}
         setCustomDecktitle={setCustomDecktitle} /> : null}
-      {pageView === 'ViewCards' ? <ViewCards
-        gameState={gameState}
-        setPageView={setPageView}
-        selectedCustomDeck={selectedCustomDeck}
-        customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} /> : null}
-      {pageView === 'avatarExample' ?
-        <div>
-          <AvatarChipPicking picking={true} /><br /><AvatarChipPicking picking={false} /><br /><AvatarChipWaiting /><br />
-          <PlayingCard type='question' info='question example' /><br />
-          <PlayingCard type='answer' info='answer example' />
-        </div>
-        : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
-      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} /> : null}
-    </ThemeProvider>
+      {
+        pageView === 'CustomDeck' ? <CustomDeck
+          gameState={gameState}
+          setPageView={setPageView}
+          customDecks={customDecks}
+          setSelectedCustomDeck={setSelectedCustomDeck}
+          setCustomDecktitle={setCustomDecktitle}
+          theme={theme}
+        /> : null
+      }
+      {
+        pageView === 'Custom' ? <Custom
+          gameState={gameState}
+          setPageView={setPageView}
+          previousView={'Lobby'}
+          selectedCustomDeck={selectedCustomDeck}
+          customDeckTitle={customDeckTitle}
+          setCustomDecktitle={setCustomDecktitle} theme={theme} /> : null
+      }
+      {
+        pageView === 'ViewCards' ? <ViewCards
+          gameState={gameState}
+          setPageView={setPageView}
+          selectedCustomDeck={selectedCustomDeck}
+          customDeckTitle={customDeckTitle}
+          setCustomDecktitle={setCustomDecktitle} theme={theme} /> : null
+      }
+      {
+        pageView === 'avatarExample' ?
+          <div>
+            <AvatarChipPicking picking={true} theme={theme} /><br /><AvatarChipPicking picking={false} theme={theme} /><br /><AvatarChipWaiting theme={theme} /><br />
+            <PlayingCard type='question' info='question example' theme={theme} /><br />
+            <PlayingCard type='answer' info='answer example' theme={theme} />
+          </div>
+          : null
+      }
+      {pageView === 'avatarExample' ? <div><AvatarChipPicking theme={theme} /><br /><AvatarChipWaiting theme={theme} /></div> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+    </ThemeProvider >
   )
 }

@@ -13,10 +13,11 @@ let Game = function (users, deck) {
   this.users = users;
   this.deck = deck;
   this.gameState = {
-      currentDeck: deck,
+      currentDeck: deck, // {questions: [], answers: []}
       judgeIndex: 0,
+      // judge: this.users[this.gameState.judgeIndex],
       judging: false,
-      userInformation: {
+      userInformation: { //UID: {cards: [], points:0}
       },
       questionCard: null,
       hasPicked: [], // do we need this?
@@ -121,7 +122,7 @@ let Game = function (users, deck) {
     }
     // give each player 6 cards -- 7th card is picked up on first round.
     for (let i = 0; i < 6; i++) {
-      this.gameState.userInformation[user.UID].cards.push(this.drawRandomCard(this.gameState.currentDeck.questions))
+      this.gameState.userInformation[user.UID].cards.push(this.drawRandomCard(this.gameState.currentDeck.answers))
     }
   })
 
@@ -139,6 +140,28 @@ while (i < 500) {
   i++
 }
 
+// function newGame(msg) {
+//   const { users, deck } = msg
+//   let game = new Game(users, deck);
+
+//   // for (let j = 0; j < game.users.length; j++) {
+//   //   game.gameState.userInformation[game.users[j]] = []
+//   // }
+//   console.log('userInfo: ', game.gameState.userInformation)
+//   // for (let i = 0; i < 7; i++) {
+//   //   for (let j = 0; j < game.users.length; j++) {
+//   //     game.gameState.userInformation[game.users[j]].push(game.drawRandomCard(game.gameState.currentDeck.questions))
+//   //     console.log(`${game.users[j]}'s hand: ${game.gameState.userInformation[game.users[j]]}`)
+//   //   }
+//   // }
+
+//   return game;
+// }
+
+// console.log('newgmae', newGame({users: users, deck: deck}))
+
 // start game and start a round
-let newGame = new Game(users, deck)
-newGame.startRound();
+// let newGame1 = new Game(users, deck)
+// newGame1.startRound();
+
+module.exports = { Game: Game };

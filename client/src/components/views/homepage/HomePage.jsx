@@ -10,11 +10,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useFormControl } from '@mui/material/FormControl';;
-import { motion } from 'framer-motion'
+import { useFormControl } from '@mui/material/FormControl';
+import { motion } from 'framer-motion';
+import { io } from "socket.io-client";
+const socket = io();
 
 
-export default function HomePage({ currentUser, setCurrentUser, getUser, currentUserID, setPageView, theme, handleLogState }) {
+export default function HomePage({ currentUser, setCurrentUser, currentUserID, setPageView, theme, handleLogState }) {
   const handleLogOut = (e) => {
     e.preventDefault();
     // setCurrentUser({});
@@ -34,18 +36,16 @@ export default function HomePage({ currentUser, setCurrentUser, getUser, current
   }
 
   useEffect(() => {
-    getUser(currentUserID)
-      .then((user) => {
-        setCurrentUser(user.data());
-        setIsLoaded(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // getUser(currentUserID)
+    //   .then((user) => {
+    //     setCurrentUser(user.data());
+    //     setIsLoaded(true);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
-    return () => {
-      setCurrentUser(null);
-    };
+    setIsLoaded(true);
   }, [currentUserID]);
 
   if (!isLoaded) {
@@ -124,7 +124,7 @@ export default function HomePage({ currentUser, setCurrentUser, getUser, current
                       backgroundColor: 'info.main',
                       '&:hover': {
                         backgroundColor: 'info.main',
-                        // opacity: [0.9, 0.8, 0.8],
+                        // opacity: [0.9, 0.8, 0.8],[]
                       },
                       borderRadius: 8,
                     }}
@@ -159,7 +159,7 @@ export default function HomePage({ currentUser, setCurrentUser, getUser, current
                   whileTap={{ scale: 1 }}
                 >
                   <Button
-                    onClick={() => { setPageView('SignIn') }}
+                    onClick={() => { setPageView('Lobby') }}
                     value="user"
                     fullWidth
                     variant="contained"
@@ -186,7 +186,11 @@ export default function HomePage({ currentUser, setCurrentUser, getUser, current
                 >
                   <Button
                     // type="submit"
-                    onClick={() => { setJoiningGame(true) }}
+                    onClick={() => {
+                      setJoiningGame(true);
+                      console.log(currentUser);
+                      socket.emit('join game', JSON.stringify({ user: 'Mr Kieran' }))
+                    }} //need to get currentUser defined here
                     fullWidth
                     variant="contained"
                     sx={{
@@ -246,6 +250,9 @@ export default function HomePage({ currentUser, setCurrentUser, getUser, current
                                 '&:hover': {
                                   backgroundColor: 'primary.grey',
                                 },
+                              }}
+                              onClick={(e) => {
+                                socket.emit('join game')
                               }}
                             >
                               Enter
