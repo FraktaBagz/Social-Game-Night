@@ -17,14 +17,14 @@ const buttonStyle = {
   cursor: 'pointer',
 }
 
-export default function Results (winnerName) {
+export default function Results ({ user, chatHistory, setChatHistory }) {
 
   return (
     <div>
       <div>
-        <AvatarChipWaiting userInfo={winnerName}/> IS THE WINNER!!!
+        <AvatarChipWaiting userInfo={user}/> IS THE WINNER!!!
       </div>
-      <Chat buttonStyle={buttonStyle}/>
+      <Chat buttonStyle={buttonStyle} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
     </div>
   )
 }
