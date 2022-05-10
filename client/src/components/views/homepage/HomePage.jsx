@@ -18,12 +18,12 @@ const socket = io();
 export default function HomePage({ currentUser , setCurrentUser, setPageView, theme, handleLogState, setConnectedUsers, connectedUsers }) {
   const handleLogOut = (e) => {
     e.preventDefault();
-    // setCurrentUser({});
     setPageView('SignIn');
     handleLogState();
   }
 
-  // const [joiningGame, setJoiningGame] = useState(false)
+  // const [joiningGame, setJoiningGame] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // const joinGameWithCode = (e) => {
   //   e.preventDefault();
@@ -34,8 +34,26 @@ export default function HomePage({ currentUser , setCurrentUser, setPageView, th
   // }
 
   useEffect(() => {
-    console.log('current user: ', currentUser)
-  }, [currentUser])
+    // getUser(currentUserID)
+    //   .then((user) => {
+    //     setCurrentUser(user.data());
+    //     setIsLoaded(true);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    console.log('here in homepage', currentUser)
+
+    setIsLoaded(true);
+  }, [currentUser]);
+
+  if (!isLoaded) {
+    return (
+      <div>
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <>
@@ -113,7 +131,7 @@ export default function HomePage({ currentUser , setCurrentUser, setPageView, th
                       Avatar
                     </Typography>
                     <Typography component="h1" variant="h5">
-                      {currentUser ? currentUser.displayName : 'display name'}
+                      {currentUser ? currentUser.name : 'Display Name'}
                     </Typography>
                     <Button sx={{ color: "#000000" }} onClick={handleLogOut}>
                       LOG OUT
@@ -234,7 +252,7 @@ export default function HomePage({ currentUser , setCurrentUser, setPageView, th
                                   backgroundColor: 'primary.grey',
                                 },
                               }}
-                              onClick={(e)=>{
+                              onClick={(e) => {
                                 socket.emit('join game')
                               }}
                             >
