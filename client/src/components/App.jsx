@@ -69,10 +69,29 @@ export default function App() {
     }
   });
   const [customDeckTitle, setCustomDecktitle] = useState('');
-
-  // useEffect(() => {
-  //   setPageView('SignIn');
-  // }, [])
+  const [chatHistory, setChatHistory] = useState([{ user: 'Bot', text: 'This is the beginning of the chat history' }]);
+  const [name, setName] = useState('MrJoel');
+  const [host, setHost] = useState(true);
+  const [connectedUsers, setConnectedUsers] = useState([{
+    name: 'Nathaniel',
+    title: 'The Brave',
+    avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+  },
+  {
+    name: 'Raymond',
+    title: 'The Wise',
+    avatar: 'https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png'
+  },
+  {
+    name: 'Matthew',
+    title: 'The Hell Raiser',
+    avatar: 'https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg'
+  },
+  {
+    name: 'Kim',
+    title: 'The Wizard',
+    avatar: 'https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png'
+  }])
 
   function handleLogState() {
     if (isLoggedIn) {
@@ -87,12 +106,6 @@ export default function App() {
       setIsLoggedIn(true);
     }
   };
-
-  // useEffect(() => {
-  //   if (Object.keys(currentUser).length !== 0) {
-  //     setPageView('HomePage')
-  //   }
-  // }, [currentUser])
 
   var handleSignUp = (event) => {
     event.preventDefault();
@@ -159,15 +172,13 @@ export default function App() {
       <button onClick={handleCustomDeck}>CustomDeck</button>
       <button onClick={handleAvatarExample}>avatarExample</button>
       <button onClick={handleResults}>results</button>
-      {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'Lobby' ? <Lobby gameState={gameState} chatHistory={chatHistory} name={name} host={host} connectedUsers={connectedUsers} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
-        setCustomDecktitle={setCustomDecktitle}/> : null}
+        setCustomDecktitle={setCustomDecktitle} /> : null}
       {pageView === 'CustomDeck' ? <CustomDeck
         gameState={gameState}
         setPageView={setPageView}
@@ -190,12 +201,32 @@ export default function App() {
         setCustomDecktitle={setCustomDecktitle} /> : null}
       {pageView === 'avatarExample' ?
         <div>
-          <AvatarChipPicking picking={true} /><br /><AvatarChipPicking picking={false} /><br /><AvatarChipWaiting /><br />
+          <AvatarChipPicking userInfo={{
+            name: 'Nathaniel',
+            title: 'The Brave',
+            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+          }} picking={true} /><br /><AvatarChipPicking userInfo={{
+            name: 'Nathaniel',
+            title: 'The Brave',
+            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+          }} picking={false} /><br /><AvatarChipWaiting userInfo={{
+            name: 'Nathaniel',
+            title: 'The Brave',
+            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+          }} /><br />
           <PlayingCard type='question' info='question example' /><br />
           <PlayingCard type='answer' info='answer example' />
         </div>
         : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
+      {pageView === 'avatarExample' ? <div><AvatarChipPicking userInfo={{
+        name: 'Bilbo Swaggins',
+        title: 'The Brave',
+        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+      }} /><br /><AvatarChipWaiting userInfo={{
+        name: 'Nathaniel',
+        title: 'The Brave',
+        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+      }} /></div> : null}
       {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} /> : null}
     </ThemeProvider>
   )

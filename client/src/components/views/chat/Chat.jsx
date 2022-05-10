@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 // import emotesObj2 from './Emotes.jsx';
 import { io } from "socket.io-client";
@@ -261,20 +262,20 @@ var emotesObj = {
   riPepperonis: 'https://static-cdn.jtvnw.net/emoticons/v1/62833/1.0',
   twitchRaid: 'https://static-cdn.jtvnw.net/emoticons/v1/62836/1.0'
 }
-socket.on('chat message', function(msg) {
+socket.on('chat message', function (msg) {
   // setMessages([...messages, JSON.parse(msg)]);
   var msg = JSON.parse(msg)
   checkEmotes(msg)
 });
 
-const checkEmotes=(chatcontent)=>{
+const checkEmotes = (chatcontent) => {
   var user = chatcontent.user
   var text = chatcontent.text
   let div = document.getElementById('messageContainer')
   let li = document.createElement("li")
   var array = text.split(' ');
   li.append(`${user}: `)
-  array.forEach((word)=>{
+  array.forEach((word) => {
     if (word[0] === ':') {
       let img = document.createElement("img")
       var emote = word.split('').slice(1).join('')
@@ -290,45 +291,37 @@ const checkEmotes=(chatcontent)=>{
   document.getElementById('inputChat').value = '';
 }
 
-export default function Chat ({buttonStyle}) {
+export default function Chat({ chatHistory }) {
   const [chatContent, setChatContent] = useState('');
-  const [messages, setMessages] = useState([{user: '', text:'This is the end of the chat history'},
-]);
-
   const [text, setText] = useState('');
   const [user, setUser] = useState('MrJoel');
 
-  useEffect(()=>{
+  useEffect(() => {
     document.getElementById("inputChat")
-    .addEventListener("keyup", function(event) {
-      event.preventDefault();
-      if (event.keyCode === 13) {
-        document.getElementById("buttonChat").click();
-      }
-    });
+      .addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+          document.getElementById("buttonChat").click();
+        }
+      });
   }, [])
+  useEffect(() => {
+    chatHistory.forEach((msg) => {
+      checkEmotes(msg)
+    })
+  }, chatHistory)
 
-  const shuffleEmotes=()=>{
+  const shuffleEmotes = () => {
     var keysArray = Object.keys(emotesObj)
-    var randomKey = keysArray[Math.floor(Math.random()*keysArray.length)]
+    var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)]
     setChatContent(`${randomKey} :${randomKey}`)
     handleSubmit(null)
-    // let div = document.getElementById('messageContainer')
-    // let li = document.createElement("li")
-    // let img = document.createElement("img")
-    // var keysArray = Object.keys(emotesObj)
-    // var randomKey = keysArray[Math.floor(Math.random()*keysArray.length)]
-    // img.src = `${emotesObj[randomKey]}`
-    // img.height = "40"
-    // li.append(`${user}: :${randomKey}`)
-    // li.append(img)
-    // div.prepend(li)
-    }
-  const handleSubmit=(e)=>{
+  }
+  const handleSubmit = (e) => {
     if (e) {
       e.preventDefault();
     }
-    socket.emit('chat message', JSON.stringify({user: user, text: chatContent}));
+    socket.emit('chat message', JSON.stringify({ user: user, text: chatContent }));
   }
   var count = 0;
   return (
@@ -336,24 +329,63 @@ export default function Chat ({buttonStyle}) {
       <div className="chatContainer" >
         <div className="chatDiv" >
           <h1>Chat Room</h1>
-          <ul id="messageContainer" className="messageContainer" style={{width: '80%', borderStyle: 'solid', margin: '10px', float: 'left', overflowY:'scroll', overflow: 'scroll', height: '200px', fontSize: '18px', display: 'flex', flexDirection: 'column-reverse', listStyleType: 'none'
-        }}>
-            {messages.map((obj)=>{
-              return <li key={count+=1}>{obj.user}: {obj.text}</li>
-            })}
+          <ul id="messageContainer" className="messageContainer" style={{
+            width: '80%', borderStyle: 'solid', margin: '10px', float: 'left', overflowY: 'scroll', overflow: 'scroll', height: '200px', fontSize: '18px', display: 'flex', flexDirection: 'column-reverse', listStyleType: 'none'
+          }}>
           </ul>
-        <input id="inputChat" type="text" placeholder="New Message" style={{fontSize:'22px'}} onChange={(e)=>{setChatContent(e.target.value)}}></input>
-        <button id="buttonChat"style={{...buttonStyle, ...BSB}} onClick={(e)=>{
-          handleSubmit(e)
-        }}>Send</button>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Icon-round-Question_mark.svg/1024px-Icon-round-Question_mark.svg.png' height="30" onClick={()=>{
-          var emoteString = '';
-          for (var key in emotesObj) {
-            emoteString += `:${key}, `
-          }
-          alert(emoteString)
-        }}></img>
-          <img src='https://cdn-icons-png.flaticon.com/512/3580/3580329.png' height="30" onClick={()=>{shuffleEmotes()}}></img>
+          <input id="inputChat" type="text" placeholder="New Message" style={{ fontSize: '22px' }} onChange={(e) => { setChatContent(e.target.value) }}></input>
+          <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
+            mt: 3,
+            mb: 2,
+            width: 50,
+            height: 40,
+            borderRadius: 4,
+            backgroundColor: "secondary.main",
+            '&:hover': {
+              backgroundColor: 'primary.grey',
+            }
+          }}
+          onClick={(e) => {
+            handleSubmit(e)
+          }}>
+            Send
+          </Button>
+
+          <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
+            mt: 3,
+            mb: 2,
+            width: 70,
+            height: 40,
+            borderRadius: 4,
+            backgroundColor: "secondary.main",
+            '&:hover': {
+              backgroundColor: 'primary.grey',
+            }
+          }}
+          onClick={() => { shuffleEmotes() }}>
+            SHUFFLE
+          </Button>
+
+          <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
+            mt: 3,
+            mb: 2,
+            width: 40,
+            height: 40,
+            borderRadius: 4,
+            backgroundColor: "secondary.main",
+            '&:hover': {
+              backgroundColor: 'primary.grey',
+            }
+          }}
+          onClick={() => {
+            var emoteString = '';
+            for (var key in emotesObj) {
+              emoteString += `:${key}, `
+            }
+            alert(emoteString)
+          }}>
+            ?
+          </Button>
         </div>
       </div>
     </>

@@ -18,41 +18,19 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
-const buttonStyle = {
-  border: 'none',
-  color: 'white',
-  padding: '8px 20px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  fontSize: '16px',
-  margin: '4px 2px',
-  cursor: 'pointer',
+const sx = {
+  mt: 3,
+  mb: 2,
+  width: 150,
+  height: 50,
+  borderRadius: 4,
+  backgroundColor: "secondary.main",
+  '&:hover': {
+    backgroundColor: 'primary.grey',
+  }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle }) {
-  const [name, setName] = useState('MrJoel');
-  const [host, setHost] = useState(true);
-  const [connectedUsers, setConnectedUsers] = useState([{
-    name: 'Nathaniel',
-    title: 'The Brave',
-    avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-  },
-  {
-    name: 'Raymond',
-    title: 'The Wise',
-    avatar: 'https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png'
-  },
-  {
-    name: 'Matthew',
-    title: 'The Hell Raiser',
-    avatar: 'https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg'
-  },
-  {
-    name: 'Kim',
-    title: 'The Wizard',
-    avatar: 'https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png'
-  }])
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, name, host, connectedUsers }) {
   var count = 0;
   return (
     <>
@@ -62,61 +40,33 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
           <div className="sessionSettingsDiv" style={{ float: 'left', width: '70%', border: 'solid', margin: '10px' }}>
             <h1>Game code: 12345</h1>
             {host
-            ? <>
-            <h2>Choose Your Deck!</h2>
-            <CustomDeck gameState={gameState}
-              setPageView={setPageView}
-              customDecks={customDecks}
-              setSelectedCustomDeck={setSelectedCustomDeck}
-              setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
-            <h2>Rounds:
-              <input type="text"></input>
-            </h2>
-            <h2>Choosing Time:
-              <input type="text"></input> secs</h2>
+              ? <>
+                <h2>Choose Your Deck!</h2>
+                <CustomDeck gameState={gameState}
+                  setPageView={setPageView}
+                  customDecks={customDecks}
+                  setSelectedCustomDeck={setSelectedCustomDeck}
+                  setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
+                <h2>Rounds:
+                  <input type="text"></input>
+                </h2>
+                <h2>Choosing Time:
+                  <input type="text"></input> secs</h2>
               </>
-            : null
+              : null
             }
           </div>
           <div className="buttonsDiv" style={{ float: 'left', width: '20%', borderStyle: 'solid', margin: '10px' }}>
             {host ?
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 3,
-                mb: 2,
-                width: 150,
-                height: 50,
-                borderRadius: 4,
-                backgroundColor: "secondary.main",
-                '&:hover': {
-                  backgroundColor: 'primary.grey',
-                },
-              }}
-              onClick={()=>{
-                setPageView('PlayerView')
-              }}>
-              Start Game!
-            </Button>
-            : null}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 3,
-                mb: 2,
-                width: 150,
-                height: 50,
-                borderRadius: 4,
-                backgroundColor: "secondary.main",
-                '&:hover': {
-                  backgroundColor: 'primary.grey',
-                },
-              }}
-              onClick={()=>{
+              <Button type="submit" fullWidth variant="contained" sx={sx}
+                onClick={() => {
+                  setPageView('PlayerView')
+                }}>
+                Start Game!
+              </Button>
+              : null}
+            <Button type="submit" fullWidth variant="contained" sx={sx}
+              onClick={() => {
                 setPageView('HomePage')
               }}>
               Leave Game
@@ -129,20 +79,11 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             <Stack spacing={2}>
               {connectedUsers.map((userObj) => {
                 return (
-
-                  <AvatarChipPicking userInfo={userObj}/>
-                  // <Item key={count += 1}>
-                  //   <img src={`${userObj.avatar}`} height="50px"></img>
-                  //   <div style={{ display: 'inline-block' }}>{userObj.name}
-                  //     <div>
-                  //       {userObj.title}
-                  //     </div>
-                  //   </div>
-                  // </Item>
+                  <AvatarChipPicking userInfo={userObj} />
                 )
               })}
             </Stack>
-            <Chat buttonStyle={buttonStyle} />
+            <Chat chatHistory={chatHistory}/>
           </div>
         </div>
       </div>
