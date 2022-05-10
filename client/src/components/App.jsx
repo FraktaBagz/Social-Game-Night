@@ -142,8 +142,8 @@ export default function App() {
   if (!isLoggedIn) {
     return (
       <ThemeProvider theme={theme}>
-        {pageView === 'SignUp' ? <SignUpPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
-        {pageView === 'SignIn' ? <SignInPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} theme={theme} /> : null}
+        {pageView === 'SignUp' ? <SignUpPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} /> : null}
+        {pageView === 'SignIn' ? <SignInPage handleLogState={handleLogState} gameState={gameState} setPageView={setPageView} /> : null}
       </ThemeProvider>
     );
   }
@@ -162,12 +162,12 @@ export default function App() {
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
       {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView}/> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView}/> : null}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
-        setCustomDecktitle={setCustomDecktitle}/> : null}
+        setCustomDecktitle={setCustomDecktitle} /> : null}
       {pageView === 'CustomDeck' ? <CustomDeck
         gameState={gameState}
         setPageView={setPageView}
@@ -190,12 +190,32 @@ export default function App() {
         setCustomDecktitle={setCustomDecktitle} /> : null}
       {pageView === 'avatarExample' ?
         <div>
-          <AvatarChipPicking picking={true} /><br /><AvatarChipPicking picking={false} /><br /><AvatarChipWaiting /><br />
-          <PlayingCard type='question' info='question example' /><br />
-          <PlayingCard type='answer' info='answer example' />
+          <AvatarChipPicking userInfo={{
+            name: 'Nathaniel',
+            title: 'The Brave',
+            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+          }} picking={true} /><br /><AvatarChipPicking userInfo={{
+            name: 'Nathaniel',
+            title: 'The Brave',
+            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+          }} picking={false} /><br /><AvatarChipWaiting userInfo={{
+            name: 'Nathaniel',
+            title: 'The Brave',
+            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+          }} /><br />
+          <PlayingCard color='green' card={{}} /><br />
+          <PlayingCard color='red' card={{}} />
         </div>
         : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking /><br /><AvatarChipWaiting /></div> : null}
+      {pageView === 'avatarExample' ? <div><AvatarChipPicking userInfo={{
+        name: 'Bilbo Swaggins',
+        title: 'The Brave',
+        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+      }} /><br /><AvatarChipWaiting userInfo={{
+        name: 'Nathaniel',
+        title: 'The Brave',
+        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
+      }} /></div> : null}
       {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} /> : null}
     </ThemeProvider>
   )
