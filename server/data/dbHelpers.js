@@ -19,9 +19,3 @@ const getCollection = (collectionName) => {
       console.log(err);
     });
 };
-
-// // how to use getCollection example
-// getCollection('defaultRed')
-//   .then(redDeck => {
-//     console.log(redDeck);
-//   });

@@ -1,7 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { auth, db } from '../firebase.js';
-import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, updateProfile } from 'firebase/auth';
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import React, { useContext, useState, useEffect } from "react";
+import { auth, db } from "../firebase.js";
+import {
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInAnonymously,
+  updateProfile,
+} from "firebase/auth";
+import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -11,6 +17,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUserID, setCurrentUserID] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -20,19 +27,16 @@ export function AuthProvider({ children }) {
         setCurrentUserID(null);
       }
     });
-  }, [])
+  }, [user]);
 
-  function signUp(email, password, firstName, lastName) {
+  function signUp(email, password, name) {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         let user = userCredential.user;
 
-        return setDoc(doc(db, 'users', user.uid), {
-          displayName: firstName
-        })
-          .then(res => {
-
-          })
+        return setDoc(doc(db, "users", user.uid), {
+          displayName: name,
+        }).then((res) => {});
       })
       .catch((err) => {
         throw err;
@@ -40,10 +44,9 @@ export function AuthProvider({ children }) {
   }
 
   function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
-      .catch((err) => {
-        throw err;
-      });
+    return signInWithEmailAndPassword(auth, email, password).catch((err) => {
+      throw err;
+    });
   }
 
   function signInAsAnonymous(guestName) {
@@ -52,8 +55,8 @@ export function AuthProvider({ children }) {
         let anon = anonCredential.user;
 
         console.log(guestName);
-        return setDoc(doc(db, 'users', anon.uid), {
-          displayName: guestName
+        return setDoc(doc(db, "users", anon.uid), {
+          displayName: guestName,
         });
       })
       .catch((err) => {
