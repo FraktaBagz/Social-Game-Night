@@ -14,7 +14,8 @@ winner gets a point
 next round starts
 */
 
-const Game = require('./gameService');
+const { Game } = require('./gameService');
+const { getCollection } = require('../data/dbhelpers')
 
 function gameHandler(msg) {
   //each socket will emit a 'game action' to send an object to this function.
@@ -61,9 +62,12 @@ function gameHandler(msg) {
 };
 
 function newGame(msg) {
-  const { users, deck } = msg
+  msg = JSON.parse(msg)
+  let { users, deck } = msg
+  console.log(' new game with deck: ', deck)
   let game = new Game(users, deck);
+  console.log(game);
   return game;
 };
 
-exports = {newGame, gameHandler};
+module.exports = {newGame: newGame, gameHandler: gameHandler,};

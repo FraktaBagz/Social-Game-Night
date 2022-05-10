@@ -18,8 +18,6 @@ export default function SignInPage({ setPageView, handleLogState }) {
   const [isGuest, setIsGuest] = useState(false);
   const [guestName, setGuestName] = useState('')
 
-  console.log('User info: ', useAuth(), useAuth().displayName);
-
   const submitGuestName = (event) => {
     event.preventDefault();
     console.log('test')

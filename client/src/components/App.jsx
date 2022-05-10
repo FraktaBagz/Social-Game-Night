@@ -14,6 +14,9 @@ import Custom from './views/customdeck/Custom.jsx';
 import ViewCards from './views/customdeck/ViewCards.jsx';
 import PlayingCard from './views/common/PlayingCard.jsx';
 import Results from './views/results/Results.jsx';
+import { io } from "socket.io-client";
+const socket = io();
+
 
 /*
 black #2c2f3a
@@ -55,12 +58,16 @@ const customDecksSample =
   }
 }
 
+
+
 export default function App() {
-  const { signUp, currentUser, setCurrentUser } = useAuth();
+  //currentUser currently not getting defined
+  const { signUp, currentUser, setCurrentUser, getDeck } = useAuth();
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
-  const [defaultDeck, setDefaultDeck] = useState(['defaultDeck']);
+  //want to set the default deck from a db query
+  const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skips);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
@@ -70,9 +77,19 @@ export default function App() {
   });
   const [customDeckTitle, setCustomDecktitle] = useState('');
 
-  // useEffect(() => {
-  //   setPageView('SignIn');
-  // }, [])
+  useEffect(() => {
+    console.log('currentUser: ', currentUser);
+  }, [])
+
+  socket.on('new game', (gameObj) => {
+    gameObj = JSON.parse(gameObj);
+    setGameState(gameObj);
+  })
+
+  socket.on('game action', (gameObj) => {
+    gameObj = JSON.parse(gameObj);
+    setGameState(gameObj);
+  })
 
   function handleLogState() {
     if (isLoggedIn) {
@@ -93,6 +110,14 @@ export default function App() {
   //     setPageView('HomePage')
   //   }
   // }, [currentUser])
+
+  useEffect(() => {
+    getDeck()
+    .then((deck) => {
+      setDefaultDeck(deck)
+    })
+    .catch(e => console.log(e))
+  }, [])
 
   var handleSignUp = (event) => {
     event.preventDefault();
@@ -161,11 +186,12 @@ export default function App() {
       <button onClick={handleResults}>results</button>
       {/* {pageView === 'SignUp' ? <SignUpPage gameState={gameState} setPageView={setPageView} /> : null}
       {pageView === 'SignIn' ? <SignInPage gameState={gameState} setPageView={setPageView} /> : null} */}
-      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser} setPageView={setPageView} /> : null}
-      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} /> : null}
-      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'HomePage' ? <HomePage gameState={gameState} currentUser={currentUser} setCurrentUser={setCurrentUser}  handleLogState={handleLogState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'JudgeView' ? <JudgeView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
+      {pageView === 'PlayerView' ? <PlayerView gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
       {pageView === 'Lobby' ? <Lobby gameState={gameState} setPageView={setPageView} theme={theme}
         customDecks={customDecks}
+        defaultDeck={defaultDeck}
         setSelectedCustomDeck={setSelectedCustomDeck}
         setCustomDecktitle={setCustomDecktitle} /> : null}
       {pageView === 'CustomDeck' ? <CustomDeck
@@ -174,6 +200,7 @@ export default function App() {
         customDecks={customDecks}
         setSelectedCustomDeck={setSelectedCustomDeck}
         setCustomDecktitle={setCustomDecktitle}
+        theme={theme}
       /> : null}
       {pageView === 'Custom' ? <Custom
         gameState={gameState}
@@ -181,42 +208,22 @@ export default function App() {
         previousView={'Lobby'}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} /> : null}
+        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
       {pageView === 'ViewCards' ? <ViewCards
         gameState={gameState}
         setPageView={setPageView}
         selectedCustomDeck={selectedCustomDeck}
         customDeckTitle={customDeckTitle}
-        setCustomDecktitle={setCustomDecktitle} /> : null}
+        setCustomDecktitle={setCustomDecktitle} theme={theme}/> : null}
       {pageView === 'avatarExample' ?
         <div>
-          <AvatarChipPicking userInfo={{
-            name: 'Nathaniel',
-            title: 'The Brave',
-            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-          }} picking={true} /><br /><AvatarChipPicking userInfo={{
-            name: 'Nathaniel',
-            title: 'The Brave',
-            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-          }} picking={false} /><br /><AvatarChipWaiting userInfo={{
-            name: 'Nathaniel',
-            title: 'The Brave',
-            avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-          }} /><br />
-          <PlayingCard color='green' card={{}} /><br />
-          <PlayingCard color='red' card={{}} />
+          <AvatarChipPicking picking={true} theme={theme}/><br /><AvatarChipPicking picking={false} theme={theme}/><br /><AvatarChipWaiting theme={theme}/><br />
+          <PlayingCard type='question' info='question example' theme={theme}/><br />
+          <PlayingCard type='answer' info='answer example' theme={theme}/>
         </div>
         : null}
-      {pageView === 'avatarExample' ? <div><AvatarChipPicking userInfo={{
-        name: 'Bilbo Swaggins',
-        title: 'The Brave',
-        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-      }} /><br /><AvatarChipWaiting userInfo={{
-        name: 'Nathaniel',
-        title: 'The Brave',
-        avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
-      }} /></div> : null}
-      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} /> : null}
+      {pageView === 'avatarExample' ? <div><AvatarChipPicking theme={theme}/><br /><AvatarChipWaiting theme={theme}/></div> : null}
+      {pageView === 'results' ? <Results gameState={gameState} setPageView={setPageView} theme={theme}/> : null}
     </ThemeProvider>
   )
 }

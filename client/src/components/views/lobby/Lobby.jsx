@@ -54,6 +54,18 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
     avatar: 'https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png'
   }])
   var count = 0;
+
+  function createGame(users, deck) {
+    socket.emit('new game', JSON.stringify({users: users, deck: deck}))
+  }
+
+  socket.on('join game', (msg) => {
+    console.log('new player entered room')
+    msg = JSON.parse(msg);
+    console.log(msg)
+    setConnectedUsers([...connectedUsers, msg.user])
+  })
+
   return (
     <>
       <div className="lobbyContainer">
@@ -96,7 +108,8 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                 },
               }}
               onClick={()=>{
-                setPageView('PlayerView')
+                createGame(connectedUsers, defaultDeck);
+                setPageView('PlayerView');
               }}>
               Start Game!
             </Button>
