@@ -32,26 +32,33 @@ export function AuthProvider({ children }) {
   }, []);
 
   function signUp(email, password, name) {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        let user = userCredential.user;
+    return setPersistence(auth, inMemoryPersistence)
+    .then(() => {
+      return createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          let user = userCredential.user;
 
-        return setDoc(doc(db, "users", user.uid), {
-          name: name,
-          UID: user.uid,
-          avatar: '',
-          title: '',
-        });
-      })
+          return setDoc(doc(db, "users", user.uid), {
+            name: name,
+            UID: user.uid,
+            avatar: '',
+            title: '',
+          });
+        })
+    })
       .catch((err) => {
         throw err;
       });
   }
 
   function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password).catch((err) => {
-      throw err;
-    });
+    return setPersistence(auth, inMemoryPersistence)
+      .then(() => {
+        return signInWithEmailAndPassword(auth, email, password)
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 
   function signInAsAnonymous(guestName) {

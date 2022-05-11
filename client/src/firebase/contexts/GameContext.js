@@ -77,7 +77,7 @@ export function GameProvider({ children }) {
     let deckRef = doc(db, userId, deckName);
 
     if (color === 'green') {
-      setDoc(deckRef, {
+      updateDoc(deckRef, {
         greenCard: arrayRemove(card),
       })
         .catch((err) => {
