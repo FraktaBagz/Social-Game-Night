@@ -199,7 +199,7 @@ export default function App() {
   return (
     <>
       <Navbar handleViewClick={handleViewClick} />
-      <button onClick={handleViewClick} value='SignUp'>SignUp</button>
+      {/* <button onClick={handleViewClick} value='SignUp'>SignUp</button>
       <button onClick={handleViewClick} value='SignIn'>SignIn</button>
       <button onClick={handleViewClick} value='HomePage'>HomePage</button>
       <button onClick={handleViewClick} value='JudgeView'>JudgeView</button>
@@ -208,7 +208,7 @@ export default function App() {
       <button onClick={handleViewClick} value='LobbyRestyle'>LobbyRestyle</button>
       <button onClick={handleViewClick} value='CustomDeck'>CustomDeck</button>
       <button onClick={handleViewClick} value='avatarExample'>avatarExample</button>
-      <button onClick={handleViewClick} value='results'>results</button>
+      <button onClick={handleViewClick} value='results'>results</button> */}
       {pageView === "HomePage" ? (
         <HomePage
           gameState={gameState}
