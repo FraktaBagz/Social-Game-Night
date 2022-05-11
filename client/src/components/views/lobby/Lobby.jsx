@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Chat from '../chat/Chat.jsx'
 import { AvatarChipWaiting, AvatarChipPicking } from '../common/AvatarChips.jsx';
+import AvatarList from '../common/AvatarList.jsx';
 import CustomDeck from '../customdeck/CustomDeck.jsx';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -36,14 +37,15 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
   useEffect(() => {
 
   })
-
+  var count = 0;
   return (
     <>
       <div className="lobbyContainer">
         <div className="lobbyDiv" style={{ float: 'left', width: '60%', borderStyle: 'solid', margin: '10px' }}>
           <h2>Welcome to the Lobby</h2>
           <div className="sessionSettingsDiv" style={{ float: 'left', width: '70%', border: 'solid', margin: '10px' }}>
-            <h1>Game code: 12345</h1>
+            <AvatarList/>
+            <h1>Game code: -----</h1>
             {host
               ? <>
                 <h2>Choose Your Deck!</h2>
@@ -84,8 +86,9 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
           <div className="playerListDiv">
             <Stack spacing={2}>
               {connectedUsers.map((userObj) => {
+                console.log('exec')
                 return (
-                  <AvatarChipPicking user={userObj} />
+                  <AvatarChipPicking key={count+=1}user={userObj} />
                 )
               })}
             </Stack>
