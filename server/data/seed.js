@@ -8,6 +8,10 @@ const {
   setDoc,
   doc,
   getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  deleteDoc,
 } = require("firebase/firestore");
 
 // seed initial data

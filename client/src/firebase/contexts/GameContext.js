@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth, db } from '../firebase.js';
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, updateProfile } from 'firebase/auth';
-import { collection, doc, setDoc, getDocs, getDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from 'firebase/firestore';
 
 const GameContext = React.createContext();
 
@@ -10,19 +10,6 @@ export function useGame() {
 }
 
 export function GameProvider({ children }) {
-  // const [currentUser, setCurrentUser] = useState(null);
-
-  // function getUser(currentUserID) {
-  //   return getDoc(doc(db, 'users', currentUserID))
-  //     // .then((client) => {
-  //     //   setCurrentUser(client.data());
-  //     // })
-  //     .catch((err) => {
-  //       // console.log(err);
-  //       throw err;
-  //     })
-  // }
-
   function getDeck(deck, uid) {
     let redContainer = [];
     let greenContainer = [];

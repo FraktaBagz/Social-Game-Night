@@ -305,11 +305,11 @@ export default function Chat({ chatHistory, setChatHistory }) {
         }
       });
   }, [])
-  // useEffect(() => {
-  //   chatHistory.forEach((msg) => {
-  //     checkEmotes(msg)
-  //   })
-  // }, chatHistory)
+  useEffect(() => {
+    chatHistory.forEach((msg) => {
+      checkEmotes(msg)
+    })
+  }, chatHistory)
 
   const shuffleEmotes = () => {
     var keysArray = Object.keys(emotesObj)

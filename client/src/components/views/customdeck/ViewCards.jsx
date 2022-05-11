@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import PlayingCard from '../common/PlayingCard.jsx';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -14,7 +15,9 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function ViewCards({ setPageView, selectedCustomDeck }) {
+export default function ViewCards({
+  gameState, setPageView, selectedCustomDeck, customDeckTitle, setCustomDecktitle
+}) {
   const decks = Object.keys(selectedCustomDeck);
   const deckName = decks[0]
   const deck = selectedCustomDeck[deckName]
@@ -27,7 +30,7 @@ export default function ViewCards({ setPageView, selectedCustomDeck }) {
   return (
     <Container >
       <div>AllCards in deck</div>
-      <div onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</div>
+      {/* <div onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</div> */}
       <h1>{deckName}</h1>
       <div>Questions</div>
       <div>
@@ -35,7 +38,12 @@ export default function ViewCards({ setPageView, selectedCustomDeck }) {
           {deck.questions.map((question, key) => (
             <div key={key}>
               <div onClick={() => (deletecard('question', question))}>X</div>
-              <Item >{question}</Item>
+              <Item >{question.label}</Item>
+              <PlayingCard color="green" card={{
+                label: 'some prompt',
+                extra: '(ridiculous, senseless, foolish) ',
+                sets: 'default green',
+              }} />
             </div>
           ))}
         </Stack>
@@ -46,7 +54,12 @@ export default function ViewCards({ setPageView, selectedCustomDeck }) {
           {deck.answers.map((answer, key) => (
             <div key={key}>
               <div onClick={() => (deletecard('answer', answer))}>X</div>
-              <Item>{answer}</Item>
+              <Item>{answer.label}</Item>
+              <PlayingCard color="red" card={{
+                label: 'some prompt',
+                extra: '(ridiculous, senseless, foolish) ',
+                sets: 'default green',
+              }} />
             </div>
           ))}
         </Stack>
