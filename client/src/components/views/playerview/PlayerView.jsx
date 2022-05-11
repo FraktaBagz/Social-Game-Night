@@ -14,7 +14,7 @@ import { styled } from '@mui/material/styles';
 import { io } from "socket.io-client";
 const socket = io();
 
-export default function PlayerView({ gameState, connectedUsers, chatHistory, setChatHistory, customDecksSample }) {
+export default function PlayerView({ gameState, connectedUsers, chatHistory, setChatHistory, customDecksSample, currentUser }) {
 
   // this.gameState.userInformation[user.UID] = {
   //   cards: [],
@@ -62,7 +62,7 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
             <Grid item xs={12}>
               {/* Judge avatar */}
               <AvatarChipPicking userInfo={{
-                //this can come from 
+                //this can come from
                 name: 'Nathaniel',
                 title: 'Judge',
                 avatar: 'https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png'
@@ -78,7 +78,7 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
                 e.preventDefault();
                 //answer is whatever card that gets clicked on
                 console.log(answer);
-
+                socket.emit('game action', JSON.stringify({action: 'play card', game: gameState, user: currentUser, card: answer}))
               }}/>
             )}
           </Stack>

@@ -28,7 +28,7 @@ let Game = function (users, deck) {
 
   this.drawRandomCard = (deckArray) => {
     let randomIndex = Math.floor((deckArray.length - 0.0000001) * Math.random())
-    return deckArray.splice(randomIndex, 1);
+    return deckArray.splice(randomIndex, 1)[0];
   }
 
   this.startRound = () => {

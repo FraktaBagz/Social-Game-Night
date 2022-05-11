@@ -31,7 +31,6 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
 
   function createGame(users, deck) {
     socket.emit('new game', JSON.stringify({users: connectedUsers, deck: defaultDeck}));
-    socket.emit('new round');
   }
 
   useEffect(() => {
