@@ -18,7 +18,7 @@ const buttonStyle = {
   cursor: 'pointer',
 }
 
-export default function Results ({ winner, chatHistory, setChatHistory }) {
+export default function Results ({ winner, chatHistory, setChatHistory, currentUser, setCurrentUser }) {
 
   return (
     <div>
@@ -30,7 +30,13 @@ export default function Results ({ winner, chatHistory, setChatHistory }) {
           <i>IS THE WINNER!!!</i>
         </Typography>
       </div>
-      <Chat buttonStyle={buttonStyle} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
+      <Chat
+        buttonStyle={buttonStyle}
+        chatHistory={chatHistory}
+        setChatHistory={setChatHistory}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+      />
     </div>
   );
 }
