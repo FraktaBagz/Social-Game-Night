@@ -51,24 +51,11 @@ export default function PlayerView({
 
   };
 
-  // this.gameState.userInformation[user.UID] = {
-  //   cards: [],
-  //   points: 0,
-  // }
-  // let currentUser = {
-  //   name: "Raymond",
-  //   title: "The Wise",
-  //   avatar:
-  //     "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
-  // };
-
-
-  // useEffect(() => {
-  //   console.log("currentUser: ", currentUser);
-  //   console.log("gameState: ", gameState);
-  //   console.log("connectedUsers: ", connectedUsers);
-  // }, []);
-
+  useEffect(() => {
+    console.log("currentUser: ", currentUser);
+    console.log("gameState: ", gameState);
+    console.log("connectedUsers: ", connectedUsers);
+  }, []);
 
   useEffect(() => {
     if (gameState.gameState) {
@@ -80,10 +67,8 @@ export default function PlayerView({
       }
   }, [gameState]);
 
+  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
 
-
-  //isJudge = true/false if you are the judge
-  //judging = true/false if all answers have been submitted
   let playField;
   if (isJudge) {
     if (judging) {
@@ -101,7 +86,6 @@ export default function PlayerView({
             {gameState.gameState ? gameState.gameState.userInformation[currentUser.name].cards.map((answer) =>
               <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
                 e.preventDefault();
-                //answer is whatever card that gets clicked on
                 console.log(answer);
                 setSelected(answer)
               }}/>
