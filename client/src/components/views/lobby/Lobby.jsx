@@ -30,12 +30,8 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
   var count = 0;
 
   function createGame() {
-    socket.emit('new game', JSON.stringify({users: connectedUsers, deck: defaultDeck}));
+    socket.emit('new game', JSON.stringify({ users: connectedUsers, deck: defaultDeck }));
   }
-
-  useEffect(() => {
-
-  })
 
   return (
     <>
@@ -74,17 +70,18 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             </Button>
           </div>
         </div>
-        <div className="playerListContainer" style={{ float: 'left', width: '30%', borderStyle: 'solid', margin: '10px' }}>
+        <div className="playerListContainer">
+          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} />
+          <hr />
           <h2>Players Connected</h2>
           <div className="playerListDiv">
             <Stack spacing={2}>
-              {connectedUsers.map((userObj) => {
+              {connectedUsers.length ? connectedUsers.map((userObj) => {
                 return (
                   <AvatarChipPicking user={userObj} />
                 )
-              })}
+              }) : 'Waiting...'}
             </Stack>
-            <Chat chatHistory={chatHistory} setChatHistory={setChatHistory}/>
           </div>
         </div>
       </div>

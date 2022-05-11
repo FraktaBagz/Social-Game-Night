@@ -105,7 +105,7 @@ const dummyWinners = [
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck } = useGame();
-  const [pageView, setPageView] = useState('HomePage');
+  const [pageView, setPageView] = useState('Lobby');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
@@ -161,7 +161,7 @@ export default function App() {
 
   useEffect(() => {
     console.log("currentUser: ", currentUser);
-    if(currentUser) {
+    if (currentUser) {
       console.log("currentUser Name: ", currentUser.name);
       console.log("currentUser ID: ", currentUser.UID);
     }
@@ -201,21 +201,21 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    console.log('calling get deck');
-    getDeck('default', 'default')
-      .then((deck) => {
-        console.log('deck', deck);
-        if (deck.greenCard) {
-          deck['questions'] = deck['greenCard'];
-          deck['answers'] = deck['redCard'];
-          delete deck['greenCard'];
-          delete deck['redCard'];
-        }
-        setDefaultDeck(deck);
-      })
-      .catch((e) => console.log(e));
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   console.log('calling get deck');
+  //   getDeck('default', 'default')
+  //     .then((deck) => {
+  //       console.log('deck', deck);
+  //       if (deck.greenCard) {
+  //         deck['questions'] = deck['greenCard'];
+  //         deck['answers'] = deck['redCard'];
+  //         delete deck['greenCard'];
+  //         delete deck['redCard'];
+  //       }
+  //       setDefaultDeck(deck);
+  //     })
+  //     .catch((e) => console.log(e));
+  // }, [isLoggedIn]);
 
   var handleViewClick = (view) => {
     // e.preventDefault();
@@ -245,7 +245,7 @@ export default function App() {
 
   return (
     <>
-      <Navbar handleViewClick={handleViewClick} />
+      <Navbar handleViewClick={handleViewClick} pageView={pageView} />
       {/* <button onClick={handleViewClick} value='SignUp'>SignUp</button>
       <button onClick={handleViewClick} value='SignIn'>SignIn</button>
       <button onClick={handleViewClick} value='HomePage'>HomePage</button>

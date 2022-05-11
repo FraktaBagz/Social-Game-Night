@@ -33,3 +33,63 @@
     top: 70%;
   }
 }
+
+/* lobby styles */
+.playerListContainer {
+  margin: 0;
+  padding: 20px;
+  width: 400px;
+  position: fixed;
+  right: 0;
+  display: block;
+  height: 100%;
+  overflow: auto;
+  background-color: #EA9E48;
+  color: white;
+}
+
+/* chat styles */
+.messageContainer {
+  background-color: white;
+  color: black;
+  margin: 0;
+  padding: 20px;
+  border-style: solid;
+  border-width: 0.8px;
+  border-color: #CED4DA;
+  overflow: scroll;
+  height: 200px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column-reverse;
+  list-style: none;
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.messageContainer::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
+.chat-input input {
+  border-radius: 0;
+}
+
+.chat-input button {
+  border-radius: 0;
+  background-color: #E95D70;
+  color: white;
+  border: none;
+}
+
+.chat-input button:hover {
+  background-color: #2C2F39;
+}
+
+.chat-emote-btn Button {
+  width: 100%;
+  margin: 15px 0 15px 0;
+}
