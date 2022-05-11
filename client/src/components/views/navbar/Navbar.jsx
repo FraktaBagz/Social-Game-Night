@@ -4,7 +4,7 @@ const Navbar = ({ handleViewClick, pageView }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand" onClick={() => handleViewClick("HomePage")}><strong>Apples to Oranges</strong></a>
+        <a className="navbar-brand" onClick={() => handleViewClick("HomePage")}><strong><span className="apples-logo">Apples</span> <span className="to-logo">to</span> <span className="oranges-logo">Oranges</span></strong></a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
