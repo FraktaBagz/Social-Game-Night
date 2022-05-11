@@ -20,7 +20,8 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
 
   // if (Object.keys(customDecks).length <= 0) {
   // }
-  const deckNames = Object.keys(customDecks);
+  console.log(customDecks);
+  // const deckNames = Object.keys(customDecks);
   const [decks, setDecks] = useState(deckNames);
 
   // should pass already customized decks in format below and send custom deck to database. with a post if deck doesn't exist or put request if deck exists already.
