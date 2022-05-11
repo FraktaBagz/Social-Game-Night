@@ -16,11 +16,10 @@ import { useGame } from "../../../firebase/contexts/GameContext.js";
 
 export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView, currentUserUID }) {
   const { addToCustomDeck, removeFromCustomDeck } = useGame();
-  const [customAnswer, setCustomAnswer] = useState('');
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(customDeckTitle);
   const [cardTypeCust, setCardTypeCust] = useState('green')
-  const [newCard, setNewCard] = useState('');
+  const [newLabel, setnewLabel] = useState('');
   const [newExtras, setNewExtras] = useState('');
   const [createButton, setCreateButton] = useState(false);
 
@@ -33,7 +32,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
           <Typography variant="h4">
             <Box sx={{ fontStyle: 'italic', m: 1 }}>Title</Box></Typography>
           : <Typography variant="h4">{customDeckTitle}</Typography>}
-        <Button variant="outlined" onClick={() => (setEditTitle(true))}>edit</Button>
+        {/* <Button variant="outlined" onClick={() => (setEditTitle(true))}>edit</Button> */}
       </Box>
       :
       <Box>
@@ -76,7 +75,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
       {createButton
         ?
         <>
-          <div>{newCard}</div>
+          <div>{newLabel}</div>
         </>
         :
         <>
@@ -87,7 +86,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
             defaultValue=""
             size="small"
             onChange={(e) => (
-              setNewCard(e.target.value)
+              setnewLabel(e.target.value)
             )}
           />
         </>
@@ -100,7 +99,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
       {createButton
         ?
         <>
-          <div>{newCard}</div>
+          <div>{newLabel}</div>
         </>
         :
         <>
@@ -129,7 +128,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
         :
         <>
           <Button variant="" onClick={() => (
-            newCard.length > 0 ? (createCard(currentUserUID, newTitle, { label: newCard, extra: '', sets: newTitle }, cardTypeCust),
+            newLabel.length > 0 ? (createCard(currentUserUID, newTitle, { label: newLabel, extra: newExtras, sets: newTitle }, cardTypeCust),
               setCreateButton(true)) : null
           )}>create card <AddIcon /></Button>
         </>
@@ -137,19 +136,23 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
     </Box>
   )
 
-  // const createNewCardButton = () => (
-  //   <Box>
-  //     {createButton
-  //       ?
-  //       <>
-  //         <Button variant="" onClick={() => (
-  //         )}>Create New Card!<AddIcon /></Button>
-  //       </>
-  //       : null
-  //     }
-  //   </Box>
-  // )
-  
+  const createnewLabelButton = () => (
+    <Box>
+      {createButton
+        ?
+        <>
+          <Button variant="" onClick={() => (
+            setCreateButton(false),
+            setNewTitle(customDeckTitle),
+            setnewLabel(''),
+            setNewExtras('')
+          )}>Create New Card!<AddIcon /></Button>
+        </>
+        : null
+      }
+    </Box>
+  )
+
   const createCard = (userId, deckName, card, color) => {
     console.log(userId, deckName, card, color)
     // addToCustomDeck(userId, deckName, card, color)
@@ -176,6 +179,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
               }} />
               {createExtrasFunc()}
               {createButtonFunc()}
+              {createnewLabelButton()}
             </Paper>
           </Box>
         </Grid>

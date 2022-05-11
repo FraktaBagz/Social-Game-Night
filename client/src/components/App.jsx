@@ -182,8 +182,6 @@ export default function App() {
   //     .catch((e) => console.log(e));
   // }, []);
 
-
-
   var handleViewClick = (e) => {
     e.preventDefault();
     setPageView(e.target.value);
