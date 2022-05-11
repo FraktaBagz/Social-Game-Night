@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import SignUpPage from "./views/signup/SignUp.jsx";
-import SignInPage from "./views/signin/SignIn.jsx";
 import { useAuth } from "../firebase/contexts/AuthContext.js";
 import { auth } from "../firebase/firebase.js";
 import { useGame } from "../firebase/contexts/GameContext.js";
+import SignUpPage from "./views/signup/SignUp.jsx";
+import SignInPage from "./views/signin/SignIn.jsx";
+import Navbar from "./views/navbar/Navbar.jsx";
 import HomePage from "./views/homepage/HomePage.jsx";
 import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";
@@ -80,8 +81,8 @@ const customUserInfo = {
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck } = useGame();
-  const [pageView, setPageView] = useState('SignIn');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [pageView, setPageView] = useState('HomePage');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skips);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
@@ -197,6 +198,7 @@ export default function App() {
 
   return (
     <>
+      <Navbar />
       <button onClick={handleViewClick} value='SignUp'>SignUp</button>
       <button onClick={handleViewClick} value='SignIn'>SignIn</button>
       <button onClick={handleViewClick} value='HomePage'>HomePage</button>
