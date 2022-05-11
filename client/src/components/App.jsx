@@ -131,7 +131,7 @@ export default function App() {
   });
   const [deletedCard, setDeletedCard] = useState(false);
   const [postCard, setPostCard] = useState(false);
-  const [customDeckTitle, setCustomDecktitle] = useState("");
+  const [customDeckTitle, setCustomDeckTitle] = useState("");
   const [chatHistory, setChatHistory] = useState([
     { user: "Bot", text: "This is the beginning of the chat history" },
   ]);
@@ -221,7 +221,7 @@ export default function App() {
     console.log('calling get custom decks');
     if (currentUser) {
       console.log(currentUser.UID)
-      getDecks('1234')
+      getDecks(currentUser.UID)
         .then((usersCustomDecks) => {
           console.log('custom deck', usersCustomDecks);
           setCustomDecks(usersCustomDecks);
@@ -311,7 +311,7 @@ export default function App() {
           customDecks={customDecks}
           defaultDeck={defaultDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
         />
@@ -328,7 +328,7 @@ export default function App() {
           customDecks={customDecks}
           defaultDeck={defaultDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
         />
       ) : null}
       {pageView === "CustomDeck" ? (
@@ -337,7 +337,8 @@ export default function App() {
           setPageView={setPageView}
           customDecks={customDecks}
           setSelectedCustomDeck={setSelectedCustomDeck}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
+          currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "Custom" ? (
@@ -345,9 +346,10 @@ export default function App() {
           gameState={gameState}
           setPageView={setPageView}
           previousView={"Lobby"}
+          setSelectedCustomDeck={setSelectedCustomDeck}
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
           currentUserUID={currentUser.UID}
           setDeletedCard={setDeletedCard}
           setPostCard={setPostCard}
@@ -361,7 +363,7 @@ export default function App() {
           setPageView={setPageView}
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
           currentUserUID={currentUser.UID}
           setDeletedCard={setDeletedCard}
           setPostCard={setPostCard}

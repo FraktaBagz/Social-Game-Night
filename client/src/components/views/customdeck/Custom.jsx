@@ -14,8 +14,8 @@ import PlayingCard from '../common/PlayingCard.jsx';
 
 import { useGame } from "../../../firebase/contexts/GameContext.js";
 
-export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView, currentUserUID, setDeletedCard, setPostCard }) {
-  const { addToCustomDeck } = useGame();
+export default function Custom({ gameState, setSelectedCustomDeck, selectedCustomDeck, setPageView, customDeckTitle, setCustomDeckTitle, previousView, currentUserUID, setDeletedCard, setPostCard }) {
+  const { addToCustomDeck, getDeck } = useGame();
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(customDeckTitle);
   const [cardTypeCust, setCardTypeCust] = useState('green')
@@ -27,10 +27,10 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
     !editTitle
       ?
       <Box>
-        {customDeckTitle.length <= 0
+        {customDeckTitle.length === 0
           ?
           <Typography variant="h4">
-            <Box sx={{ fontStyle: 'italic', m: 1 }}>Title</Box></Typography>
+            <Box sx={{ fontStyle: 'italic', m: 1 }}>{customDeckTitle}</Box></Typography>
           : <Typography variant="h4">{customDeckTitle}</Typography>}
         {/* <Button variant="outlined" onClick={() => (setEditTitle(true))}>edit</Button> */}
       </Box>
@@ -46,7 +46,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
           )}
         />
         <br></br>
-        <Button variant="outlined" onClick={() => (setEditTitle(false), setCustomDecktitle(newTitle))}>save</Button>
+        <Button variant="outlined" onClick={() => (setEditTitle(false), setCustomDeckTitle(newTitle))}>save</Button>
       </Box>
   )
 
@@ -155,15 +155,15 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
 
   const createCard = (userId, deckName, card, color) => {
     console.log(userId, deckName, card, color)
-    addToCustomDeck('1234', deckName, card, color)
+    addToCustomDeck(userId, deckName, card, color)
       .then(() => (
         setPostCard(true),
         console.log('card created')))
       .then(() => (
-        getDeck(deckName, '1234')
+        getDeck(deckName, userId)
           .then((getdeck) => {
-            console.log('getting custom deck after card posting')
-            setSelectedCustomDeck(getdeck)
+            console.log('getting custom deck after card posting', getdeck)
+            setSelectedCustomDeck({ [deckName]: getdeck })
           })
           .catch((e) => (
             console.log(e)
@@ -176,7 +176,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
 
   return (
     <Container>
-      <Button variant="outlined" onClick={() => (setPageView(`${previousView}`), setCustomDecktitle(''))}>back to {previousView} page</Button>
+      <Button variant="outlined" onClick={() => (setPageView(`${previousView}`), setCustomDeckTitle(''))}>back to {previousView} page</Button>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Box>
@@ -201,7 +201,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
               setPageView={setPageView}
               selectedCustomDeck={selectedCustomDeck}
               customDeckTitle={customDeckTitle}
-              setCustomDecktitle={setCustomDecktitle}
+              setCustomDeckTitle={setCustomDeckTitle}
               currentUserUID={currentUserUID}
               setDeletedCard={setDeletedCard}
               setPostCard={setPostCard}

@@ -18,7 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ViewCards({
-  gameState, setPageView, selectedCustomDeck, customDeckTitle, setCustomDecktitle, currentUserUID,
+  gameState, setPageView, selectedCustomDeck, customDeckTitle, setCustomDeckTitle, currentUserUID,
   setDeletedCard,
   setPostCard,
   deletedCard,
@@ -29,20 +29,23 @@ export default function ViewCards({
   const deckName = decks[0]
   const [deck, setDeck] = useState(selectedCustomDeck[deckName])
 
-  // useEffect(() => {
-  //   setDeck(selectedCustomDeck)
-  // }, [selectedCustomDeck])
+  useEffect(() => {
+    setDeck(selectedCustomDeck[deckName])
+    // console.log('deck', deck)
+    // console.log('selectedrefreshdeck', selectedCustomDeck)
+    // console.log('selectedrefreshdeckname', selectedCustomDeck[deckName])
+  }, [selectedCustomDeck])
 
 
   const deletecard = (userId, deckName, card, color) => {
-    removeFromCustomDeck('1234', deckName, card, color)
+    removeFromCustomDeck(userId, deckName, card, color)
       .then(() => (
         setDeletedCard(true),
         console.log('card deleted')),
       )
       .then(() => (
         console.log('refreshing custom deck'),
-        getDeck(deckName, '1234')
+        getDeck(deckName, userId)
           .then((getdeck) => {
             console.log('getting custom deck after card deleted')
             setDeck(getdeck)

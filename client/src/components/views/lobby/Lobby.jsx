@@ -27,7 +27,7 @@ const sx = {
   }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck, currentUser, setCurrentUser }) {
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDeckTitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck, currentUser, setCurrentUser }) {
   var count = 0;
 
   function createGame() {
@@ -50,7 +50,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                   setPageView={setPageView}
                   customDecks={customDecks}
                   setSelectedCustomDeck={setSelectedCustomDeck}
-                  setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
+                  setCustomDeckTitle={setCustomDeckTitle} previousView={'Lobby'} />
               </>
               : null
             }
