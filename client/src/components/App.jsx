@@ -280,6 +280,7 @@ export default function App() {
           chatHistory={chatHistory}
           setChatHistory={setChatHistory}
           currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
         />
       ) : null}
       {pageView === "Lobby" ? (
@@ -295,6 +296,8 @@ export default function App() {
           defaultDeck={defaultDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
           setCustomDecktitle={setCustomDecktitle}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
         />
       ) : null}
       {pageView === "LobbyRestyle" ? (
@@ -356,7 +359,15 @@ export default function App() {
         </div>
       ) : null}
       {pageView === "results" ? (
-        <Results gameState={gameState} setPageView={setPageView} winner={dummyWinners} chatHistory={chatHistory} setChatHistory={setChatHistory} />
+        <Results
+          gameState={gameState}
+          setPageView={setPageView}
+          winner={dummyWinners}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+        />
       ) : null}
     </>
   );
