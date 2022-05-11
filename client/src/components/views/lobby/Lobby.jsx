@@ -52,11 +52,6 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                   customDecks={customDecks}
                   setSelectedCustomDeck={setSelectedCustomDeck}
                   setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
-                <h2>Rounds:
-                  <input type="text"></input>
-                </h2>
-                <h2>Choosing Time:
-                  <input type="text"></input> secs</h2>
               </>
               : null
             }
