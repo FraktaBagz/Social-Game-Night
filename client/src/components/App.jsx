@@ -82,7 +82,6 @@ export default function App() {
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
-  //want to set the default deck from a db query
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skips);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
@@ -130,8 +129,15 @@ export default function App() {
 
   socket.on("new game", (gameObj) => {
     gameObj = JSON.parse(gameObj);
-    setGameState(gameObj);
+    socket.emit('game action', JSON.stringify({ action: 'new round', game: gameObj }))
   });
+
+  socket.on('join game', (msg) => {
+    console.log('new player entered room')
+    msg = JSON.parse(msg);
+    console.log(msg)
+    setConnectedUsers([...connectedUsers, msg.user])
+  })
 
   socket.on("game action", (gameObj) => {
     gameObj = JSON.parse(gameObj);
@@ -153,13 +159,14 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    // getDeck()
-    //   .then((deck) => {
-    //     setDefaultDeck(deck);
-    //   })
-    //   .catch((e) => console.log(e));
-  }, []);
+  // useEffect(() => {
+  //   console.log('calling get deck');
+  //   getDeck()
+  //     .then((deck) => {
+  //       setDefaultDeck(deck);
+  //     })
+  //     .catch((e) => console.log(e));
+  // }, []);
 
   var handleSignUp = (event) => {
     event.preventDefault();
@@ -245,6 +252,8 @@ export default function App() {
           setCurrentUser={setCurrentUser}
           handleLogState={handleLogState}
           setPageView={setPageView}
+          connectedUsers={connectedUsers}
+          setConnectedUsers={setConnectedUsers}
         />
       ) : null}
       {pageView === "JudgeView" ? (
@@ -261,6 +270,7 @@ export default function App() {
           connectedUsers={connectedUsers}
           chatHistory={chatHistory}
           setChatHistory={setChatHistory}
+          currentUser={currentUser}
         />
       ) : null}
       {pageView === "Lobby" ? (
