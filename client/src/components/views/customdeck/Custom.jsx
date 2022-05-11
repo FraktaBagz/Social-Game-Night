@@ -9,13 +9,14 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import AddIcon from '@mui/icons-material/Add';
-import ViewCards from './ViewCards.jsx'
+import ViewCards from './ViewCards.jsx';
+import PlayingCard from '../common/PlayingCard.jsx';
 
 
 export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView }) {
   const [customAnswer, setCustomAnswer] = useState('');
   const [editTitle, setEditTitle] = useState(false);
-  const [newTitle, setNewTitle] = useState('');
+  const [newTitle, setNewTitle] = useState(customDeckTitle);
   const [cardTypeCust, setCardTypeCust] = useState('green')
   const [newCard, setNewCard] = useState('');
   const [createButton, setCreateButton] = useState(false);
@@ -69,37 +70,51 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
           </Stack>
         }
       </Box>
-
-      <Box>
-        {createButton
-          ?
-          <>
-            <div>{newCard}</div>
-            <div>created!</div>
-          </>
-          :
-          <>
-            <TextField
-              required
-              id="outlined-required"
-              label={"NEW " + cardTypeCust}
-              defaultValue=""
-              onChange={(e) => (
-                setNewCard(e.target.value)
-              )}
-            />
-            <br></br>
-            <Button variant="" onClick={() => (
-              newCard.length > 0 ? (createCard(cardTypeCust, newCard),
-                setCreateButton(true)) : null
-            )}>create card <AddIcon /></Button>
-          </>
-        }
-      </Box>
-
     </Box>
   )
 
+  const createPromptFunc = () => (
+    <Box>
+      {createButton
+        ?
+        <>
+          <div>{newCard}</div>
+        </>
+        :
+        <>
+          <TextField
+            required
+            id="outlined-required"
+            label={"NEW " + cardTypeCust}
+            defaultValue=""
+            size="small"
+            onChange={(e) => (
+              setNewCard(e.target.value)
+            )}
+          />
+        </>
+      }
+    </Box>
+
+  )
+
+  const createButtonFunc = () => (
+    <Box>
+      {createButton
+        ?
+        <>
+          <div>created!</div>
+        </>
+        :
+        <>
+          <Button variant="" onClick={() => (
+            newCard.length > 0 ? (createCard(cardTypeCust, newCard),
+              setCreateButton(true)) : null
+          )}>create card <AddIcon /></Button>
+        </>
+      }
+    </Box>
+  )
   const createCard = (type, message) => {
     // put request to add specific card to users deck depending on what cardtype it is
   }
@@ -114,6 +129,12 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
             <Paper elevation={(5)}>
               {editTitleFunc()}
               {addCardFunc()}
+              <PlayingCard color={cardTypeCust} card={{
+                label: createPromptFunc(),
+                extra: '(ridiculous, senseless, foolish) ',
+                sets: newTitle,
+              }} />
+              {createButtonFunc()}
             </Paper>
           </Box>
         </Grid>

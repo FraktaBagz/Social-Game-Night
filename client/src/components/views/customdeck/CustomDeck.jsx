@@ -17,9 +17,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDecktitle, previousView }) {
-
-  // if (Object.keys(customDecks).length <= 0) {
-  // }
   const deckNames = Object.keys(customDecks);
   const [decks, setDecks] = useState(deckNames);
 
