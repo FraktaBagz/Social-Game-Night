@@ -170,9 +170,9 @@ export default function App() {
   //     .catch((e) => console.log(e));
   // }, []);
 
-  var handleViewClick = (e) => {
-    e.preventDefault();
-    setPageView(e.target.value);
+  var handleViewClick = (view) => {
+    // e.preventDefault();
+    setPageView(view);
   };
 
   if (!isLoggedIn) {
@@ -198,7 +198,7 @@ export default function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar handleViewClick={handleViewClick} />
       <button onClick={handleViewClick} value='SignUp'>SignUp</button>
       <button onClick={handleViewClick} value='SignIn'>SignIn</button>
       <button onClick={handleViewClick} value='HomePage'>HomePage</button>

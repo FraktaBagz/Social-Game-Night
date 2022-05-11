@@ -1,3 +1,13 @@
+/* signup/login styles */
 .link:hover {
-  cursor: pointer !important;
+  cursor: pointer;
+}
+
+/* navbar styles */
+.navbar-brand:hover {
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  cursor: pointer;
 }
