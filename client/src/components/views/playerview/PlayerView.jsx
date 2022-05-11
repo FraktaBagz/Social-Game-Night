@@ -29,7 +29,11 @@ export default function PlayerView({
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
-  const [hasPicked, setHasPicked] = useState(false)
+  const [hasPicked, setHasPicked] = useState(false);
+
+  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+
+
 
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
@@ -58,20 +62,25 @@ export default function PlayerView({
   //     "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
   // };
 
-  useEffect(() => {
-    console.log("currentUser: ", currentUser);
-    console.log("gameState: ", gameState);
-    console.log("connectedUsers: ", connectedUsers);
-  }, []);
+
+  // useEffect(() => {
+  //   console.log("currentUser: ", currentUser);
+  //   console.log("gameState: ", gameState);
+  //   console.log("connectedUsers: ", connectedUsers);
+  // }, []);
+
 
   useEffect(() => {
-    if (gameState.judgeIndex && connectedUsers[gameState.judgeIndex].name === currentUser.name) {
-      setIsJudge(true);
-    }
+    if (gameState.gameState) {
+        const judge = gameState.users[gameState.gameState.judgeIndex];
+        console.log('judge', judge.name, 'currentUser', currentUser.name)
+        if (currentUser.name === judge.name) {
+          setIsJudge(true)
+        }
+      }
   }, [gameState]);
 
 
-  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
 
   //isJudge = true/false if you are the judge
   //judging = true/false if all answers have been submitted
