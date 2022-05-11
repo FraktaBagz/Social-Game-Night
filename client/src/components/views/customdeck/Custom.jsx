@@ -14,8 +14,8 @@ import PlayingCard from '../common/PlayingCard.jsx';
 
 import { useGame } from "../../../firebase/contexts/GameContext.js";
 
-export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView, currentUserUID }) {
-  const { addToCustomDeck} = useGame();
+export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView, currentUserUID, setDeletedCard, setPostCard }) {
+  const { addToCustomDeck } = useGame();
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(customDeckTitle);
   const [cardTypeCust, setCardTypeCust] = useState('green')
@@ -155,9 +155,9 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
 
   const createCard = (userId, deckName, card, color) => {
     console.log(userId, deckName, card, color)
-    // addToCustomDeck(userId, deckName, card, color)
-    //   .then(() => (console.log('card created')))
-    //   .catch((e) => (console.log(e)));
+    addToCustomDeck('1234', deckName, card, color)
+      .then(() => (console.log('card created')))
+      .catch((e) => (console.log(e)));
     // expected format: userId, deckName, card, color
     // put request to add specific card to users deck depending on what cardtype it is
   }
@@ -184,7 +184,16 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
         </Grid>
         <Grid item xs={8}>
           <Box>
-            <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} customDeckTitle={customDeckTitle} setCustomDecktitle={setCustomDecktitle}  currentUserUID={currentUserUID}/>
+            <ViewCards
+              gameState={gameState}
+              setPageView={setPageView}
+              selectedCustomDeck={selectedCustomDeck}
+              customDeckTitle={customDeckTitle}
+              setCustomDecktitle={setCustomDecktitle}
+              currentUserUID={currentUserUID}
+              setDeletedCard={setDeletedCard}
+              setPostCard={setPostCard}
+            />
           </Box>
         </Grid>
       </Grid>

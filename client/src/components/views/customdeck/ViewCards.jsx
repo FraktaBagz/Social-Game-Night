@@ -26,7 +26,7 @@ export default function ViewCards({
   const deck = selectedCustomDeck[deckName]
 
   const deletecard = (userId, deckName, card, color) => {
-    // removeFromCustomDeck(userId, deckName, card, color)
+    // removeFromCustomDeck('1234', deckName, card, color)
     //   .then(() => (console.log('card deleted')))
     //   .catch((e) => (console.log(e)));
 
@@ -34,43 +34,67 @@ export default function ViewCards({
 
     console.log(currentUserUID)
     console.log('delete', userId, deckName, card, color)
+    console.log('userid:', typeof (userId))
+    console.log('deckname:', typeof (deckName))
+    console.log('card:', typeof (card))
+    console.log('color:', typeof (color))
   }
 
   return (
-    <Container >
+    <Container
+      maxWidth="sm"
+    >
       <div>AllCards in deck</div>
       {/* <div onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</div> */}
       <h1>{deckName}</h1>
       <div>Questions</div>
       <div>
         <Stack direction="row" spacing={2}>
-          {deck.questions.map((question, key) => (
-            <div key={key}>
-              <div onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: question.label, extra: question.extra, sets: question.sets }, 'green'))}>X</div>
-              <Item >{question.label}</Item>
-              <PlayingCard color="green" card={{
-                label: question.label,
-                extra: question.extra,
-                sets: question.sets,
-              }} />
-            </div>
-          ))}
+          {deck.greenCard.length > 0
+            ?
+            deck.greenCard.map((question, key) => (
+              <div key={key}>
+                <div onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: question.label, extra: question.extra, sets: question.sets }, 'green'))}>X</div>
+                <Item >{question.label}</Item>
+                <PlayingCard color="green" card={{
+                  label: question.label,
+                  extra: question.extra,
+                  sets: question.sets,
+                }} />
+              </div>
+            ))
+            :
+            <PlayingCard color="green" card={{
+              label: 'label',
+              extra: 'extra',
+              sets: 'sets',
+            }} />
+          }
         </Stack>
       </div>
       <div>Answers</div>
       <div>
         <Stack direction="row" spacing={2}>
-          {deck.answers.map((answer, key) => (
-            <div key={key}>
-              <div onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: answer.label, extra: answer.extra, sets: answer.sets }, 'red'))}>X</div>
-              <Item>{answer.label}</Item>
-              <PlayingCard color="red" card={{
-                label: answer.label,
-                extra: answer.extra,
-                sets: answer.sets,
-              }} />
-            </div>
-          ))}
+          {deck.redCard.length > 0
+            ?
+            deck.redCard.map((answer, key) => (
+              <div key={key}>
+                <div onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: answer.label, extra: answer.extra, sets: answer.sets }, 'red'))}>X</div>
+                <Item>{answer.label}</Item>
+                <PlayingCard color="red" card={{
+                  label: answer.label,
+                  extra: answer.extra,
+                  sets: answer.sets,
+                }} />
+              </div>
+            ))
+            :
+            <PlayingCard color="red" card={{
+              label: 'label',
+              extra: 'extra',
+              sets: 'sets',
+            }} />
+          }
         </Stack>
       </div>
     </Container>
