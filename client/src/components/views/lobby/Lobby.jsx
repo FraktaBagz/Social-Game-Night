@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { motion } from 'framer-motion';
 import { io } from "socket.io-client";
 const socket = io();
 
@@ -18,6 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
+
 const sx = {
   mt: 3, mb: 2, width: 150, height: 50, borderRadius: 4,
   backgroundColor: "secondary.main",
@@ -29,45 +31,69 @@ const sx = {
 export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck }) {
   var count = 0;
 
+  const [gameCode, setGameCode] = useState('12345');
+
   function createGame() {
     socket.emit('new game', JSON.stringify({ users: connectedUsers, deck: defaultDeck }));
+  }
+
+  function handleCodeClick() {
+    navigator.clipboard.writeText(gameCode)
+      .then(() => {
+        alert('Copied game code to clipboard: ' + gameCode);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
     <>
       <div className="lobbyContainer">
-        <div className="lobbyDiv" style={{ float: 'left', width: '60%', borderStyle: 'solid', margin: '10px' }}>
-          <h2>Welcome to the Lobby</h2>
-          <div className="sessionSettingsDiv" style={{ float: 'left', width: '70%', border: 'solid', margin: '10px' }}>
-            <h1>Game code: 12345</h1>
+        <div className="lobbyDiv">
+          <h1 className="welcome"><strong>Welcome to the Lobby!</strong></h1>
+          <div className="sessionSettingsDiv">
+            <div className="game-code">
+              <h3 onClick={handleCodeClick}>Game code: 12345</h3>
+              <p><strong>click to copy</strong></p>
+            </div>
             {host
-              ? <>
-                <h2>Choose Your Deck!</h2>
+              ? <div>
                 <CustomDeck gameState={gameState}
                   setPageView={setPageView}
                   customDecks={customDecks}
                   setSelectedCustomDeck={setSelectedCustomDeck}
                   setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
-              </>
+              </div>
               : null
             }
           </div>
-          <div className="buttonsDiv" style={{ float: 'left', width: '20%', borderStyle: 'solid', margin: '10px' }}>
+          <div className="buttonsDiv">
             {host ?
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 1 }}
+              >
+                <Button type="submit" fullWidth variant="contained" sx={sx}
+                  onClick={() => {
+                    createGame();
+                    setPageView('PlayerView');
+                  }}>
+                  Start Game!
+                </Button>
+              </motion.div>
+              : null}
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 1 }}
+            >
               <Button type="submit" fullWidth variant="contained" sx={sx}
                 onClick={() => {
-                  createGame();
-                  setPageView('PlayerView')
+                  setPageView('HomePage')
                 }}>
-                Start Game!
+                Leave Game
               </Button>
-              : null}
-            <Button type="submit" fullWidth variant="contained" sx={sx}
-              onClick={() => {
-                setPageView('HomePage')
-              }}>
-              Leave Game
-            </Button>
+            </motion.div>
           </div>
         </div>
         <div className="playerListContainer">
