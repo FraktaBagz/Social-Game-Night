@@ -13,7 +13,7 @@ const { newGame, gameHandler } = require('./gameService/gameHandlers.js')
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 io.on('connection', (socket) => {
-  console.log('user connected');
+  // console.log('user connected');
 
   socket.on('chat message', (msg, room) => {
     console.log('emitting message', msg)
@@ -23,10 +23,11 @@ io.on('connection', (socket) => {
   //when the server gets a 'game action' message, it will send the given obj to be processed by a game logic handler in the handlers file
   //it will always only return a game object
   socket.on('game action', (msg) => {
-    io.emit('game action', gameHandler(msg))
+    io.emit('game action', JSON.stringify(gameHandler(msg)))
   })
 
   socket.on('new game', (msg) => {
+    console.log('new game');
     io.emit('new game', JSON.stringify(newGame(msg)))
   })
 

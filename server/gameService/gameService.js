@@ -10,19 +10,18 @@ let Lobby = function (host) {
 }
 
 let Game = function (users, deck) {
-  this.users = users;
+  this.users = users; //[{UID: 'dfiunn4nuiq5', name: kieran, avatar: 'someURL'}]
   this.deck = deck;
   this.gameState = {
       currentDeck: deck, // {questions: [], answers: []}
       judgeIndex: 0,
-      // judge: this.users[this.gameState.judgeIndex],
+      // judge: this.users[this.judgeIndex].name,
       judging: false,
-      userInformation: { //UID: {cards: [], points:0}
-      },
-      questionCard: null,
+      userInformation: {}, //UID: {cards: [], points:0}
+      questionCard: null, //{label: 'string', extra: 'lala', set: 'lala'}
       hasPicked: [], // do we need this?
       submittedCards: [], // [playerid, cardIndex]
-      finished: true,
+      finished: false,
       winner: null,
   }
 
@@ -116,13 +115,13 @@ let Game = function (users, deck) {
 
   users.map((user) => { // change to fit identifiers that we end up using
     // gives each user points for specific information
-    this.gameState.userInformation[user.UID] = {
+    this.gameState.userInformation[user.name] = {
       cards: [],
       points: 0,
     }
     // give each player 6 cards -- 7th card is picked up on first round.
     for (let i = 0; i < 6; i++) {
-      this.gameState.userInformation[user.UID].cards.push(this.drawRandomCard(this.gameState.currentDeck.answers))
+      this.gameState.userInformation[user.name].cards.push(this.drawRandomCard(this.gameState.currentDeck.answers))
     }
   })
 

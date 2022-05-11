@@ -17,18 +17,25 @@ next round starts
 const { Game } = require('./gameService');
 const { getCollection } = require('../data/dbHelpers')
 
+drawRandomCard = (deckArray) => {
+  let randomIndex = Math.floor((deckArray.length - 0.0000001) * Math.random())
+  return deckArray.splice(randomIndex, 1)[0];
+}
+
 function gameHandler(msg) {
   //each socket will emit a 'game action' to send an object to this function.
   //each object must have an 'action' and 'game' property
   //depending on the action, it might also need a user and card property
-  const { action, game, user, card } = msg
-  const { gameState: { currentDeck, judgeIndex, judge, judging, userInformation, questionCard, submittedCards, finished, winner }, users, drawRandomCard } = game
+  msg = JSON.parse(msg);
+  console.log('game action msg', msg);
+  const { action, game, user, card } = msg;
+  const { gameState: { currentDeck, judgeIndex, judge, judging, userInformation, questionCard, submittedCards, finished, winner }, users, } = game;
 
   //start a round
   //everyone draws a card
   if (action === 'new round') {
     users.forEach((user) => {
-      game.gameState.userInformation[user.UID].cards.push(drawRandomCard(currentDeck.answers))
+      game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
     })
     //the question card is drawn
     game.gameState.questionCard = drawRandomCard(currentDeck.questions)
@@ -36,17 +43,19 @@ function gameHandler(msg) {
   //each user will play a card, we add that card to submittedCards, when submitted cards length is = to # of players - judge, change judging to true
   if (action === 'play card') {
     //find index of played card in hand
-    let indexInHand = userInformation[user.UID].cards.indexOf(card);
+    let indexInHand = userInformation[user.name].cards.indexOf(card);
     //removed played card from hand
     //add played card to submitted cards
-    const submission = [user.UID, game.gameState.userInformation[user.UID].cards.splice(indexInHand, 1)];
+    const submission = [user.name, game.gameState.userInformation[user.name].cards.splice(indexInHand, 1)];
+    console.log(submission)
+
     game.gameState.submittedCards.push(submission);
     console.log(`${submission[0]}, has played ${submission[1]}`)
     //set judging to true
     if (game.gameState.submittedCards.length === users.length -1) {
       game.gameState.judging = true;
+      console.log('all players have submitted cards, judging will commence')
     }
-    console.log('all players have submitted cards, judging will commence')
   }
 
   //judge chooses a card,
@@ -64,9 +73,13 @@ function gameHandler(msg) {
 function newGame(msg) {
   msg = JSON.parse(msg)
   let { users, deck } = msg
-  console.log(' new game with deck: ', deck)
   let game = new Game(users, deck);
-  console.log(game);
+
+  users.forEach((user) => {
+    game.gameState.userInformation[user.name].cards.push(drawRandomCard(game.gameState.currentDeck.answers))
+  });
+  //the question card is drawn
+  game.gameState.questionCard = drawRandomCard(game.gameState.currentDeck.questions);
   return game;
 };
 

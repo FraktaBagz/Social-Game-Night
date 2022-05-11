@@ -26,18 +26,15 @@ const sx = {
   }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers }) {
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck }) {
   var count = 0;
 
-  function createGame(users, deck) {
-    socket.emit('new game', JSON.stringify({users: users, deck: deck}))
+  function createGame() {
+    socket.emit('new game', JSON.stringify({users: connectedUsers, deck: defaultDeck}));
   }
 
-  socket.on('join game', (msg) => {
-    console.log('new player entered room')
-    msg = JSON.parse(msg);
-    console.log(msg)
-    setConnectedUsers([...connectedUsers, msg.user])
+  useEffect(() => {
+
   })
 
   return (
@@ -55,11 +52,6 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                   customDecks={customDecks}
                   setSelectedCustomDeck={setSelectedCustomDeck}
                   setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
-                <h2>Rounds:
-                  <input type="text"></input>
-                </h2>
-                <h2>Choosing Time:
-                  <input type="text"></input> secs</h2>
               </>
               : null
             }
@@ -68,7 +60,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             {host ?
               <Button type="submit" fullWidth variant="contained" sx={sx}
                 onClick={() => {
-                  createGame(connectedUsers, defaultDeck);
+                  createGame();
                   setPageView('PlayerView')
                 }}>
                 Start Game!
