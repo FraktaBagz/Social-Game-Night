@@ -130,7 +130,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                     // setJoiningGame(true);
                     setPageView('Lobby')
                     console.log('joining game')
-                    socket.emit('join game', JSON.stringify({ user: currentUser.displayName }))
+                    socket.emit('join game', JSON.stringify({ user: currentUser }))
                   }}
                   //later it should be just 'currentUser'
                   fullWidth
