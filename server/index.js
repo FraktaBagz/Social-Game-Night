@@ -47,6 +47,31 @@ io.on('connection', (socket) => {
     io.emit('update connected users', JSON.stringify(connectedUsers))
   })
 
+  socket.on('disconnect', (msg) => {
+    console.log('user disconnected, requesting current users...')
+    connectedUsers = [];
+    io.emit('request current users')
+  });
+
+  socket.on('request current users2', (msg)=>{
+    msg = JSON.parse(msg);
+    console.log('msg', msg);
+    var flag = true;
+    if (msg !== null) {
+      connectedUsers.forEach((user, index)=>{
+        if (user !== null) {
+          if (user.name === msg.name) {
+            flag=false
+          }
+        }
+      })
+      if (flag) {
+        connectedUsers.push(msg)
+        io.emit('update connected users2', JSON.stringify(connectedUsers))
+      }
+    }
+  })
+
   // socket.on('update connected users', (msg)=>{
   //   console.log('Updating connected users...', msg)
   //   io.emit('update connected users', msg)
@@ -58,9 +83,6 @@ io.on('connection', (socket) => {
   //   //io emit connected users
   // })
 
-  socket.on('disconnect', (msg) => {
-    console.log('user disconnected')
-  });
   //to join a new room, we will need to have a username and room
   //user can come from the react context and the room will have to be explicitly declared in a text box or something.
   socket.on('joinRoom', ({ user, room }) => {
