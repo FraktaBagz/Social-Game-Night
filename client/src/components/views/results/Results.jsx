@@ -18,17 +18,19 @@ const buttonStyle = {
   cursor: 'pointer',
 }
 
-export default function Results ({ user, chatHistory, setChatHistory }) {
+export default function Results ({ winner, chatHistory, setChatHistory }) {
 
   return (
     <div>
       <div>
-        <AvatarChipWaiting user={user}/>
+        {winner.map(eachWinner => {
+          return <AvatarChipWaiting user={eachWinner}/>
+        })}
         <Typography variant='subtitle1'>
           <i>IS THE WINNER!!!</i>
         </Typography>
       </div>
       <Chat buttonStyle={buttonStyle} chatHistory={chatHistory} setChatHistory={setChatHistory}/>
     </div>
-  )
+  );
 }

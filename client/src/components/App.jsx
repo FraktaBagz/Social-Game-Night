@@ -77,6 +77,30 @@ const customUserInfo = {
     "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
 };
 
+const dummyWinner = [
+  {
+    name: "Nathaniel",
+    title: "The Brave",
+    avatar:
+      "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
+  }
+];
+
+const dummyWinners = [
+  {
+    name: "Nathaniel",
+    title: "The Brave",
+    avatar:
+      "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
+  },
+  {
+    name: "Raymond",
+    title: "The Wise",
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
+  }
+];
+
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck } = useGame();
@@ -316,7 +340,7 @@ export default function App() {
         </div>
       ) : null}
       {pageView === "results" ? (
-        <Results gameState={gameState} setPageView={setPageView} user={customUserInfo} chatHistory={chatHistory} setChatHistory={setChatHistory} />
+        <Results gameState={gameState} setPageView={setPageView} winner={dummyWinners} chatHistory={chatHistory} setChatHistory={setChatHistory} />
       ) : null}
     </>
   );
