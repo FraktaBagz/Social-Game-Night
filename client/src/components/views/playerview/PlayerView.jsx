@@ -73,7 +73,7 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
         {/* ---------------------------- MIDDLE -------------------------------- */}
         <Grid item xs={6}>
           <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: 'wrap' }}>
-            {customDecksSample.skips.answers.map((answer) =>
+            {gameState.gameState.userInformation[currentUser].cards.map((answer) =>
               <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
                 e.preventDefault();
                 //answer is whatever card that gets clicked on

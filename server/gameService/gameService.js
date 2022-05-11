@@ -22,7 +22,7 @@ let Game = function (users, deck) {
       questionCard: null,
       hasPicked: [], // do we need this?
       submittedCards: [], // [playerid, cardIndex]
-      finished: true,
+      finished: false,
       winner: null,
   }
 
