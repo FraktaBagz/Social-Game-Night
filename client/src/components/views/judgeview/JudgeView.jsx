@@ -81,11 +81,11 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
             <>
               {isJudge ? (
                 <>
-                  <Typography>{`WINNER IS: ${selectedUser.name}`}</Typography>
+                  <Typography variant="h5">{`WINNER IS: ${selectedUser.name}`}</Typography>
                   <Button onClick={handleNextRound}>Start Next Round</Button>
                 </>
               ) : (
-                <Typography>{`WINNER IS: ${selectedUser.name}`}</Typography>
+                <Typography variant="h5">{`WINNER IS: ${selectedUser.name}`}</Typography>
               )}
             </>
           )}
