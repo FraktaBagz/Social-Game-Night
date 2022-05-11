@@ -15,27 +15,45 @@ import { io } from "socket.io-client";
 const socket = io();
 
 
-export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState }) {
+export default function HomePage({ currentUser , setCurrentUser, setPageView, theme, handleLogState, setConnectedUsers, connectedUsers }) {
   const handleLogOut = (e) => {
     e.preventDefault();
-    // setCurrentUser({});
     setPageView('SignIn');
     handleLogState();
   }
 
-  const [joiningGame, setJoiningGame] = useState(false)
+  // const [joiningGame, setJoiningGame] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const joinGameWithCode = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget)
-    console.log(data.get('joinCode'));
-    //Add logic here to verify the code
-    //then switch view using setPageView('') to the lobby
-  }
+  // const joinGameWithCode = (e) => {
+  //   e.preventDefault();
+  //   const data = new FormData(e.currentTarget)
+  //   console.log(data.get('joinCode'));
+  //   //Add logic here to verify the code
+  //   //then switch view using setPageView('') to the lobby
+  // }
 
   useEffect(() => {
-    console.log(currentUser)
-  }, [currentUser])
+    // getUser(currentUserID)
+    //   .then((user) => {
+    //     setCurrentUser(user.data());
+    //     setIsLoaded(true);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    console.log('here in homepage', currentUser)
+
+    setIsLoaded(true);
+  }, [currentUser]);
+
+  if (!isLoaded) {
+    return (
+      <div>
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <>
@@ -113,7 +131,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                       Avatar
                     </Typography>
                     <Typography component="h1" variant="h5">
-                      {currentUser ? currentUser.displayName : 'display name'}
+                      {currentUser ? currentUser.name : 'Display Name'}
                     </Typography>
                     <Button sx={{ color: "#000000" }} onClick={handleLogOut}>
                       LOG OUT
@@ -139,7 +157,9 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   whileTap={{ scale: 1 }}
                 >
                   <Button
-                    onClick={() => { setPageView('Lobby') }}
+                    onClick={() => {
+                      setPageView('Lobby')
+                      setConnectedUsers([...connectedUsers, currentUser]) }}
                     value="user"
                     fullWidth
                     variant="contained"
@@ -167,9 +187,11 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   <Button
                     // type="submit"
                     onClick={() => {
-                      setJoiningGame(true);
-                      console.log( currentUser );
-                      socket.emit('join game', JSON.stringify({user: 'Mr Kieran'})) }} //need to get currentUser defined here
+                      // setJoiningGame(true);
+                      setPageView('Lobby')
+                      console.log('joining game')
+                      socket.emit('join game', JSON.stringify({ user: currentUser.displayName })) }}
+                      //later it should be just 'currentUser'
                     fullWidth
                     variant="contained"
                     sx={{
@@ -188,7 +210,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   </Button>
                 </motion.div>
               </Grid>
-              {
+              {/* {
                 joiningGame ?
                   <Grid item xs={12} sm={6}>
                     <Box component="form" noValidate onSubmit={joinGameWithCode}>
@@ -230,7 +252,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                                   backgroundColor: 'primary.grey',
                                 },
                               }}
-                              onClick={(e)=>{
+                              onClick={(e) => {
                                 socket.emit('join game')
                               }}
                             >
@@ -242,7 +264,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                     </Box>
                   </Grid>
                   : <></>
-              }
+              } */}
             </Grid>
           </Grid>
           {/* -------------------------------------------------------------------------------- */}
