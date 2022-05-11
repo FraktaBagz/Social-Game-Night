@@ -30,8 +30,6 @@ const sx = {
 }
 
 export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck, currentUser, setCurrentUser }) {
-  var count = 0;
-
   const [gameCode, setGameCode] = useState('12345');
 
   function createGame() {
@@ -108,9 +106,9 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
           <h2>Players Connected</h2>
           <div className="playerListDiv">
             <Stack spacing={2}>
-              {connectedUsers.length ? connectedUsers.map((userObj) => {
+              {connectedUsers.length ? connectedUsers.map((userObj, i) => {
                 return (
-                  <AvatarChipPicking key={count += 1} user={userObj} />
+                  <AvatarChipPicking key={i} user={userObj} />
                 )
               }) : 'Waiting...'}
             </Stack>

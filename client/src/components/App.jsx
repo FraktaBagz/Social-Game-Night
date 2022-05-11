@@ -105,8 +105,8 @@ const dummyWinners = [
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck } = useGame();
-  const [pageView, setPageView] = useState('Lobby');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [pageView, setPageView] = useState('SignIn');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
@@ -160,16 +160,16 @@ export default function App() {
   //   }
   // }, [connectedUsers])
 
-  socket.on('update connected users', (msg)=>{
+  socket.on('update connected users', (msg) => {
     msg = JSON.parse(msg)
     console.log('the master user list:', msg)
     // if ((msg.length !== connectedUsers.length) && !host) {
     //   console.log('166')
-      setConnectedUsers(msg)
+    setConnectedUsers(msg)
     // }
   })
 
-  socket.on('set host', ()=>{
+  socket.on('set host', () => {
     setHost(true)
   })
 
