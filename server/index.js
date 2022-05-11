@@ -11,9 +11,18 @@ const { newGame, gameHandler } = require('./gameService/gameHandlers.js')
 // });
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
+var count = 0;
+var connectedUsers = [];
 
 io.on('connection', (socket) => {
   // console.log('user connected');
+  if (count === 0) {
+    console.log('Host is set')
+    count+=1;
+    setTimeout(()=>{
+      io.emit('set host')
+    }, 1000)
+  }
 
   socket.on('chat message', (msg, room) => {
     console.log('emitting message', msg)
@@ -33,8 +42,21 @@ io.on('connection', (socket) => {
 
   socket.on('join game', (msg) => {
     console.log('msg', msg);
-    io.emit('join game', msg)
+    msg = JSON.parse(msg);
+    connectedUsers.push(msg.user)
+    io.emit('update connected users', JSON.stringify(connectedUsers))
   })
+
+  // socket.on('update connected users', (msg)=>{
+  //   console.log('Updating connected users...', msg)
+  //   io.emit('update connected users', msg)
+  // })
+
+  // socket.on('join game', (msg) => {
+  //   //see who joined
+  //   //add the person to connected users array
+  //   //io emit connected users
+  // })
 
   socket.on('disconnect', () => {
     console.log('user disconnected');

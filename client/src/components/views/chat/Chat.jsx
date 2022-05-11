@@ -291,10 +291,10 @@ const checkEmotes = (chatcontent) => {
   document.getElementById('inputChat').value = '';
 }
 
-export default function Chat({ chatHistory, setChatHistory }) {
+export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   const [chatContent, setChatContent] = useState('');
   const [text, setText] = useState('');
-  const [user, setUser] = useState('MrJoel');
+  const [user, setUser] = useState(currentUser.name);
 
   useEffect(() => {
     document.getElementById("inputChat")

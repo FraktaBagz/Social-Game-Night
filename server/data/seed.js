@@ -1,6 +1,6 @@
 const { defaultGreen } = require("./defaultGreen.js");
 const { defaultRed } = require("./defaultRed.js");
-const db = require("../firebase/firebase.js");
+const {db} = require("../firebase/firebase.js");
 const {
   getFirestore,
   collection,

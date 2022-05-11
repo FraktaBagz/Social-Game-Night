@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Chat from '../chat/Chat.jsx'
 import { AvatarChipWaiting, AvatarChipPicking } from '../common/AvatarChips.jsx';
+import AvatarList from '../common/AvatarList.jsx';
 import CustomDeck from '../customdeck/CustomDeck.jsx';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -28,7 +29,7 @@ const sx = {
   }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck }) {
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck, currentUser, setCurrentUser }) {
   var count = 0;
 
   const [gameCode, setGameCode] = useState('12345');
@@ -97,20 +98,25 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
           </div>
         </div>
         <div className="playerListContainer">
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} />
+          <Chat
+            chatHistory={chatHistory}
+            setChatHistory={setChatHistory}
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+          />
           <hr />
           <h2>Players Connected</h2>
           <div className="playerListDiv">
             <Stack spacing={2}>
               {connectedUsers.length ? connectedUsers.map((userObj) => {
                 return (
-                  <AvatarChipPicking user={userObj} />
+                  <AvatarChipPicking key={count += 1} user={userObj} />
                 )
               }) : 'Waiting...'}
             </Stack>
-          </div>
-        </div>
-      </div>
+          </div >
+        </div >
+      </div >
     </>
   )
 }
