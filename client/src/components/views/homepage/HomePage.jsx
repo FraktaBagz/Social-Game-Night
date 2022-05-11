@@ -159,7 +159,8 @@ export default function HomePage({ currentUser , setCurrentUser, setPageView, th
                   <Button
                     onClick={() => {
                       setPageView('Lobby')
-                      setConnectedUsers([...connectedUsers, currentUser]) }}
+                      console.log('joining game')
+                      socket.emit('join game', JSON.stringify({ user: currentUser })) }}
                     value="user"
                     fullWidth
                     variant="contained"
