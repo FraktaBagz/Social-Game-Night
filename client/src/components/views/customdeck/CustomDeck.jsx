@@ -17,9 +17,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDecktitle, previousView }) {
-
-  // if (Object.keys(customDecks).length <= 0) {
-  // }
   const deckNames = Object.keys(customDecks);
   const [decks, setDecks] = useState(deckNames);
 
@@ -67,7 +64,7 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               onClick={() => (
                 setSelectedCustomDeck({ [deck]: customDecks[deck] }),
                 setCustomDecktitle(deck)
-                )}>{deck}'s
+              )}>{deck}'s
             </Item>
             <span>Total Cards: {(customDecks[deck].questions).length + (customDecks[deck].answers).length}</span>
             <Button type="submit"
@@ -87,12 +84,27 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                 setPageView('Custom'),
                 setSelectedCustomDeck({ [deck]: customDecks[deck] }),
                 setCustomDecktitle(deck)
-                )}>Edit
+              )}>Edit
             </Button>
           </div>
         ))}
-        <Item onClick={() => (setPageView('Custom'), setCustomDecktitle(''), setSelectedCustomDeck({ 'title here': {questions:['question here'], answers:['answer here']}}))}>+</Item>
-    </Stack>
+        <Item onClick={() => (setPageView('Custom'), setCustomDecktitle(''), setSelectedCustomDeck({
+          'title here': {
+            questions: [
+              {
+                label: 'some prompt',
+                extra: '(ridiculous, senseless, foolish) ',
+                sets: 'default green',
+              }
+
+            ], answers: [{
+              label: 'some prompt',
+              extra: '(ridiculous, senseless, foolish) ',
+              sets: 'default green',
+            }]
+          }
+        }))}>+</Item>
+      </Stack>
     </Container >
   )
 }

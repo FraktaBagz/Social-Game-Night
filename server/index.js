@@ -13,7 +13,7 @@ const { newGame, gameHandler } = require('./gameService/gameHandlers.js')
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 
 io.on('connection', (socket) => {
-  console.log('user connected');
+  // console.log('user connected');
 
   socket.on('chat message', (msg, room) => {
     console.log('emitting message', msg)

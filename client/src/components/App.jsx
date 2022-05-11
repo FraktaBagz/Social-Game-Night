@@ -23,45 +23,45 @@ const customDecksSample = {
   skips: {
     questions: [
       {
-        label: 'some prompt',
-        extra: '(ridiculous, senseless, foolish) ',
-        sets: 'default green',
+        label: 'skiplabel1',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default green',
       },
       {
-        label: 'some prompt',
-        extra: '(plentiful, ample, numerous) ',
-        sets: 'default green',
+        label: '2some prompt',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default green',
       },
       {
-        label: 'some prompt',
-        extra: '(obsessive, consuming, captivating) ',
-        sets: 'default green',
+        label: '3some prompt',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default green',
       },],
     answers: [
       {
-        label: 'Absurd',
-        extra: '(ridiculous, senseless, foolish) ',
-        sets: 'default red',
+        label: '1Absurd',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default red',
       },
       {
-        label: 'Abundant',
-        extra: '(plentiful, ample, numerous) ',
-        sets: 'default red',
+        label: '2Abundant',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default red',
       },
       {
-        label: 'Addictive',
-        extra: '(obsessive, consuming, captivating) ',
-        sets: 'default red',
+        label: '3Addictive',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default red',
       },
       {
-        label: 'Absurd',
-        extra: '(ridiculous, senseless, foolish) ',
-        sets: 'default red',
+        label: '4Absurd',
+        extra: '4(ridiculous, senseless, foolish) ',
+        sets: '4default red',
       },
       {
-        label: 'Abundant',
-        extra: '(plentiful, ample, numerous) ',
-        sets: 'default red',
+        label: '5bundant',
+        extra: '5(plentiful, ample, numerous) ',
+        sets: '5default red',
       },
       {
         label: 'Addictive',
@@ -78,18 +78,52 @@ const customUserInfo = {
     "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
 };
 
+const dummyWinner = [
+  {
+    name: "Nathaniel",
+    title: "The Brave",
+    avatar:
+      "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
+  }
+];
+
+const dummyWinners = [
+  {
+    name: "Nathaniel",
+    title: "The Brave",
+    avatar:
+      "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
+  },
+  {
+    name: "Raymond",
+    title: "The Wise",
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
+  }
+];
+
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck } = useGame();
   const [pageView, setPageView] = useState('HomePage');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [gameState, setGameState] = useState({});
-  const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skips);
+  const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
-      questions: ["dummyq1", "dummyq2"],
-      answers: ["dummya1", "dummya2"],
+      questions: [
+        {
+          label: 'some prompt',
+          extra: '(obsessive, consuming, captivating) ',
+          sets: 'default green',
+        }],
+      answers: [
+        {
+          label: 'Addictive',
+          extra: '(obsessive, consuming, captivating) ',
+          sets: 'default red',
+        }]
     },
   });
   const [customDeckTitle, setCustomDecktitle] = useState("");
@@ -99,39 +133,44 @@ export default function App() {
   const [name, setName] = useState("MrJoel");
   const [host, setHost] = useState(true);
   const [connectedUsers, setConnectedUsers] = useState([
-    {
-      name: "Nathaniel",
-      title: "The Brave",
-      avatar:
-        "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
-    },
-    {
-      name: "Raymond",
-      title: "The Wise",
-      avatar:
-        "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
-    },
-    {
-      name: "Matthew",
-      title: "The Hell Raiser",
-      avatar:
-        "https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg",
-    },
-    {
-      name: "Kim",
-      title: "The Wizard",
-      avatar:
-        "https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png",
-    },
+    // {
+    //   name: "Nathaniel",
+    //   title: "The Brave",
+    //   avatar:
+    //     "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
+    // },
+    // {
+    //   name: "Raymond",
+    //   title: "The Wise",
+    //   avatar:
+    //     "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
+    // },
+    // {
+    //   name: "Matthew",
+    //   title: "The Hell Raiser",
+    //   avatar:
+    //     "https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg",
+    // },
+    // {
+    //   name: "Kim",
+    //   title: "The Wizard",
+    //   avatar:
+    //     "https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png",
+    // },
   ]);
 
   useEffect(() => {
     console.log("currentUser: ", currentUser);
-  }, []);
+    if(currentUser) {
+      console.log("currentUser Name: ", currentUser.name);
+      console.log("currentUser ID: ", currentUser.UID);
+    }
+  }, [currentUser]);
 
   socket.on("new game", (gameObj) => {
+    console.log('newGame!!')
     gameObj = JSON.parse(gameObj);
-    socket.emit('game action', JSON.stringify({ action: 'new round', game: gameObj }))
+    setGameState(gameObj);
   });
 
   socket.on('join game', (msg) => {
@@ -142,6 +181,7 @@ export default function App() {
   })
 
   socket.on("game action", (gameObj) => {
+    console.log('gameAction received');
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);
   });
@@ -161,14 +201,21 @@ export default function App() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log('calling get deck');
-  //   getDeck()
-  //     .then((deck) => {
-  //       setDefaultDeck(deck);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, []);
+  useEffect(() => {
+    console.log('calling get deck');
+    getDeck('default', 'default')
+      .then((deck) => {
+        console.log('deck', deck);
+        if (deck.greenCard) {
+          deck['questions'] = deck['greenCard'];
+          deck['answers'] = deck['redCard'];
+          delete deck['greenCard'];
+          delete deck['redCard'];
+        }
+        setDefaultDeck(deck);
+      })
+      .catch((e) => console.log(e));
+  }, [isLoggedIn]);
 
   var handleViewClick = (view) => {
     // e.preventDefault();
@@ -284,6 +331,7 @@ export default function App() {
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
           setCustomDecktitle={setCustomDecktitle}
+          currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "ViewCards" ? (
@@ -293,6 +341,7 @@ export default function App() {
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
           setCustomDecktitle={setCustomDecktitle}
+          currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "avatarExample" ? (
@@ -309,7 +358,7 @@ export default function App() {
         </div>
       ) : null}
       {pageView === "results" ? (
-        <Results gameState={gameState} setPageView={setPageView} user={customUserInfo} chatHistory={chatHistory} setChatHistory={setChatHistory} />
+        <Results gameState={gameState} setPageView={setPageView} winner={dummyWinners} chatHistory={chatHistory} setChatHistory={setChatHistory} />
       ) : null}
     </>
   );
