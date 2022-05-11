@@ -37,8 +37,8 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
               {/* Extra goes here pr */}
             </Typography>
             <Typography variant='subtitle1'>
-              {/* {card.sets} */}
-              Sets goes here
+              {card.sets}
+              {/* Sets goes here */}
             </Typography>
             {handleSelectCard ?
               <Button

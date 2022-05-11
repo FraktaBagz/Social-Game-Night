@@ -15,7 +15,7 @@ import PlayingCard from '../common/PlayingCard.jsx';
 import { useGame } from "../../../firebase/contexts/GameContext.js";
 
 export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView, currentUserUID }) {
-  const { addToCustomDeck, removeFromCustomDeck } = useGame();
+  const { addToCustomDeck} = useGame();
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(customDeckTitle);
   const [cardTypeCust, setCardTypeCust] = useState('green')
@@ -158,7 +158,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
     // addToCustomDeck(userId, deckName, card, color)
     //   .then(() => (console.log('card created')))
     //   .catch((e) => (console.log(e)));
-    // userId, deckName, card, color
+    // expected format: userId, deckName, card, color
     // put request to add specific card to users deck depending on what cardtype it is
   }
 
@@ -177,7 +177,6 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
                 extra: createExtrasFunc(),
                 sets: newTitle,
               }} />
-              {createExtrasFunc()}
               {createButtonFunc()}
               {createnewLabelButton()}
             </Paper>
@@ -185,7 +184,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
         </Grid>
         <Grid item xs={8}>
           <Box>
-            <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} customDeckTitle={customDeckTitle} setCustomDecktitle={setCustomDecktitle} />
+            <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} customDeckTitle={customDeckTitle} setCustomDecktitle={setCustomDecktitle}  currentUserUID={currentUserUID}/>
           </Box>
         </Grid>
       </Grid>
