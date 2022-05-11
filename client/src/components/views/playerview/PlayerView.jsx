@@ -98,7 +98,9 @@ export default function PlayerView({
           >
             {/* Prompt Card */}
             <Grid item xs={12} mb={10}>
-              <PlayingCard color="green" card={fakeGameState.questionCard} />
+              {gameState.gameState ?
+                <PlayingCard color="green" card={gameState.gameState.questionCard} />
+                : null}
             </Grid>
             <Grid item xs={12}>
               {/* Judge avatar */}
@@ -118,14 +120,15 @@ export default function PlayerView({
 
         <Grid item xs={6}>
           <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: 'wrap' }}>
-            {gameState.gameState.userInformation[currentUser].cards.map((answer) =>
+            {console.log(gameState.gameState, 'gamestate')}
+            {gameState.gameState ? gameState.gameState.userInformation[currentUser.name].cards.map((answer) =>
               <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
                 e.preventDefault();
                 //answer is whatever card that gets clicked on
                 console.log(answer);
-                socket.emit('game action', JSON.stringify({action: 'play card', game: gameState, user: currentUser, card: answer}))
+                socket.emit('game action', JSON.stringify({action: 'play card', game: gameState, user: currentUser, card: answer[0]}))
               }}/>
-            )}
+            ) : null }
           </Stack>
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}

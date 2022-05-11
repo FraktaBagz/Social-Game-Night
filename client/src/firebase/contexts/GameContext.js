@@ -27,35 +27,75 @@ export function GameProvider({ children }) {
     let redContainer = [];
     let greenContainer = [];
 
-    return getDocs(collection(db, 'defaultRed'))
-      .then((snapShot) => {
-        snapShot.forEach((doc) => {
-          redContainer.push(doc.data());
-        });
-
-        return getDocs(collection(db, 'defaultGreen'));
-      })
-      .then((snapShot) => {
-        snapShot.forEach((doc) => {
-          greenContainer.push(doc.data());
-        });
-      })
-      .then(() => {
-        return {
-          questions: redContainer,
-          answers: greenContainer
-        }
+    return getDoc(doc(db, uid, deck))
+      .then((customDeck) => {
+        return customDeck.data();
       })
       .catch((err) => {
+        throw err;
+      })
+  }
+
+  //initialize new deck
+  function initializeDeck(userId, deckName) {
+    setDoc(doc(db, userId, deckName), {
+      greenCard: [],
+      redCard: []
+    })
+      .catch(e => {
         console.log(err);
       });
   }
 
-  //adds card to deck collection
-  function addToCustomDeck(card, color, deckName, userId) {
-    addDoc(collection(db, `${deckName} ${color}`), card)
-      .catch(e => {
-        console.error('Error adding document: ', e);
+  //adds/updates card to deck collection
+  function addToCustomDeck(userId, deckName, card, color) {
+    let deckRef = doc(db, userId, deckName);
+
+    if (color === 'green') {
+      updateDoc(deckRef, {
+        greenCard: arrayUnion(card),
+      })
+        .catch((err) => {
+          console.log(err);
+        })
+    } else {
+      updateDoc(deckRef, {
+        redCard: arrayUnion(card),
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+
+  //remove card from deck collection
+  function removeFromCustomDeck(userId, deckName, card, color) {
+    let deckRef = doc(db, userId, deckName);
+
+    if (color === 'green') {
+      setDoc(deckRef, {
+        greenCard: arrayRemove(card),
+      })
+        .catch((err) => {
+          console.log(err);
+        })
+    } else {
+      updateDoc(deckRef, {
+        redCard: arrayRemove(card),
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+
+  //delete deck
+  function deleteCustomDeck(userId, deckName) {
+    let deckRef = doc(db, userId, deckName);
+
+    deleteDoc(deckRef)
+      .catch((err) => {
+        console.log(err);
       });
   }
 
