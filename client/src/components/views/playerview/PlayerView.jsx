@@ -20,54 +20,213 @@ import JudgeView from "../judgeview/JudgeView.jsx";
 const socket = io();
 
 export default function PlayerView({
-  gameState,
+  // gameState,
   connectedUsers,
   chatHistory,
   setChatHistory,
   customDecksSample,
-  currentUser,
+  // currentUser,
 }) {
   const [selected, setSelected] = useState({});
+  const [isJudge, setIsJudge] = useState(false);
 
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
     console.log(selected);
-    // socket.emit(
-    //   "game action",
-    //   JSON.stringify({
-    //     action: "play card",
-    //     game: gameState,
-    //     user: currentUser,
-    //     card: answer,
-    //   })
-    // );
+    socket.emit(
+      "game action",
+      JSON.stringify({
+        action: "play card",
+        game: gameState,
+        user: currentUser,
+        card: selected,
+      })
+    );
   };
 
   // this.gameState.userInformation[user.UID] = {
   //   cards: [],
   //   points: 0,
   // }
-
-  const fakeGameState = {
-    currentDeck: [],
-    judgeIndex: 0,
-    judging: false,
-    userInformation: {},
-    questionCard: {
-      label: "some prompt",
-      extra: "(ridiculous, senseless, foolish) ",
-      sets: "default green",
-    },
-    hasPicked: [],
-    submittedCards: [],
-    finished: true,
-    winner: null,
+  let currentUser = {
+    name: "Raymond",
+    title: "The Wise",
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
   };
 
   useEffect(() => {
+    console.log("currentUser: ", currentUser);
     console.log("gameState: ", gameState);
     console.log("connectedUsers: ", connectedUsers);
   }, []);
+
+  useEffect(() => {
+    if (connectedUsers[gameState.judgeIndex].name === currentUser.name) {
+      setIsJudge(true);
+    }
+  }, [gameState]);
+
+  //hard code some fake data to use
+  connectedUsers = [
+    {
+      name: "Nathaniel",
+      title: "The Brave",
+      avatar:
+        "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
+    },
+    {
+      name: "Raymond",
+      title: "The Wise",
+      avatar:
+        "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
+    },
+    {
+      name: "Matthew",
+      title: "The Hell Raiser",
+      avatar:
+        "https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg",
+    },
+    {
+      name: "Kim",
+      title: "The Wizard",
+      avatar:
+        "https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png",
+    },
+  ];
+
+  let gameState = {
+    currentDeck: {
+      questions: [
+        {
+          label: "some prompt",
+          extra: "(ridiculous, senseless, foolish) ",
+          sets: "default green",
+        },
+        {
+          label: "some prompt",
+          extra: "(plentiful, ample, numerous) ",
+          sets: "default green",
+        },
+        {
+          label: "some prompt",
+          extra: "(obsessive, consuming, captivating) ",
+          sets: "default green",
+        },
+      ],
+      answers: [
+        {
+          label: "Absurd",
+          extra: "(ridiculous, senseless, foolish) ",
+          sets: "default red",
+        },
+        {
+          label: "Abundant",
+          extra: "(plentiful, ample, numerous) ",
+          sets: "default red",
+        },
+        {
+          label: "Addictive",
+          extra: "(obsessive, consuming, captivating) ",
+          sets: "default red",
+        },
+        {
+          label: "Absurd",
+          extra: "(ridiculous, senseless, foolish) ",
+          sets: "default red",
+        },
+        {
+          label: "Abundant",
+          extra: "(plentiful, ample, numerous) ",
+          sets: "default red",
+        },
+        {
+          label: "Addictive",
+          extra: "(obsessive, consuming, captivating) ",
+          sets: "default red",
+        },
+      ],
+    },
+    judgeIndex: 0,
+    judging: false,
+    userInformation: {}, //UID: {cards: [], points:0}
+    questionCard: {
+      label: "some prompt",
+      extra: "(obsessive, consuming, captivating) ",
+      sets: "default green",
+    }, //{label: 'string', extra: 'lala', set: 'lala'}
+    hasPicked: [], // do we need this?
+    submittedCards: [
+      {
+        label: "Absurd",
+        extra: "(ridiculous, senseless, foolish) ",
+        sets: "default red",
+      },
+      {
+        label: "Abundant",
+        extra: "(plentiful, ample, numerous) ",
+        sets: "default red",
+      },
+      {
+        label: "Addictive",
+        extra: "(obsessive, consuming, captivating) ",
+        sets: "default red",
+      },
+    ],
+    finished: false,
+    winner: null,
+  };
+
+  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+
+  //isJudge = true/false if you are the judge
+  //judging = true/false if all answers have been submitted
+  let playField;
+  if (isJudge) {
+    if (judging) {
+      playField = <JudgeView isJudge={true} submittedCards={submittedCards} />;
+    } else {
+      playField = <JudgeWaiting />;
+    }
+  } else {
+    if (judging) {
+      playField = <JudgeView isJudge={false} submittedCards={submittedCards} />;
+    } else {
+      if (Object.keys(selected).length === 0) {
+        playField = (
+          <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
+            {customDecksSample.skips.answers.map((answer) => (
+              <PlayingCard
+                color="red"
+                card={answer}
+                handleSelectCard={(e) => {
+                  e.preventDefault();
+                  setSelected(answer);
+                }}
+              />
+            ))}
+          </Stack>
+        );
+      } else {
+        playField = (
+          <Stack
+            direction="column"
+            spacing={2}
+            mt={2}
+            sx={{ alignItems: "center", justifyContent: "center" }}
+          >
+            <PlayingCard color="red" card={selected} />
+            <Button variant="contained" onClick={handleConfirmSelection}>
+              Confirm
+            </Button>
+            <Button variant="contained" onClick={() => setSelected({})}>
+              Deselect
+            </Button>
+          </Stack>
+        );
+      }
+    }
+  }
 
   return (
     <div className="PlayerViewContainer">
@@ -96,58 +255,19 @@ export default function PlayerView({
             direction="column"
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
-            {/* Prompt Card */}
             <Grid item xs={12} mb={10}>
-              <PlayingCard color="green" card={fakeGameState.questionCard} />
+              <PlayingCard color="green" card={gameState.questionCard} />
             </Grid>
             <Grid item xs={12}>
-              {/* Judge avatar */}
               <AvatarChipPicking
-                userInfo={{
-                  //this can come from
-                  name: "Nathaniel",
-                  title: "Judge",
-                  avatar:
-                    "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
-                }}
+                userInfo={connectedUsers[judgeIndex]}
               />
             </Grid>
           </Grid>
         </Grid>
         {/* ---------------------------- MIDDLE -------------------------------- */}
-
         <Grid item xs={6}>
-        {/* insert conditionals here to render judge view or judge waiting */}
-
-          {Object.keys(selected).length === 0 ? (
-            <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
-              {customDecksSample.skips.answers.map((answer) => (
-                <PlayingCard
-                  color="red"
-                  card={answer}
-                  handleSelectCard={(e) => {
-                    e.preventDefault();
-                    setSelected(answer);
-                  }}
-                />
-              ))}
-            </Stack>
-          ) : (
-            <Stack
-              direction="column"
-              spacing={2}
-              mt={2}
-              sx={{ alignItems: "center", justifyContent: "center" }}
-            >
-              <PlayingCard color="red" card={selected} />
-              <Button variant="contained" onClick={handleConfirmSelection}>
-                Confirm
-              </Button>
-              <Button variant="contained" onClick={() => setSelected({})}>
-                Deselect
-              </Button>
-            </Stack>
-          )}
+          {playField}
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
