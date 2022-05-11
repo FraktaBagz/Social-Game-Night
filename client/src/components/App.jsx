@@ -87,8 +87,18 @@ export default function App() {
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
-      questions: ["dummyq1", "dummyq2"],
-      answers: ["dummya1", "dummya2"],
+      questions: [
+        {
+          label: 'some prompt',
+          extra: '(obsessive, consuming, captivating) ',
+          sets: 'default green',
+        }],
+      answers: [
+        {
+          label: 'Addictive',
+          extra: '(obsessive, consuming, captivating) ',
+          sets: 'default red',
+        }]
     },
   });
   const [customDeckTitle, setCustomDecktitle] = useState("");
@@ -126,6 +136,9 @@ export default function App() {
 
   useEffect(() => {
     console.log("currentUser: ", currentUser);
+    if(currentUser) {
+      console.log("currentUser ID: ", currentUser.UID);
+    }
   }, []);
 
   socket.on("new game", (gameObj) => {
@@ -162,12 +175,14 @@ export default function App() {
 
   // useEffect(() => {
   //   console.log('calling get deck');
-  //   getDeck()
+  //   getDeck('default', 'default')
   //     .then((deck) => {
   //       setDefaultDeck(deck);
   //     })
   //     .catch((e) => console.log(e));
   // }, []);
+
+
 
   var handleViewClick = (e) => {
     e.preventDefault();
@@ -282,6 +297,7 @@ export default function App() {
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
           setCustomDecktitle={setCustomDecktitle}
+          currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "ViewCards" ? (

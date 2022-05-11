@@ -12,19 +12,17 @@ import AddIcon from '@mui/icons-material/Add';
 import ViewCards from './ViewCards.jsx';
 import PlayingCard from '../common/PlayingCard.jsx';
 
+import { useGame } from "../../../firebase/contexts/GameContext.js";
 
-export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView }) {
+export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView, currentUserUID }) {
+  const { addToCustomDeck, removeFromCustomDeck } = useGame();
   const [customAnswer, setCustomAnswer] = useState('');
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(customDeckTitle);
   const [cardTypeCust, setCardTypeCust] = useState('green')
   const [newCard, setNewCard] = useState('');
+  const [newExtras, setNewExtras] = useState('');
   const [createButton, setCreateButton] = useState(false);
-
-  // {
-  //   answers: [],
-  //   questions: [],
-  // }
 
   const editTitleFunc = () => (
     !editTitle
@@ -95,7 +93,30 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
         </>
       }
     </Box>
+  )
 
+  const createExtrasFunc = () => (
+    <Box>
+      {createButton
+        ?
+        <>
+          <div>{newCard}</div>
+        </>
+        :
+        <>
+          <TextField
+            required
+            id="outlined-required"
+            label={"extras"}
+            defaultValue=""
+            size="small"
+            onChange={(e) => (
+              setNewExtras(e.target.value)
+            )}
+          />
+        </>
+      }
+    </Box>
   )
 
   const createButtonFunc = () => (
@@ -108,14 +129,33 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
         :
         <>
           <Button variant="" onClick={() => (
-            newCard.length > 0 ? (createCard(cardTypeCust, newCard),
+            newCard.length > 0 ? (createCard(currentUserUID, newTitle, { label: newCard, extra: '', sets: newTitle }, cardTypeCust),
               setCreateButton(true)) : null
           )}>create card <AddIcon /></Button>
         </>
       }
     </Box>
   )
-  const createCard = (type, message) => {
+
+  // const createNewCardButton = () => (
+  //   <Box>
+  //     {createButton
+  //       ?
+  //       <>
+  //         <Button variant="" onClick={() => (
+  //         )}>Create New Card!<AddIcon /></Button>
+  //       </>
+  //       : null
+  //     }
+  //   </Box>
+  // )
+  
+  const createCard = (userId, deckName, card, color) => {
+    console.log(userId, deckName, card, color)
+    // addToCustomDeck(userId, deckName, card, color)
+    //   .then(() => (console.log('card created')))
+    //   .catch((e) => (console.log(e)));
+    // userId, deckName, card, color
     // put request to add specific card to users deck depending on what cardtype it is
   }
 
@@ -131,9 +171,10 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
               {addCardFunc()}
               <PlayingCard color={cardTypeCust} card={{
                 label: createPromptFunc(),
-                extra: '(ridiculous, senseless, foolish) ',
+                extra: createExtrasFunc(),
                 sets: newTitle,
               }} />
+              {createExtrasFunc()}
               {createButtonFunc()}
             </Paper>
           </Box>

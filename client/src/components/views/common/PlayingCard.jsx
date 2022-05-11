@@ -33,8 +33,8 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
         <Card sx={{ mt: 0, ml: 1, mr: 1, height: 115, bgcolor: cardColor }}>
           <Box component={Stack} direction="column" justifyContent="center" sx={{ textAlign: "left" }}>
             <Typography variant='h6'>
-              {/* {card.extra} */}
-              Extra goes here pr
+              {card.extra}
+              {/* Extra goes here pr */}
             </Typography>
             <Typography variant='subtitle1'>
               {/* {card.sets} */}
