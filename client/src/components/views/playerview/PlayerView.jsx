@@ -26,6 +26,7 @@ export default function PlayerView({
   setChatHistory,
   customDecksSample,
   currentUser,
+  setCurrentUser
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
@@ -164,7 +165,7 @@ export default function PlayerView({
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser}/>
+          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
         </Grid>
         {/* -------------------------------------------------------------------- */}
       </Grid>
