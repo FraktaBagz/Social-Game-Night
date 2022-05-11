@@ -135,34 +135,9 @@ export default function App() {
   const [chatHistory, setChatHistory] = useState([
     { user: "Bot", text: "This is the beginning of the chat history" },
   ]);
-  const [name, setName] = useState("MrJoel");
-  const [host, setHost] = useState(true);
-  const [connectedUsers, setConnectedUsers] = useState([
-    // {
-    //   name: "Nathaniel",
-    //   title: "The Brave",
-    //   avatar:
-    //     "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
-    // },
-    // {
-    //   name: "Raymond",
-    //   title: "The Wise",
-    //   avatar:
-    //     "https://upload.wikimedia.org/wikipedia/en/2/2d/SSU_Kirby_artwork.png",
-    // },
-    // {
-    //   name: "Matthew",
-    //   title: "The Hell Raiser",
-    //   avatar:
-    //     "https://mpng.subpng.com/20180624/zyt/kisspng-magic-rush-heroes-wikia-character-western-restaurants-5b2fccfed0dfb9.9185671315298593268556.jpg",
-    // },
-    // {
-    //   name: "Kim",
-    //   title: "The Wizard",
-    //   avatar:
-    //     "https://w7.pngwing.com/pngs/525/864/png-transparent-wizard-holding-staff-dungeons-dragons-pathfinder-roleplaying-game-d20-system-wizard-magician-wizard-cartoon-d20-system-wizard-thumbnail.png",
-    // },
-  ]);
+  const [name, setName] = useState('');
+  const [host, setHost] = useState(false);
+  const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
     console.log("currentUser: ", currentUser);
@@ -184,6 +159,24 @@ export default function App() {
     msg = JSON.parse(msg);
     console.log(msg)
     setConnectedUsers([...connectedUsers, msg.user])
+  })
+  // useEffect(()=>{
+  //   if (host) {
+  //     socket.emit('update connected users', JSON.stringify(connectedUsers))
+  //   }
+  // }, [connectedUsers])
+
+  socket.on('update connected users', (msg)=>{
+    msg = JSON.parse(msg)
+    console.log('the master user list:', msg)
+    // if ((msg.length !== connectedUsers.length) && !host) {
+    //   console.log('166')
+      setConnectedUsers(msg)
+    // }
+  })
+
+  socket.on('set host', ()=>{
+    setHost(true)
   })
 
   socket.on("game action", (gameObj) => {
