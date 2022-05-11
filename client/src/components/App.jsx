@@ -129,7 +129,7 @@ export default function App() {
 
   socket.on("new game", (gameObj) => {
     gameObj = JSON.parse(gameObj);
-    socket.emit('game action', JSON.stringify({action: 'new round', game: gameObj}))
+    socket.emit('game action', JSON.stringify({ action: 'new round', game: gameObj }))
   });
 
   socket.on('join game', (msg) => {
