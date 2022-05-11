@@ -15,23 +15,23 @@ import { io } from "socket.io-client";
 const socket = io();
 
 
-export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState }) {
+export default function HomePage({ currentUser , setCurrentUser, setPageView, theme, handleLogState, setConnectedUsers, connectedUsers }) {
   const handleLogOut = (e) => {
     e.preventDefault();
     setPageView('SignIn');
     handleLogState();
   }
 
-  const [joiningGame, setJoiningGame] = useState(false);
+  // const [joiningGame, setJoiningGame] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const joinGameWithCode = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget)
-    console.log(data.get('joinCode'));
-    //Add logic here to verify the code
-    //then switch view using setPageView('') to the lobby
-  }
+  // const joinGameWithCode = (e) => {
+  //   e.preventDefault();
+  //   const data = new FormData(e.currentTarget)
+  //   console.log(data.get('joinCode'));
+  //   //Add logic here to verify the code
+  //   //then switch view using setPageView('') to the lobby
+  // }
 
   useEffect(() => {
     // getUser(currentUserID)
@@ -157,7 +157,9 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   whileTap={{ scale: 1 }}
                 >
                   <Button
-                    onClick={() => { setPageView('Lobby') }}
+                    onClick={() => {
+                      setPageView('Lobby')
+                      setConnectedUsers([...connectedUsers, currentUser]) }}
                     value="user"
                     fullWidth
                     variant="contained"
@@ -185,10 +187,11 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   <Button
                     // type="submit"
                     onClick={() => {
-                      setJoiningGame(true);
-                      console.log(currentUser);
-                      socket.emit('join game', JSON.stringify({ user: 'Mr Kieran' }))
-                    }} //need to get currentUser defined here
+                      // setJoiningGame(true);
+                      setPageView('Lobby')
+                      console.log('joining game')
+                      socket.emit('join game', JSON.stringify({ user: currentUser.displayName })) }}
+                      //later it should be just 'currentUser'
                     fullWidth
                     variant="contained"
                     sx={{
@@ -207,7 +210,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   </Button>
                 </motion.div>
               </Grid>
-              {
+              {/* {
                 joiningGame ?
                   <Grid item xs={12} sm={6}>
                     <Box component="form" noValidate onSubmit={joinGameWithCode}>
@@ -261,7 +264,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                     </Box>
                   </Grid>
                   : <></>
-              }
+              } */}
             </Grid>
           </Grid>
           {/* -------------------------------------------------------------------------------- */}

@@ -8,6 +8,7 @@ import HomePage from "./views/homepage/HomePage.jsx";
 import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";
 import Lobby from "./views/lobby/Lobby.jsx";
+import LobbyRestyle from "./views/lobby/LobbyRestyle.jsx";
 import CustomDeck from "./views/customdeck/CustomDeck.jsx";
 import { AvatarChipWaiting, AvatarChipPicking } from "./views/common/AvatarChips.jsx";
 import Custom from "./views/customdeck/Custom.jsx";
@@ -82,7 +83,6 @@ export default function App() {
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
-  //want to set the default deck from a db query
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skips);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
@@ -130,8 +130,15 @@ export default function App() {
 
   socket.on("new game", (gameObj) => {
     gameObj = JSON.parse(gameObj);
-    setGameState(gameObj);
+    socket.emit('game action', JSON.stringify({ action: 'new round', game: gameObj }))
   });
+
+  socket.on('join game', (msg) => {
+    console.log('new player entered room')
+    msg = JSON.parse(msg);
+    console.log(msg)
+    setConnectedUsers([...connectedUsers, msg.user])
+  })
 
   socket.on("game action", (gameObj) => {
     gameObj = JSON.parse(gameObj);
@@ -153,57 +160,18 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    getDeck()
-      .then((deck) => {
-        setDefaultDeck(deck);
-      })
-      .catch((e) => console.log(e));
-  }, []);
+  // useEffect(() => {
+  //   console.log('calling get deck');
+  //   getDeck()
+  //     .then((deck) => {
+  //       setDefaultDeck(deck);
+  //     })
+  //     .catch((e) => console.log(e));
+  // }, []);
 
-  var handleSignUp = (event) => {
-    event.preventDefault();
-    setPageView("SignUp");
-  };
-
-  var handleSignIn = (event) => {
-    event.preventDefault();
-    setPageView("SignIn");
-  };
-
-  var handleHomePage = (event) => {
-    event.preventDefault();
-    setPageView("HomePage");
-  };
-
-  var handleJudgeView = (event) => {
-    event.preventDefault();
-    setPageView("JudgeView");
-  };
-
-  var handlePlayerView = (event) => {
-    event.preventDefault();
-    setPageView("PlayerView");
-  };
-
-  var handleLobby = (event) => {
-    event.preventDefault();
-    setPageView("Lobby");
-  };
-
-  var handleCustomDeck = (event) => {
-    event.preventDefault();
-    setPageView("CustomDeck");
-  };
-
-  var handleAvatarExample = (event) => {
-    event.preventDefault();
-    setPageView("avatarExample");
-  };
-
-  var handleResults = (event) => {
-    event.preventDefault();
-    setPageView("results");
+  var handleViewClick = (e) => {
+    e.preventDefault();
+    setPageView(e.target.value);
   };
 
   if (!isLoggedIn) {
@@ -229,15 +197,16 @@ export default function App() {
 
   return (
     <>
-      <button onClick={handleSignUp}>SignUp</button>
-      <button onClick={handleSignIn}>SignIn</button>
-      <button onClick={handleHomePage}>HomePage</button>
-      <button onClick={handleJudgeView}>JudgeView</button>
-      <button onClick={handlePlayerView}>PlayerView</button>
-      <button onClick={handleLobby}>Lobby</button>
-      <button onClick={handleCustomDeck}>CustomDeck</button>
-      <button onClick={handleAvatarExample}>avatarExample</button>
-      <button onClick={handleResults}>results</button>
+      <button onClick={handleViewClick} value='SignUp'>SignUp</button>
+      <button onClick={handleViewClick} value='SignIn'>SignIn</button>
+      <button onClick={handleViewClick} value='HomePage'>HomePage</button>
+      <button onClick={handleViewClick} value='JudgeView'>JudgeView</button>
+      <button onClick={handleViewClick} value='PlayerView'>PlayerView</button>
+      <button onClick={handleViewClick} value='Lobby'>Lobby</button>
+      <button onClick={handleViewClick} value='LobbyRestyle'>LobbyRestyle</button>
+      <button onClick={handleViewClick} value='CustomDeck'>CustomDeck</button>
+      <button onClick={handleViewClick} value='avatarExample'>avatarExample</button>
+      <button onClick={handleViewClick} value='results'>results</button>
       {pageView === "HomePage" ? (
         <HomePage
           gameState={gameState}
@@ -245,6 +214,8 @@ export default function App() {
           setCurrentUser={setCurrentUser}
           handleLogState={handleLogState}
           setPageView={setPageView}
+          connectedUsers={connectedUsers}
+          setConnectedUsers={setConnectedUsers}
         />
       ) : null}
       {pageView === "JudgeView" ? (
@@ -261,10 +232,26 @@ export default function App() {
           connectedUsers={connectedUsers}
           chatHistory={chatHistory}
           setChatHistory={setChatHistory}
+          currentUser={currentUser}
         />
       ) : null}
       {pageView === "Lobby" ? (
         <Lobby
+          gameState={gameState}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
+          name={name}
+          host={host}
+          connectedUsers={connectedUsers}
+          setPageView={setPageView}
+          customDecks={customDecks}
+          defaultDeck={defaultDeck}
+          setSelectedCustomDeck={setSelectedCustomDeck}
+          setCustomDecktitle={setCustomDecktitle}
+        />
+      ) : null}
+      {pageView === "LobbyRestyle" ? (
+        <LobbyRestyle
           gameState={gameState}
           chatHistory={chatHistory}
           setChatHistory={setChatHistory}
@@ -314,9 +301,9 @@ export default function App() {
           <br />
           <AvatarChipWaiting user={customUserInfo} />
           <br />
-          <PlayingCard type="question" info="question example" />
+          <PlayingCard card={customDecksSample.skips.questions[0]} color='green' />
           <br />
-          <PlayingCard type="answer" info="answer example" />
+          <PlayingCard card={customDecksSample.skips.answers[0]} color='red' />
         </div>
       ) : null}
       {pageView === "results" ? (
