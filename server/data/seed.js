@@ -14,19 +14,27 @@ const {
   deleteDoc,
 } = require("firebase/firestore");
 
-//seed initial data
-// function seedData(userId, deckName, greenCards, redCards) {
-//   let customDeckRef = doc
-//   setDoc(doc(db, userId, deckName), {
-//     greenCard: greenCards,
-//     redCard: redCards
-//   })
-//     .catch(e => {
-//       console.error('Error adding document: ', e);
-//     });
-// }
+// seed initial data
+function seedData(userId, deckName, greenCards, redCards) {
+  setDoc(doc(db, userId, deckName), {
+    greenCard: greenCards,
+    redCard: redCards
+  })
+    .catch(e => {
+      console.error('Error adding document: ', e);
+    });
+};
+function initializeDeck(userId, deckName) {
+  setDoc(doc(db, userId, deckName), {
+    greenCard: [],
+    redCard: []
+  })
+    .catch(e => {
+      console.log(err);
+    });
+};
 
-//initializeDeck('default', 'default');
-// seedData('default', 'default', defaultGreen, defaultRed);
+initializeDeck('default', 'default');
+seedData('default', 'default', defaultGreen, defaultRed);
 
 // enter node server/data/seed.js into terminal to seed data

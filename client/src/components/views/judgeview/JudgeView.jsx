@@ -6,55 +6,48 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import PlayingCard from "../common/PlayingCard.jsx";
 
-export default function JudgeView({ gameState }) {
+export default function JudgeView({ gameState, isJudge, submittedCards }) {
   const [selected, setSelected] = useState({});
-
+  const [hasPicked, setHasPicked] = useState(false);
+  //selected = card.user
   const handleWinnerPicked = (e) => {
     e.preventDefault();
-    console.log('winning card confirmed')
+    console.log("winning card confirmed");
     //card object stored in <selected> variable
     //add game logic here to submit this card as a the winning one
-  }
-
-  //hard code array of all submitted cards:
-  const submittedCards = [
-    {
-      label: "Absurd",
-      extra: "(ridiculous, senseless, foolish) ",
-      sets: "default red",
-    },
-    {
-      label: "Abundant",
-      extra: "(plentiful, ample, numerous) ",
-      sets: "default red",
-    },
-    {
-      label: "Addictive",
-      extra: "(obsessive, consuming, captivating) ",
-      sets: "default red",
-    },
-    {
-      label: "Absurd",
-      extra: "(ridiculous, senseless, foolish) ",
-      sets: "default red",
-    },
-  ];
+    socket.emit(
+      "game action",
+      JSON.stringify({
+        action: "judge selection",
+        game: gameState,
+        user: selected,
+      })
+    );
+    setHasPicked(true);
+  };
 
   return (
     <Container style={{ textAlign: "center" }}>
-      <Typography variant="h5">
-        YOU ARE JUDGING SELECT A WINNER
-      </Typography>
+      {isJudge ? (
+        <Typography variant="h5">YOU ARE JUDGING SELECT A WINNER</Typography>
+      ) : (
+        <Typography variant="h5">WAITING FOR JUDGE TO PICK A WINNER</Typography>
+      )}
+
       {Object.keys(selected).length === 0 ? (
         <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
           {submittedCards.map((card) => (
             <PlayingCard
               color="red"
               card={card}
-              handleSelectCard={(e) => {
-                e.preventDefault();
-                setSelected(card);
-              }}
+              handleSelectCard={
+                isJudge
+                  ? (e) => {
+                      e.preventDefault();
+                      setSelected(card.user);
+                    }
+                  : null
+              }
             />
           ))}
         </Stack>
@@ -66,12 +59,18 @@ export default function JudgeView({ gameState }) {
           sx={{ alignItems: "center", justifyContent: "center" }}
         >
           <PlayingCard color="red" card={selected} />
-          <Button variant="contained" onClick={handleWinnerPicked}>
-            Confirm
-          </Button>
-          <Button variant="contained" onClick={() => setSelected({})}>
-            Deselect
-          </Button>
+          {isJudge && !hasPicked ? (
+            <>
+              <Button variant="contained" onClick={handleWinnerPicked}>
+                Confirm
+              </Button>
+              <Button variant="contained" onClick={() => setSelected({})}>
+                Deselect
+              </Button>
+            </>
+          ) : (
+            <></>
+          )}
         </Stack>
       )}
     </Container>

@@ -47,6 +47,7 @@ function gameHandler(msg) {
     //removed played card from hand
     //add played card to submitted cards
     const submission = [user.name, game.gameState.userInformation[user.name].cards.splice(indexInHand, 1)];
+    console.log(submission)
 
     game.gameState.submittedCards.push(submission);
     console.log(`${submission[0]}, has played ${submission[1]}`)
@@ -73,6 +74,12 @@ function newGame(msg) {
   msg = JSON.parse(msg)
   let { users, deck } = msg
   let game = new Game(users, deck);
+
+  users.forEach((user) => {
+    game.gameState.userInformation[user.name].cards.push(drawRandomCard(game.gameState.currentDeck.answers))
+  });
+  //the question card is drawn
+  game.gameState.questionCard = drawRandomCard(game.gameState.currentDeck.questions);
   return game;
 };
 
