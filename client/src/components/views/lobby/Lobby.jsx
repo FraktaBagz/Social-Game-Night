@@ -62,7 +62,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                   setPageView={setPageView}
                   customDecks={customDecks}
                   setSelectedCustomDeck={setSelectedCustomDeck}
-                  setCustomDecktitle={setCustomDecktitle} previousView={'Lobby'} />
+                  setCustomDeckTitle={setCustomDeckTitle} previousView={'Lobby'} />
               </div>
               : null
             }

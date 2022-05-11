@@ -33,10 +33,11 @@ export function AuthProvider({ children }) {
 
   function signUp(email, password, name) {
     return setPersistence(auth, inMemoryPersistence)
-    .then(() => {
-      return createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          let user = userCredential.user;
+      .then(() => {
+        return createUserWithEmailAndPassword(auth, email, password)
+      })
+      .then((userCredential) => {
+        let user = userCredential.user;
 
           return setDoc(doc(db, "users", user.uid), {
             name: name,
