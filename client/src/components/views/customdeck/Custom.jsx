@@ -156,7 +156,19 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
   const createCard = (userId, deckName, card, color) => {
     console.log(userId, deckName, card, color)
     addToCustomDeck('1234', deckName, card, color)
-      .then(() => (console.log('card created')))
+      .then(() => (
+        setPostCard(true),
+        console.log('card created')))
+      .then(() => (
+        getDeck(deckName, '1234')
+          .then((getdeck) => {
+            console.log('getting custom deck after card posting')
+            setSelectedCustomDeck(getdeck)
+          })
+          .catch((e) => (
+            console.log(e)
+          ))
+      ))
       .catch((e) => (console.log(e)));
     // expected format: userId, deckName, card, color
     // put request to add specific card to users deck depending on what cardtype it is

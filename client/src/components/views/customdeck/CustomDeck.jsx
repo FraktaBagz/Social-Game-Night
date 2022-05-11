@@ -1,5 +1,5 @@
 // CUSTOM DECK PAGE VIEW
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
@@ -19,6 +19,10 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDecktitle, previousView }) {
   const deckNames = Object.keys(customDecks);
   const [decks, setDecks] = useState(deckNames);
+
+  useEffect(() => {
+    setDecks(deckNames)
+  }, [customDecks])
 
   // should pass already customized decks in format below and send custom deck to database. with a post if deck doesn't exist or put request if deck exists already.
   // expected data per deck

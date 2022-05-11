@@ -1,5 +1,5 @@
 // CUSTOM DECK PAGE VIEW
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
@@ -18,17 +18,40 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ViewCards({
-  gameState, setPageView, selectedCustomDeck, customDeckTitle, setCustomDecktitle, currentUserUID
+  gameState, setPageView, selectedCustomDeck, customDeckTitle, setCustomDecktitle, currentUserUID,
+  setDeletedCard,
+  setPostCard,
+  deletedCard,
+  postCard
 }) {
-  const { removeFromCustomDeck } = useGame();
+  const { removeFromCustomDeck, getDeck } = useGame();
   const decks = Object.keys(selectedCustomDeck);
   const deckName = decks[0]
-  const deck = selectedCustomDeck[deckName]
+  const [deck, setDeck] = useState(selectedCustomDeck[deckName])
+
+  // useEffect(() => {
+  //   setDeck(selectedCustomDeck)
+  // }, [selectedCustomDeck])
+
 
   const deletecard = (userId, deckName, card, color) => {
-    // removeFromCustomDeck('1234', deckName, card, color)
-    //   .then(() => (console.log('card deleted')))
-    //   .catch((e) => (console.log(e)));
+    removeFromCustomDeck('1234', deckName, card, color)
+      .then(() => (
+        setDeletedCard(true),
+        console.log('card deleted')),
+      )
+      .then(() => (
+        console.log('refreshing custom deck'),
+        getDeck(deckName, '1234')
+          .then((getdeck) => {
+            console.log('getting custom deck after card deleted')
+            setDeck(getdeck)
+          })
+          .catch((e) => (
+            console.log(e)
+          ))
+      ))
+      .catch((e) => (console.log(e)));
 
     // each time the card is deleted, useEffect custom deck to dynamically render the page with this update
 

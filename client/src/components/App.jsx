@@ -217,22 +217,20 @@ export default function App() {
   // }, [isLoggedIn]);
 
 
-  // useEffect(() => {
-  //   console.log('calling get custom decks');
-  //   if (currentUser) {
-  //     console.log(currentUser.UID)
-  //     getDecks('1234')
-  //       .then((usersCustomDecks) => {
-
-
-  //         console.log('custom deck', usersCustomDecks);
-  //         setCustomDecks(usersCustomDecks);
-  //         setDeletedCard(false);
-  //         setPostCard(false);
-  //       })
-  //       .catch((e) => console.log(e));
-  //   }
-  // }, [currentUser, deletedCard, postCard]);
+  useEffect(() => {
+    console.log('calling get custom decks');
+    if (currentUser) {
+      console.log(currentUser.UID)
+      getDecks('1234')
+        .then((usersCustomDecks) => {
+          console.log('custom deck', usersCustomDecks);
+          setCustomDecks(usersCustomDecks);
+          setDeletedCard(false);
+          setPostCard(false);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [currentUser, deletedCard, postCard]);
 
   var handleViewClick = (e) => {
     e.preventDefault();
@@ -353,6 +351,8 @@ export default function App() {
           currentUserUID={currentUser.UID}
           setDeletedCard={setDeletedCard}
           setPostCard={setPostCard}
+          deletedCard={deletedCard}
+          postCard={postCard}
         />
       ) : null}
       {pageView === "ViewCards" ? (
