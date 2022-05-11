@@ -116,13 +116,13 @@ let Game = function (users, deck) {
 
   users.map((user) => { // change to fit identifiers that we end up using
     // gives each user points for specific information
-    this.gameState.userInformation[user.UID] = {
+    this.gameState.userInformation[user.name] = {
       cards: [],
       points: 0,
     }
     // give each player 6 cards -- 7th card is picked up on first round.
     for (let i = 0; i < 6; i++) {
-      this.gameState.userInformation[user.UID].cards.push(this.drawRandomCard(this.gameState.currentDeck.answers))
+      this.gameState.userInformation[user.name].cards.push(this.drawRandomCard(this.gameState.currentDeck.answers))
     }
   })
 
