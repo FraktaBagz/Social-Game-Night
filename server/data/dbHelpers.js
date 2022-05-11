@@ -6,7 +6,7 @@ const { getFirestore, collection, addDoc, doc, getDoc, getDocs } = require('fire
 // get an entire collection from firestore database
 module.exports.getCollection = (collectionName) => {
   let container = [];
-  return getDocs(collection(db, 'defaultRed'))
+  return getDocs(collection(db, collectionName))
     .then((snapShot) => {
       snapShot.forEach((doc) => {
         container.push(doc.data());

@@ -22,45 +22,45 @@ const customDecksSample = {
   skips: {
     questions: [
       {
-        label: 'some prompt',
-        extra: '(ridiculous, senseless, foolish) ',
-        sets: 'default green',
+        label: 'skiplabel1',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default green',
       },
       {
-        label: 'some prompt',
-        extra: '(plentiful, ample, numerous) ',
-        sets: 'default green',
+        label: '2some prompt',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default green',
       },
       {
-        label: 'some prompt',
-        extra: '(obsessive, consuming, captivating) ',
-        sets: 'default green',
+        label: '3some prompt',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default green',
       },],
     answers: [
       {
-        label: 'Absurd',
-        extra: '(ridiculous, senseless, foolish) ',
-        sets: 'default red',
+        label: '1Absurd',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default red',
       },
       {
-        label: 'Abundant',
-        extra: '(plentiful, ample, numerous) ',
-        sets: 'default red',
+        label: '2Abundant',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default red',
       },
       {
-        label: 'Addictive',
-        extra: '(obsessive, consuming, captivating) ',
-        sets: 'default red',
+        label: '3Addictive',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default red',
       },
       {
-        label: 'Absurd',
-        extra: '(ridiculous, senseless, foolish) ',
-        sets: 'default red',
+        label: '4Absurd',
+        extra: '4(ridiculous, senseless, foolish) ',
+        sets: '4default red',
       },
       {
-        label: 'Abundant',
-        extra: '(plentiful, ample, numerous) ',
-        sets: 'default red',
+        label: '5bundant',
+        extra: '5(plentiful, ample, numerous) ',
+        sets: '5default red',
       },
       {
         label: 'Addictive',
@@ -111,8 +111,18 @@ export default function App() {
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
-      questions: ["dummyq1", "dummyq2"],
-      answers: ["dummya1", "dummya2"],
+      questions: [
+        {
+          label: 'some prompt',
+          extra: '(obsessive, consuming, captivating) ',
+          sets: 'default green',
+        }],
+      answers: [
+        {
+          label: 'Addictive',
+          extra: '(obsessive, consuming, captivating) ',
+          sets: 'default red',
+        }]
     },
   });
   const [customDeckTitle, setCustomDecktitle] = useState("");
@@ -150,7 +160,11 @@ export default function App() {
 
   useEffect(() => {
     console.log("currentUser: ", currentUser);
-  }, []);
+    if(currentUser) {
+      console.log("currentUser Name: ", currentUser.name);
+      console.log("currentUser ID: ", currentUser.UID);
+    }
+  }, [currentUser]);
 
   socket.on("new game", (gameObj) => {
     console.log('newGame!!')
@@ -200,7 +214,7 @@ export default function App() {
         setDefaultDeck(deck);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [isLoggedIn]);
 
   var handleViewClick = (e) => {
     e.preventDefault();
@@ -266,6 +280,7 @@ export default function App() {
           chatHistory={chatHistory}
           setChatHistory={setChatHistory}
           currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
         />
       ) : null}
       {pageView === "Lobby" ? (
@@ -281,6 +296,8 @@ export default function App() {
           defaultDeck={defaultDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
           setCustomDecktitle={setCustomDecktitle}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
         />
       ) : null}
       {pageView === "LobbyRestyle" ? (
@@ -315,6 +332,7 @@ export default function App() {
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
           setCustomDecktitle={setCustomDecktitle}
+          currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "ViewCards" ? (
@@ -324,6 +342,7 @@ export default function App() {
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
           setCustomDecktitle={setCustomDecktitle}
+          currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "avatarExample" ? (
@@ -340,7 +359,15 @@ export default function App() {
         </div>
       ) : null}
       {pageView === "results" ? (
-        <Results gameState={gameState} setPageView={setPageView} winner={dummyWinners} chatHistory={chatHistory} setChatHistory={setChatHistory} />
+        <Results
+          gameState={gameState}
+          setPageView={setPageView}
+          winner={dummyWinners}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+        />
       ) : null}
     </>
   );
