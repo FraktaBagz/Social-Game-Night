@@ -10,10 +10,9 @@ export function useGame() {
 }
 
 export function GameProvider({ children }) {
-  function getDeck(deck, uid) {
-    let redContainer = [];
-    let greenContainer = [];
 
+  // get a specific deck from the db
+  function getDeck(deck, uid) {
     return getDoc(doc(db, uid, deck))
       .then((customDeck) => {
         return customDeck.data();
@@ -22,6 +21,24 @@ export function GameProvider({ children }) {
         throw err;
       })
   }
+
+  // get an array of all decks from a user
+  function getDecks = (UID) => {
+    let decks = [];
+    return getDocs(collection(db, UID))
+      .then((data) => {
+        data.forEach(deck => {
+          if (deck.data().greenCard.length) {
+            decks.push(deck.data().greenCard[0].sets);
+          } else if (deck.data().redCard.length) {
+            decks.push(deck.data().redCard[0].sets);
+          }
+        });
+      })
+      .then(() => {
+        return decks;
+      });
+  };
 
   //initialize new deck
   function initializeDeck(userId, deckName) {
@@ -88,7 +105,11 @@ export function GameProvider({ children }) {
 
   const value = {
     getDeck,
+    getDecks,
     addToCustomDeck,
+    deleteCustomDeck,
+    removeFromCustomDeck,
+    initializeDeck,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
