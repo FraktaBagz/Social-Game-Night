@@ -7,12 +7,8 @@ import Button from "@mui/material/Button";
 import PlayingCard from "../common/PlayingCard.jsx";
 
 export default function JudgeView({ gameState, isJudge, submittedCards }) {
-<<<<<<< HEAD
   const [selected, setSelected] = useState({});
   const [winningCard, setWinningCard] = useState(null);
-=======
-  const [selectedUser, setSelectedUser] = useState({});
->>>>>>> 4c7ad10010c25ad6db14be3e6e0373a09206b2e2
   const [hasPicked, setHasPicked] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
 
