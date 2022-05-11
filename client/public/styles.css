@@ -61,7 +61,7 @@
   right: 0;
   display: block;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   background-color: #ECECEC;
   color: #E95D70;
 }
@@ -173,7 +173,18 @@
 }
 
 .playerListDiv {
+  height: 35vh;
+  padding-bottom: 20px;
   overflow: scroll;
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.playerListDiv::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
 }
 
 /* lobby custom deck styles */
