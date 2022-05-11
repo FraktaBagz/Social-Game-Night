@@ -28,46 +28,96 @@ export default function PlayerView({
   currentUser,
 }) {
   const [selected, setSelected] = useState({});
+  const [isJudge, setIsJudge] = useState(false);
+  const [hasPicked, setHasPicked] = useState(false);
+
+  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+
+
 
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
     console.log(selected);
-    // socket.emit(
-    //   "game action",
-    //   JSON.stringify({
-    //     action: "play card",
-    //     game: gameState,
-    //     user: currentUser,
-    //     card: answer,
-    //   })
-    // );
-  };
+    socket.emit(
+      "game action",
+      JSON.stringify({
+        action: "play card",
+        game: gameState,
+        user: currentUser,
+        card: selected,
+      })
+    );
+    setHasPicked(true);
 
-  // this.gameState.userInformation[user.UID] = {
-  //   cards: [],
-  //   points: 0,
-  // }
-
-  const fakeGameState = {
-    currentDeck: [],
-    judgeIndex: 0,
-    judging: false,
-    userInformation: {},
-    questionCard: {
-      label: "some prompt",
-      extra: "(ridiculous, senseless, foolish) ",
-      sets: "default green",
-    },
-    hasPicked: [],
-    submittedCards: [],
-    finished: true,
-    winner: null,
   };
 
   useEffect(() => {
+    console.log("currentUser: ", currentUser);
     console.log("gameState: ", gameState);
     console.log("connectedUsers: ", connectedUsers);
   }, []);
+
+  useEffect(() => {
+    if (gameState.gameState) {
+        const judge = gameState.users[gameState.gameState.judgeIndex];
+        console.log('judge', judge.name, 'currentUser', currentUser.name)
+        if (currentUser.name === judge.name) {
+          setIsJudge(true)
+        }
+      }
+  }, [gameState]);
+
+  // duplicate
+  // const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+
+  let playField;
+  if (isJudge) {
+    if (judging) {
+      playField = <JudgeView isJudge={true} submittedCards={submittedCards} />;
+    } else {
+      playField = <JudgeWaiting />;
+    }
+  } else {
+    if (judging) {
+      playField = <JudgeView isJudge={false} submittedCards={submittedCards} />;
+    } else {
+      if (Object.keys(selected).length === 0) {
+        playField = (
+          <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
+            {gameState.gameState ? gameState.gameState.userInformation[currentUser.name].cards.map((answer) =>
+              <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
+                e.preventDefault();
+                console.log(answer);
+                setSelected(answer)
+              }}/>
+            ) : <div>loading</div> }
+          </Stack>
+        );
+      } else {
+        playField = (
+          <Stack
+            direction="column"
+            spacing={2}
+            mt={2}
+            sx={{ alignItems: "center", justifyContent: "center" }}
+          >
+
+            <PlayingCard color="red" card={selected} />
+            {!hasPicked ?
+              <>
+                <Button variant="contained" onClick={handleConfirmSelection}>
+                  Confirm
+                </Button>
+                <Button variant="contained" onClick={() => setSelected({})}>
+                  Deselect
+                </Button>
+              </>
+            : null}
+          </Stack>
+        );
+      }
+    }
+  }
 
   return (
     <div className="PlayerViewContainer">
@@ -96,58 +146,21 @@ export default function PlayerView({
             direction="column"
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
-            {/* Prompt Card */}
             <Grid item xs={12} mb={10}>
-              <PlayingCard color="green" card={fakeGameState.questionCard} />
+              {gameState.gameState ?
+                <PlayingCard color="green" card={gameState.gameState.questionCard} />
+                : null}
             </Grid>
             <Grid item xs={12}>
-              {/* Judge avatar */}
               <AvatarChipPicking
-                userInfo={{
-                  //this can come from
-                  name: "Nathaniel",
-                  title: "Judge",
-                  avatar:
-                    "https://www.kindpng.com/picc/m/3-35984_transparent-emotion-clipart-transparent-background-happy-emoji-png.png",
-                }}
+                userInfo={connectedUsers[judgeIndex]}
               />
             </Grid>
           </Grid>
         </Grid>
         {/* ---------------------------- MIDDLE -------------------------------- */}
-
         <Grid item xs={6}>
-        {/* insert conditionals here to render judge view or judge waiting */}
-
-          {Object.keys(selected).length === 0 ? (
-            <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
-              {customDecksSample.skips.answers.map((answer) => (
-                <PlayingCard
-                  color="red"
-                  card={answer}
-                  handleSelectCard={(e) => {
-                    e.preventDefault();
-                    setSelected(answer);
-                  }}
-                />
-              ))}
-            </Stack>
-          ) : (
-            <Stack
-              direction="column"
-              spacing={2}
-              mt={2}
-              sx={{ alignItems: "center", justifyContent: "center" }}
-            >
-              <PlayingCard color="red" card={selected} />
-              <Button variant="contained" onClick={handleConfirmSelection}>
-                Confirm
-              </Button>
-              <Button variant="contained" onClick={() => setSelected({})}>
-                Deselect
-              </Button>
-            </Stack>
-          )}
+          {playField}
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
