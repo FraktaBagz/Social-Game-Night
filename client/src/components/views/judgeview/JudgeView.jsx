@@ -8,6 +8,7 @@ import PlayingCard from "../common/PlayingCard.jsx";
 
 export default function JudgeView({ gameState }) {
   const [selected, setSelected] = useState({});
+
   const handleWinnerPicked = (e) => {
     e.preventDefault();
     console.log('winning card confirmed')
@@ -35,16 +36,6 @@ export default function JudgeView({ gameState }) {
     {
       label: "Absurd",
       extra: "(ridiculous, senseless, foolish) ",
-      sets: "default red",
-    },
-    {
-      label: "Abundant",
-      extra: "(plentiful, ample, numerous) ",
-      sets: "default red",
-    },
-    {
-      label: "Addictive",
-      extra: "(obsessive, consuming, captivating) ",
       sets: "default red",
     },
   ];
