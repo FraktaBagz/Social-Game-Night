@@ -16,7 +16,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
   const [customAnswer, setCustomAnswer] = useState('');
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState('');
-  const [cardTypeCust, setCardTypeCust] = useState('QUESTION')
+  const [cardTypeCust, setCardTypeCust] = useState('green')
   const [newCard, setNewCard] = useState('');
   const [createButton, setCreateButton] = useState(false);
 
@@ -55,14 +55,14 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
   const addCardFunc = () => (
     <Box>
       <Box>
-        {cardTypeCust === 'QUESTION' ?
+        {cardTypeCust === 'green' ?
           <Stack direction="row" spacing={2}>
             <Button variant="contained">Question</Button>
-            <Button variant="outlined" onClick={() => (setCardTypeCust('ANSWER'))}>Answer</Button>
+            <Button variant="outlined" onClick={() => (setCardTypeCust('red'))}>Answer</Button>
           </Stack>
           :
           <Stack direction="row" spacing={2}>
-            <Button variant="outlined" onClick={() => (setCardTypeCust('QUESTION'))}>Question</Button>
+            <Button variant="outlined" onClick={() => (setCardTypeCust('green'))}>Question</Button>
             <Button variant="contained">
               Answer
             </Button>
