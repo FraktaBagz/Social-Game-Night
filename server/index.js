@@ -18,8 +18,8 @@ io.on('connection', (socket) => {
   // console.log('user connected');
   if (count === 0) {
     console.log('Host is set')
-    count+=1;
-    setTimeout(()=>{
+    count += 1;
+    setTimeout(() => {
       io.emit('set host')
     }, 1000)
   }
@@ -44,6 +44,7 @@ io.on('connection', (socket) => {
     console.log('msg', msg);
     msg = JSON.parse(msg);
     connectedUsers.push(msg.user)
+    console.log('connected users have been updated ', connectedUsers);
     io.emit('update connected users', JSON.stringify(connectedUsers))
   })
 

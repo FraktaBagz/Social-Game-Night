@@ -93,7 +93,7 @@ function SignUpPage({ handleLogState, setPageView }) {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link variant="body2" onClick={() => { setPageView('SignIn') }}>
+              <Link className="link" variant="body2" onClick={() => { setPageView('SignIn') }}>
                 Back To Log In
               </Link>
             </Grid>
