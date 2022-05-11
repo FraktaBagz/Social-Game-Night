@@ -35,8 +35,11 @@ const theme = createTheme({
 
 ReactDOM.render(
   <AuthProvider>
-    <GameProvider>
-      <App />
-    </GameProvider>
+    <ThemeProvider theme={theme}>
+      <GameProvider>
+        <App />
+      </GameProvider>
+    </ThemeProvider>
+
   </AuthProvider >
   , document.getElementById('root'));

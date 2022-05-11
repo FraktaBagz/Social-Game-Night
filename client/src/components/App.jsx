@@ -291,9 +291,9 @@ export default function App() {
           <br />
           <AvatarChipWaiting user={customUserInfo} />
           <br />
-          <PlayingCard type="question" info="question example" />
+          <PlayingCard card={customDecksSample.skips.questions[0]} color='green' />
           <br />
-          <PlayingCard type="answer" info="answer example" />
+          <PlayingCard card={customDecksSample.skips.answers[0]} color='red' />
         </div>
       ) : null}
       {pageView === "results" ? (
