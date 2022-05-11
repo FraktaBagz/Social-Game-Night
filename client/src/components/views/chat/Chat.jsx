@@ -270,6 +270,7 @@ socket.on('chat message', function (msg) {
 
 const checkEmotes = (chatcontent) => {
   var user = chatcontent.user
+  var typoDetector = true;
   var text = chatcontent.text
   let div = document.getElementById('messageContainer')
   let li = document.createElement("li")
@@ -280,15 +281,21 @@ const checkEmotes = (chatcontent) => {
       let img = document.createElement("img")
       var emote = word.split('').slice(1).join('')
       var emoteURL = emotesObj[emote]
+      typoDetector = emoteURL;
       img.src = `${emoteURL}`
       img.height = "40"
       li.append(img)
     } else {
       li.append(`${word} `)
     }
-  })
-  div.prepend(li)
-  document.getElementById('inputChat').value = '';
+  });
+
+  if (!typoDetector) {
+    alert('Not an EMOTE!');
+  } else {
+    div.prepend(li)
+    document.getElementById('inputChat').value = '';
+  }
 }
 
 export default function Chat({ chatHistory, setChatHistory, currentUser }) {
@@ -312,10 +319,10 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   }, chatHistory)
 
   const shuffleEmotes = () => {
-    var keysArray = Object.keys(emotesObj)
-    var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)]
-    setChatContent(`${randomKey} :${randomKey}`)
-    handleSubmit(null)
+    var keysArray = Object.keys(emotesObj);
+    var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)];
+    setChatContent(`${randomKey} :${randomKey}`);
+    handleSubmit(null);
   }
   const handleSubmit = (e) => {
     if (e) {
@@ -323,7 +330,7 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
     }
     socket.emit('chat message', JSON.stringify({ user: user, text: chatContent }));
     var chatHistoryCopy = chatHistory
-    chatHistoryCopy.push({user: `${user}`, text: `${chatContent}`})
+    chatHistoryCopy.push({ user: `${user}`, text: `${chatContent}` })
     setChatHistory(chatHistoryCopy)
   }
   var count = 0;
@@ -331,64 +338,48 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
     <>
       <div className="chatContainer" >
         <div className="chatDiv" >
-          <h1>Chat Room</h1>
-          <ul id="messageContainer" className="messageContainer" style={{
-            width: '80%', borderStyle: 'solid', margin: '10px', float: 'left', overflowY: 'scroll', overflow: 'scroll', height: '200px', fontSize: '18px', display: 'flex', flexDirection: 'column-reverse', listStyleType: 'none'
-          }}>
-          </ul>
-          <input id="inputChat" type="text" placeholder="New Message" style={{ fontSize: '22px' }} onChange={(e) => { setChatContent(e.target.value) }}></input>
-          <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
-            mt: 3,
-            mb: 2,
-            width: 50,
-            height: 40,
-            borderRadius: 4,
-            backgroundColor: "secondary.main",
-            '&:hover': {
-              backgroundColor: 'primary.grey',
-            }
-          }}
-          onClick={(e) => {
-            handleSubmit(e)
-          }}>
-            Send
-          </Button>
+          <h2>Chat Room</h2>
+          <ul id="messageContainer" className="messageContainer"></ul>
 
-          <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
-            mt: 3,
-            mb: 2,
-            width: 70,
-            height: 40,
-            borderRadius: 4,
-            backgroundColor: "secondary.main",
-            '&:hover': {
-              backgroundColor: 'primary.grey',
-            }
-          }}
-          onClick={() => { shuffleEmotes() }}>
-            SHUFFLE
-          </Button>
+          <div className="chat-input input-group mb-3">
+            <input id="inputChat" type="text" className="form-control" placeholder="share some wisdom..." onChange={(e) => { setChatContent(e.target.value) }} />
+            <button id="buttonChat" className="btn btn-outline-secondary" type="button" onClick={(e) => { handleSubmit(e) }}>Send</button>
+          </div>
+          <div className="chat-emote-btn">
+            <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
+              mt: 3,
+              mb: 2,
+              height: 40,
+              borderRadius: 4,
+              backgroundColor: "secondary.main",
+              '&:hover': {
+                backgroundColor: 'primary.grey',
+              }
+            }}
+              onClick={() => { shuffleEmotes() }}>
+              SHUFFLE EMOTES
+            </Button>
 
-          <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
-            mt: 3,
-            mb: 2,
-            width: 40,
-            height: 40,
-            borderRadius: 4,
-            backgroundColor: "secondary.main",
-            '&:hover': {
-              backgroundColor: 'primary.grey',
-            }
-          }}
-          onClick={() => {
-            var emoteString = '';
-            for (var key in emotesObj) {
-              emoteString += `:${key}, `
-            }
-            alert(emoteString)
-          }}>
-            ?
-          </Button>
+            <Button type="submit" id="buttonChat" fullWidth variant="contained" sx={{
+              mt: 3,
+              mb: 2,
+              height: 40,
+              borderRadius: 4,
+              backgroundColor: "secondary.main",
+              '&:hover': {
+                backgroundColor: 'primary.grey',
+              }
+            }}
+              onClick={() => {
+                var emoteString = '';
+                for (var key in emotesObj) {
+                  emoteString += `:${key}, `
+                }
+                alert(emoteString)
+              }}>
+              EMOTE DICTIONARY
+            </Button>
+          </div>
         </div>
       </div>
     </>
