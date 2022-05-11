@@ -1,0 +1,197 @@
+/* signup/login styles */
+.link:hover {
+  cursor: pointer;
+}
+
+/* navbar styles */
+.navbar-brand {
+  background-color: #ECECEC;
+  border-radius: 15px;
+  padding: 5px 10px;
+}
+
+.navbar-brand:hover {
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+}
+
+.apples-logo {
+  color: #9CE774;
+}
+
+.to-logo {
+  color: #E95D70;
+}
+
+.oranges-logo {
+  color: #EA9E48;
+}
+
+/* homepage styles */
+.homepage {
+  width: 80%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* responsive styles */
+@media only screen and (max-width: 1200px) {
+  .homepage {
+    top: 70%;
+  }
+}
+
+/* lobby styles */
+.playerListContainer {
+  margin: 0;
+  padding: 20px;
+  width: 400px;
+  position: fixed;
+  right: 0;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  background-color: #ECECEC;
+  color: #E95D70;
+}
+
+/* lobby styles */
+.lobbyDiv {
+  margin: 0;
+  position: absolute;
+  top: 52%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 60%;
+  margin: 10px;
+}
+
+.sessionSettingsDiv {
+  margin: 10px;
+}
+
+.game-code {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 450px;
+  background-color: #EA9E48;
+  color: white;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 15px;
+}
+
+.game-code h3 {
+  color: white;
+}
+
+.game-code h3:hover {
+  cursor: pointer;
+}
+
+.game-code p {
+  margin: 0;
+  padding: 0;
+}
+
+.buttonsDiv {
+  margin: 10px;
+}
+
+.buttonsDiv div {
+  display: inline-block;
+}
+
+.buttonsDiv Button {
+  background-color: #EA9E48;
+  margin: 24px;
+  width: 300px;
+}
+
+.welcome {
+  color: #9CE774;
+  font-size: 58px;
+}
+
+/* lobby chat/users styles */
+.messageContainer {
+  background-color: white;
+  color: black;
+  margin: 0;
+  padding: 20px;
+  border-style: solid;
+  border-width: 0.8px;
+  border-color: #CED4DA;
+  overflow: scroll;
+  height: 200px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column-reverse;
+  list-style: none;
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.messageContainer::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
+.chat-input input {
+  border-radius: 0;
+}
+
+.chat-input button {
+  border-radius: 0;
+  background-color: #E95D70;
+  color: white;
+  border: none;
+}
+
+.chat-input button:hover {
+  background-color: #2C2F39;
+}
+
+.chat-emote-btn Button {
+  width: 100%;
+  margin: 15px 0 15px 0;
+}
+
+.playerListDiv {
+  height: 35vh;
+  padding-bottom: 20px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.playerListDiv::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
+/* lobby custom deck styles */
+.custom-deck-container {
+  padding: 20px;
+}
+
+.custom-deck-title {
+  color: #E95D70;
+}
