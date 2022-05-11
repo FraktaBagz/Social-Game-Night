@@ -113,7 +113,7 @@ let Game = function (users, deck) {
     this.gameState.finished = false;
   }
 
-  users.map((user) => { // change to fit identifiers that we end up using
+  users.map((user) => { // change to fit identifiers th at we end up using
     // gives each user points for specific information
     this.gameState.userInformation[user.name] = {
       cards: [],

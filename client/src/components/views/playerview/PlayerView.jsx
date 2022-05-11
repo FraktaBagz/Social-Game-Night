@@ -164,7 +164,7 @@ export default function PlayerView({
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} />
+          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser}/>
         </Grid>
         {/* -------------------------------------------------------------------- */}
       </Grid>
