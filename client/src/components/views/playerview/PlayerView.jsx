@@ -29,6 +29,11 @@ export default function PlayerView({
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
+  const [hasPicked, setHasPicked] = useState(false);
+
+  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+
+
 
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
@@ -42,6 +47,8 @@ export default function PlayerView({
         card: selected,
       })
     );
+    setHasPicked(true);
+
   };
 
   useEffect(() => {
@@ -51,12 +58,17 @@ export default function PlayerView({
   }, []);
 
   useEffect(() => {
-    if (gameState.judgeIndex && connectedUsers[gameState.judgeIndex].name === currentUser.name) {
-      setIsJudge(true);
-    }
+    if (gameState.gameState) {
+        const judge = gameState.users[gameState.gameState.judgeIndex];
+        console.log('judge', judge.name, 'currentUser', currentUser.name)
+        if (currentUser.name === judge.name) {
+          setIsJudge(true)
+        }
+      }
   }, [gameState]);
 
-  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+  // duplicate
+  // const { judgeIndex, judging, submittedCards, questionCard } = gameState;
 
   let playField;
   if (isJudge) {
@@ -74,9 +86,9 @@ export default function PlayerView({
           <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
             {gameState.gameState ? gameState.gameState.userInformation[currentUser.name].cards.map((answer) =>
               <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
-                e.preventDefault(); 
+                e.preventDefault();
                 console.log(answer);
-                socket.emit('game action', JSON.stringify({action: 'play card', game: gameState, user: currentUser, card: answer[0]}))
+                setSelected(answer)
               }}/>
             ) : <div>loading</div> }
           </Stack>
@@ -89,13 +101,18 @@ export default function PlayerView({
             mt={2}
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
+
             <PlayingCard color="red" card={selected} />
-            <Button variant="contained" onClick={handleConfirmSelection}>
-              Confirm
-            </Button>
-            <Button variant="contained" onClick={() => setSelected({})}>
-              Deselect
-            </Button>
+            {!hasPicked ?
+              <>
+                <Button variant="contained" onClick={handleConfirmSelection}>
+                  Confirm
+                </Button>
+                <Button variant="contained" onClick={() => setSelected({})}>
+                  Deselect
+                </Button>
+              </>
+            : null}
           </Stack>
         );
       }

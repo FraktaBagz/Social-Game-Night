@@ -8,6 +8,7 @@ import PlayingCard from "../common/PlayingCard.jsx";
 
 export default function JudgeView({ gameState, isJudge, submittedCards }) {
   const [selected, setSelected] = useState({});
+  const [hasPicked, setHasPicked] = useState(false);
   //selected = card.user
   const handleWinnerPicked = (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
         user: selected,
       })
     );
+    setHasPicked(true);
   };
 
   return (
@@ -57,7 +59,7 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
           sx={{ alignItems: "center", justifyContent: "center" }}
         >
           <PlayingCard color="red" card={selected} />
-          {isJudge ? (
+          {isJudge && !hasPicked ? (
             <>
               <Button variant="contained" onClick={handleWinnerPicked}>
                 Confirm

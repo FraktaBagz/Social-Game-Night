@@ -15,6 +15,7 @@ let Game = function (users, deck) {
   this.gameState = {
       currentDeck: deck, // {questions: [], answers: []}
       judgeIndex: 0,
+      // judge: this.users[this.judgeIndex].name,
       judging: false,
       userInformation: {}, //UID: {cards: [], points:0}
       questionCard: null, //{label: 'string', extra: 'lala', set: 'lala'}
