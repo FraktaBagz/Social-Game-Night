@@ -6,6 +6,8 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import PlayingCard from '../common/PlayingCard.jsx';
+import Typography from '@mui/material/Typography';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useGame } from "../../../firebase/contexts/GameContext.js";
 
@@ -29,11 +31,10 @@ export default function ViewCards({
   const deckName = decks[0]
   const [deck, setDeck] = useState(selectedCustomDeck[deckName])
 
+
+  // resetting the deck after a post has been made
   useEffect(() => {
     setDeck(selectedCustomDeck[deckName])
-    // console.log('deck', deck)
-    // console.log('selectedrefreshdeck', selectedCustomDeck)
-    // console.log('selectedrefreshdeckname', selectedCustomDeck[deckName])
   }, [selectedCustomDeck])
 
 
@@ -55,39 +56,30 @@ export default function ViewCards({
           ))
       ))
       .catch((e) => (console.log(e)));
-
-    // each time the card is deleted, useEffect custom deck to dynamically render the page with this update
-
-    console.log(currentUserUID)
-    console.log('delete', userId, deckName, card, color)
-    console.log('userid:', typeof (userId))
-    console.log('deckname:', typeof (deckName))
-    console.log('card:', typeof (card))
-    console.log('color:', typeof (color))
   }
 
   return (
     <Container
       maxWidth="sm"
     >
-      <div>AllCards in deck</div>
-      {/* <div onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</div> */}
-      <h1>{deckName}</h1>
-      <div>Questions</div>
-      <div>
+      <Typography>AllCards in deck</Typography>
+      <Typography onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</Typography>
+      <Typography variant="h1">{deckName}</Typography>
+      <Typography>Questions</Typography>
+      <Container>
         <Stack direction="row" spacing={2}>
           {deck.greenCard.length > 0
             ?
             deck.greenCard.map((question, key) => (
-              <div key={key}>
-                <div onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: question.label, extra: question.extra, sets: question.sets }, 'green'))}>X</div>
+              <Container key={key}>
+                <Typography onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: question.label, extra: question.extra, sets: question.sets }, 'green'))}><DeleteIcon /></Typography>
                 <Item >{question.label}</Item>
                 <PlayingCard color="green" card={{
                   label: question.label,
                   extra: question.extra,
                   sets: question.sets,
                 }} />
-              </div>
+              </Container>
             ))
             :
             <PlayingCard color="green" card={{
@@ -97,22 +89,22 @@ export default function ViewCards({
             }} />
           }
         </Stack>
-      </div>
-      <div>Answers</div>
-      <div>
+      </Container>
+      <Typography>Answers</Typography>
+      <Container>
         <Stack direction="row" spacing={2}>
           {deck.redCard.length > 0
             ?
             deck.redCard.map((answer, key) => (
-              <div key={key}>
-                <div onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: answer.label, extra: answer.extra, sets: answer.sets }, 'red'))}>X</div>
+              <Container key={key}>
+                <Typography onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: answer.label, extra: answer.extra, sets: answer.sets }, 'red'))}><DeleteIcon /></Typography>
                 <Item>{answer.label}</Item>
                 <PlayingCard color="red" card={{
                   label: answer.label,
                   extra: answer.extra,
                   sets: answer.sets,
                 }} />
-              </div>
+              </Container>
             ))
             :
             <PlayingCard color="red" card={{
@@ -122,7 +114,7 @@ export default function ViewCards({
             }} />
           }
         </Stack>
-      </div>
+      </Container>
     </Container>
   )
 }
