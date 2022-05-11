@@ -81,9 +81,8 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
           <div className="playerListDiv">
             <Stack spacing={2}>
               {connectedUsers.map((userObj) => {
-                console.log('exec')
                 return (
-                  <AvatarChipPicking key={count+=1}user={userObj} />
+                  <AvatarChipPicking key={count+=1} user={userObj} />
                 )
               })}
             </Stack>
