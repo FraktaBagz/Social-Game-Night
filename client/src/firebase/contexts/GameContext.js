@@ -10,6 +10,7 @@ export function useGame() {
 }
 
 export function GameProvider({ children }) {
+  // get deck function
   function getDeck(deck, uid) {
     let redContainer = [];
     let greenContainer = [];
@@ -88,7 +89,10 @@ export function GameProvider({ children }) {
 
   const value = {
     getDeck,
+    initializeDeck,
     addToCustomDeck,
+    removeFromCustomDeck,
+    deleteCustomDeck
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

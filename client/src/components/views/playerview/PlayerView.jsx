@@ -67,7 +67,8 @@ export default function PlayerView({
       }
   }, [gameState]);
 
-  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+  // duplicate
+  // const { judgeIndex, judging, submittedCards, questionCard } = gameState;
 
   let playField;
   if (isJudge) {
