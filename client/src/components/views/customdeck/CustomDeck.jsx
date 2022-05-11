@@ -37,11 +37,16 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
 
   return (
     <Container
+      className="custom-deck-container"
       sx={{
-        width: 300,
+        width: 650,
         height: 300,
         backgroundColor: 'info.main',
       }} >
+      {/* <Typography variant="h3">Custom deck</Typography> */}
+      {/* <div onClick={() => (setPageView('HomePage'))}>back to homepage</div> */}
+      <h3 className="custom-deck-title"><strong>Choose Your Deck!</strong></h3>
+
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={{ xs: 1, sm: 2, md: 4 }}

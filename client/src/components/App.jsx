@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import SignUpPage from "./views/signup/SignUp.jsx";
-import SignInPage from "./views/signin/SignIn.jsx";
 import { useAuth } from "../firebase/contexts/AuthContext.js";
 import { auth } from "../firebase/firebase.js";
 import { useGame } from "../firebase/contexts/GameContext.js";
+import SignUpPage from "./views/signup/SignUp.jsx";
+import SignInPage from "./views/signin/SignIn.jsx";
+import Navbar from "./views/navbar/Navbar.jsx";
 import HomePage from "./views/homepage/HomePage.jsx";
 import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";
@@ -166,16 +167,16 @@ export default function App() {
   //   }
   // }, [connectedUsers])
 
-  socket.on('update connected users', (msg)=>{
+  socket.on('update connected users', (msg) => {
     msg = JSON.parse(msg)
     console.log('the master user list:', msg)
     // if ((msg.length !== connectedUsers.length) && !host) {
     //   console.log('166')
-      setConnectedUsers(msg)
+    setConnectedUsers(msg)
     // }
   })
 
-  socket.on('set host', ()=>{
+  socket.on('set host', () => {
     setHost(true)
   })
 
@@ -216,7 +217,7 @@ export default function App() {
   //     .catch((e) => console.log(e));
   // }, [isLoggedIn]);
 
-
+  // grabs custom decks pls keep
   useEffect(() => {
     console.log('calling get custom decks');
     if (currentUser) {
@@ -232,9 +233,9 @@ export default function App() {
     }
   }, [currentUser, deletedCard, postCard]);
 
-  var handleViewClick = (e) => {
-    e.preventDefault();
-    setPageView(e.target.value);
+  var handleViewClick = (view) => {
+    // e.preventDefault();
+    setPageView(view);
   };
 
   if (!isLoggedIn) {
@@ -260,7 +261,8 @@ export default function App() {
 
   return (
     <>
-      <button onClick={handleViewClick} value='SignUp'>SignUp</button>
+      <Navbar handleViewClick={handleViewClick} pageView={pageView} />
+      {/* <button onClick={handleViewClick} value='SignUp'>SignUp</button>
       <button onClick={handleViewClick} value='SignIn'>SignIn</button>
       <button onClick={handleViewClick} value='HomePage'>HomePage</button>
       <button onClick={handleViewClick} value='JudgeView'>JudgeView</button>
@@ -269,7 +271,7 @@ export default function App() {
       <button onClick={handleViewClick} value='LobbyRestyle'>LobbyRestyle</button>
       <button onClick={handleViewClick} value='CustomDeck'>CustomDeck</button>
       <button onClick={handleViewClick} value='avatarExample'>avatarExample</button>
-      <button onClick={handleViewClick} value='results'>results</button>
+      <button onClick={handleViewClick} value='results'>results</button> */}
       {pageView === "HomePage" ? (
         <HomePage
           gameState={gameState}
