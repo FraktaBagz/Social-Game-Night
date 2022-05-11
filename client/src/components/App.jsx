@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import SignUpPage from "./views/signup/SignUp.jsx";
-import SignInPage from "./views/signin/SignIn.jsx";
 import { useAuth } from "../firebase/contexts/AuthContext.js";
 import { auth } from "../firebase/firebase.js";
 import { useGame } from "../firebase/contexts/GameContext.js";
+import SignUpPage from "./views/signup/SignUp.jsx";
+import SignInPage from "./views/signin/SignIn.jsx";
+import Navbar from "./views/navbar/Navbar.jsx";
 import HomePage from "./views/homepage/HomePage.jsx";
 import JudgeView from "./views/judgeview/JudgeView.jsx";
 import PlayerView from "./views/playerview/PlayerView.jsx";
@@ -20,7 +21,8 @@ const socket = io();
 
 const customDecksSample = {
   skips: {
-    questions: [
+    // questions: [
+    greenCard: [
       {
         label: 'skiplabel1',
         extra: '1(ridiculous, senseless, foolish) ',
@@ -36,7 +38,8 @@ const customDecksSample = {
         extra: '3(obsessive, consuming, captivating) ',
         sets: '3default green',
       },],
-    answers: [
+    // answers: [
+    redCard: [
       {
         label: '1Absurd',
         extra: '1(ridiculous, senseless, foolish) ',
@@ -103,7 +106,7 @@ const dummyWinners = [
 
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
-  const { getUser, getDeck } = useGame();
+  const { getUser, getDeck, getDecks } = useGame();
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
@@ -111,13 +114,15 @@ export default function App() {
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
-      questions: [
+      // questions: [
+      greenCard: [
         {
           label: 'some prompt',
           extra: '(obsessive, consuming, captivating) ',
           sets: 'default green',
         }],
-      answers: [
+      // answers: [
+      redCard: [
         {
           label: 'Addictive',
           extra: '(obsessive, consuming, captivating) ',
@@ -125,7 +130,9 @@ export default function App() {
         }]
     },
   });
-  const [customDeckTitle, setCustomDecktitle] = useState("");
+  const [deletedCard, setDeletedCard] = useState(false);
+  const [postCard, setPostCard] = useState(false);
+  const [customDeckTitle, setCustomDeckTitle] = useState("");
   const [chatHistory, setChatHistory] = useState([
     { user: "Bot", text: "This is the beginning of the chat history" },
   ]);
@@ -135,23 +142,24 @@ export default function App() {
 
   useEffect(() => {
     console.log("currentUser: ", currentUser);
-    if(currentUser) {
+    if (currentUser) {
       console.log("currentUser Name: ", currentUser.name);
       console.log("currentUser ID: ", currentUser.UID);
     }
   }, [currentUser]);
 
+
   socket.on("new game", (gameObj) => {
-    console.log('newGame!!')
+    console.log('newGame!!');
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);
   });
 
   socket.on('join game', (msg) => {
-    console.log('new player entered room')
+    console.log('new player entered room');
     msg = JSON.parse(msg);
-    console.log(msg)
-    setConnectedUsers([...connectedUsers, msg.user])
+    console.log(msg);
+    setConnectedUsers([...connectedUsers, msg.user]);
   })
   // useEffect(()=>{
   //   if (host) {
@@ -159,16 +167,16 @@ export default function App() {
   //   }
   // }, [connectedUsers])
 
-  socket.on('update connected users', (msg)=>{
+  socket.on('update connected users', (msg) => {
     msg = JSON.parse(msg)
     console.log('the master user list:', msg)
     // if ((msg.length !== connectedUsers.length) && !host) {
     //   console.log('166')
-      setConnectedUsers(msg)
+    setConnectedUsers(msg)
     // }
   })
 
-  socket.on('set host', ()=>{
+  socket.on('set host', () => {
     setHost(true)
   })
 
@@ -193,25 +201,41 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    console.log('calling get deck');
-    getDeck('default', 'default')
-      .then((deck) => {
-        console.log('deck', deck);
-        if (deck.greenCard) {
-          deck['questions'] = deck['greenCard'];
-          deck['answers'] = deck['redCard'];
-          delete deck['greenCard'];
-          delete deck['redCard'];
-        }
-        setDefaultDeck(deck);
-      })
-      .catch((e) => console.log(e));
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   console.log('calling get deck');
+  //   getDeck('default', 'default')
+  //     .then((deck) => {
+  //       console.log('deck', deck);
+  //       if (deck.greenCard) {
+  //         deck['questions'] = deck['greenCard'];
+  //         deck['answers'] = deck['redCard'];
+  //         delete deck['greenCard'];
+  //         delete deck['redCard'];
+  //       }
+  //       setDefaultDeck(deck);
+  //     })
+  //     .catch((e) => console.log(e));
+  // }, [isLoggedIn]);
 
-  var handleViewClick = (e) => {
-    e.preventDefault();
-    setPageView(e.target.value);
+  // grabs custom decks pls keep
+  useEffect(() => {
+    console.log('calling get custom decks');
+    if (currentUser) {
+      console.log(currentUser.UID)
+      getDecks(currentUser.UID)
+        .then((usersCustomDecks) => {
+          console.log('custom deck', usersCustomDecks);
+          setCustomDecks(usersCustomDecks);
+          setDeletedCard(false);
+          setPostCard(false);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [currentUser, deletedCard, postCard]);
+
+  var handleViewClick = (view) => {
+    // e.preventDefault();
+    setPageView(view);
   };
 
   if (!isLoggedIn) {
@@ -237,7 +261,8 @@ export default function App() {
 
   return (
     <>
-      <button onClick={handleViewClick} value='SignUp'>SignUp</button>
+      <Navbar handleViewClick={handleViewClick} pageView={pageView} />
+      {/* <button onClick={handleViewClick} value='SignUp'>SignUp</button>
       <button onClick={handleViewClick} value='SignIn'>SignIn</button>
       <button onClick={handleViewClick} value='HomePage'>HomePage</button>
       <button onClick={handleViewClick} value='JudgeView'>JudgeView</button>
@@ -246,7 +271,7 @@ export default function App() {
       <button onClick={handleViewClick} value='LobbyRestyle'>LobbyRestyle</button>
       <button onClick={handleViewClick} value='CustomDeck'>CustomDeck</button>
       <button onClick={handleViewClick} value='avatarExample'>avatarExample</button>
-      <button onClick={handleViewClick} value='results'>results</button>
+      <button onClick={handleViewClick} value='results'>results</button> */}
       {pageView === "HomePage" ? (
         <HomePage
           gameState={gameState}
@@ -288,7 +313,7 @@ export default function App() {
           customDecks={customDecks}
           defaultDeck={defaultDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
         />
@@ -305,7 +330,7 @@ export default function App() {
           customDecks={customDecks}
           defaultDeck={defaultDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
         />
       ) : null}
       {pageView === "CustomDeck" ? (
@@ -314,7 +339,8 @@ export default function App() {
           setPageView={setPageView}
           customDecks={customDecks}
           setSelectedCustomDeck={setSelectedCustomDeck}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
+          currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "Custom" ? (
@@ -322,10 +348,15 @@ export default function App() {
           gameState={gameState}
           setPageView={setPageView}
           previousView={"Lobby"}
+          setSelectedCustomDeck={setSelectedCustomDeck}
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
           currentUserUID={currentUser.UID}
+          setDeletedCard={setDeletedCard}
+          setPostCard={setPostCard}
+          deletedCard={deletedCard}
+          postCard={postCard}
         />
       ) : null}
       {pageView === "ViewCards" ? (
@@ -334,8 +365,10 @@ export default function App() {
           setPageView={setPageView}
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
-          setCustomDecktitle={setCustomDecktitle}
+          setCustomDeckTitle={setCustomDeckTitle}
           currentUserUID={currentUser.UID}
+          setDeletedCard={setDeletedCard}
+          setPostCard={setPostCard}
         />
       ) : null}
       {pageView === "avatarExample" ? (

@@ -1,12 +1,14 @@
 // CUSTOM DECK PAGE VIEW
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { useGame } from "../../../firebase/contexts/GameContext.js";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -16,9 +18,15 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDecktitle, previousView }) {
+export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDeckTitle, previousView, currentUserUID }) {
   const deckNames = Object.keys(customDecks);
   const [decks, setDecks] = useState(deckNames);
+  const [deckTitle, setDeckTitle] = useState('');
+  const { initializeDeck } = useGame();
+
+  useEffect(() => {
+    setDecks(deckNames)
+  }, [customDecks])
 
   // should pass already customized decks in format below and send custom deck to database. with a post if deck doesn't exist or put request if deck exists already.
   // expected data per deck
@@ -29,17 +37,16 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
 
   return (
     <Container
+      className="custom-deck-container"
       sx={{
-        width: 300,
+        width: 650,
         height: 300,
         backgroundColor: 'info.main',
-        // '&:hover': {
-        //   backgroundColor: 'primary.main',
-        //   opacity: [0.9, 0.8, 0.7],
-        // },
       }} >
       {/* <Typography variant="h3">Custom deck</Typography> */}
       {/* <div onClick={() => (setPageView('HomePage'))}>back to homepage</div> */}
+      <h3 className="custom-deck-title"><strong>Choose Your Deck!</strong></h3>
+
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -63,10 +70,10 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               }}
               onClick={() => (
                 setSelectedCustomDeck({ [deck]: customDecks[deck] }),
-                setCustomDecktitle(deck)
+                setCustomDeckTitle(deck)
               )}>{deck}'s
             </Item>
-            <span>Total Cards: {(customDecks[deck].questions).length + (customDecks[deck].answers).length}</span>
+            <span>Total Cards: {(customDecks[deck].greenCard).length + (customDecks[deck].redCard).length}</span>
             <Button type="submit"
               fullWidth
               variant="contained"
@@ -83,27 +90,41 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               }} onClick={() => (
                 setPageView('Custom'),
                 setSelectedCustomDeck({ [deck]: customDecks[deck] }),
-                setCustomDecktitle(deck)
+                setCustomDeckTitle(deck)
               )}>Edit
             </Button>
           </div>
         ))}
-        <Item onClick={() => (setPageView('Custom'), setCustomDecktitle(''), setSelectedCustomDeck({
-          'title here': {
-            questions: [
-              {
+        <Item >
+          <TextField
+            required
+            id="outlined-required"
+            label="Deck Title"
+            defaultValue={customDeckTitle}
+            onChange={(e) => (
+              setCustomDeckTitle(e.target.value),
+              setDeckTitle(e.target.value)
+            )} />
+          <Button variant="outlined" onClick={() => (setPageView('Custom'),
+          console.log('userid: ', typeof(currentUserUID), `${currentUserUID}`, 'title"', typeof(deckTitle), deckTitle ),
+          initializeDeck(`${currentUserUID}`, deckTitle),
+          setSelectedCustomDeck({
+            [deckTitle]: {
+              greenCard: [
+                {
+                  label: 'some prompt',
+                  extra: '(ridiculous, senseless, foolish) ',
+                  sets: 'default green',
+                }
+
+              ], redCard: [{
                 label: 'some prompt',
                 extra: '(ridiculous, senseless, foolish) ',
                 sets: 'default green',
-              }
-
-            ], answers: [{
-              label: 'some prompt',
-              extra: '(ridiculous, senseless, foolish) ',
-              sets: 'default green',
-            }]
-          }
-        }))}>+</Item>
+              }]
+            }
+          }))}>save</Button>
+        </Item>
       </Stack>
     </Container >
   )

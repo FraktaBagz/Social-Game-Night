@@ -90,7 +90,7 @@ export default function SignInPage({ setPageView, handleLogState }) {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link variant="body2" onClick={() => { setPageView('SignUp') }}>
+              <Link className="link" variant="body2" onClick={() => { setPageView('SignUp') }}>
                 Don't have an account? Sign Up Here!
               </Link>
             </Grid>
@@ -109,7 +109,7 @@ export default function SignInPage({ setPageView, handleLogState }) {
         </Button>
         {
           isGuest ?
-            <div>
+            <>
               <TextField
                 required
                 fullWidth
@@ -126,7 +126,7 @@ export default function SignInPage({ setPageView, handleLogState }) {
                     console.log(err);
                   });
               }}>Submit Name</Button>
-            </div>
+            </>
             : <></>
         }
       </Box>
