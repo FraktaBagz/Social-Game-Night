@@ -58,8 +58,8 @@ io.on('connection', (socket) => {
   //   //io emit connected users
   // })
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  socket.on('disconnect', (msg) => {
+    console.log('user disconnected')
   });
   //to join a new room, we will need to have a username and room
   //user can come from the react context and the room will have to be explicitly declared in a text box or something.
