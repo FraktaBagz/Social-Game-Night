@@ -8,7 +8,7 @@ import PlayingCard from "../common/PlayingCard.jsx";
 
 export default function JudgeView({ gameState, isJudge, submittedCards }) {
   const [selected, setSelected] = useState({});
-
+  //selected = card.user
   const handleWinnerPicked = (e) => {
     e.preventDefault();
     console.log("winning card confirmed");
@@ -17,10 +17,9 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
     socket.emit(
       "game action",
       JSON.stringify({
-        action: "play card",
+        action: "judge selection",
         game: gameState,
-        user: currentUser,
-        card: selected,
+        user: selected,
       })
     );
   };
@@ -43,7 +42,7 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
                 isJudge
                   ? (e) => {
                       e.preventDefault();
-                      setSelected(card);
+                      setSelected(card.user);
                     }
                   : null
               }
