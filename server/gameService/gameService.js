@@ -10,19 +10,17 @@ let Lobby = function (host) {
 }
 
 let Game = function (users, deck) {
-  this.users = users;
+  this.users = users; //[{UID: 'dfiunn4nuiq5', name: kieran, avatar: 'someURL'}]
   this.deck = deck;
   this.gameState = {
       currentDeck: deck, // {questions: [], answers: []}
       judgeIndex: 0,
-      // judge: this.users[this.gameState.judgeIndex],
       judging: false,
-      userInformation: { //UID: {cards: [], points:0}
-      },
-      questionCard: null,
+      userInformation: {}, //UID: {cards: [], points:0}
+      questionCard: null, //{label: 'string', extra: 'lala', set: 'lala'}
       hasPicked: [], // do we need this?
       submittedCards: [], // [playerid, cardIndex]
-      finished: true,
+      finished: false,
       winner: null,
   }
 

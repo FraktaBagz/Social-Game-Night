@@ -29,7 +29,6 @@ module.exports = {
     ]
   },
   devtool: "eval-cheap-module-source-map",
-
   // [devServer] configuration for the live server including port
   devServer: {
     // [static] config for how what to serve

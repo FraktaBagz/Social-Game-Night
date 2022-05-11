@@ -83,7 +83,7 @@ export default function App() {
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
-  const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skips);
+  const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     dummy: {
@@ -129,8 +129,9 @@ export default function App() {
   }, []);
 
   socket.on("new game", (gameObj) => {
+    console.log('newGame!!')
     gameObj = JSON.parse(gameObj);
-    socket.emit('game action', JSON.stringify({ action: 'new round', game: gameObj }))
+    setGameState(gameObj);
   });
 
   socket.on('join game', (msg) => {
@@ -141,6 +142,7 @@ export default function App() {
   })
 
   socket.on("game action", (gameObj) => {
+    console.log('gameAction received');
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);
   });
@@ -160,14 +162,21 @@ export default function App() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log('calling get deck');
-  //   getDeck()
-  //     .then((deck) => {
-  //       setDefaultDeck(deck);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, []);
+  useEffect(() => {
+    console.log('calling get deck');
+    getDeck('default', 'default')
+      .then((deck) => {
+        console.log('deck', deck);
+        if (deck.greenCard) {
+          deck['questions'] = deck['greenCard'];
+          deck['answers'] = deck['redCard'];
+          delete deck['greenCard'];
+          delete deck['redCard'];
+        }
+        setDefaultDeck(deck);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   var handleViewClick = (e) => {
     e.preventDefault();
