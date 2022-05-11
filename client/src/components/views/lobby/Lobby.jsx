@@ -26,16 +26,16 @@ const sx = {
   }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck }) {
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck, currentUser, setCurrentUser }) {
   var count = 0;
 
   function createGame() {
     socket.emit('new game', JSON.stringify({users: connectedUsers, deck: defaultDeck}));
   }
 
-  useEffect(() => {
-
-  })
+  // useEffect(() => {
+  //   console.log('here in lobby', currentUser)
+  // }, [currentUser])
 
   return (
     <>
@@ -84,7 +84,12 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                 )
               })}
             </Stack>
-            <Chat chatHistory={chatHistory} setChatHistory={setChatHistory}/>
+            <Chat
+              chatHistory={chatHistory}
+              setChatHistory={setChatHistory}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
           </div>
         </div>
       </div>
