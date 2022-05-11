@@ -12,19 +12,16 @@ import AddIcon from '@mui/icons-material/Add';
 import ViewCards from './ViewCards.jsx';
 import PlayingCard from '../common/PlayingCard.jsx';
 
+import { useGame } from "../../../firebase/contexts/GameContext.js";
 
-export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView }) {
-  const [customAnswer, setCustomAnswer] = useState('');
+export default function Custom({ gameState, selectedCustomDeck, setPageView, customDeckTitle, setCustomDecktitle, previousView, currentUserUID }) {
+  const { addToCustomDeck} = useGame();
   const [editTitle, setEditTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(customDeckTitle);
   const [cardTypeCust, setCardTypeCust] = useState('green')
-  const [newCard, setNewCard] = useState('');
+  const [newLabel, setnewLabel] = useState('');
+  const [newExtras, setNewExtras] = useState('');
   const [createButton, setCreateButton] = useState(false);
-
-  // {
-  //   answers: [],
-  //   questions: [],
-  // }
 
   const editTitleFunc = () => (
     !editTitle
@@ -35,7 +32,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
           <Typography variant="h4">
             <Box sx={{ fontStyle: 'italic', m: 1 }}>Title</Box></Typography>
           : <Typography variant="h4">{customDeckTitle}</Typography>}
-        <Button variant="outlined" onClick={() => (setEditTitle(true))}>edit</Button>
+        {/* <Button variant="outlined" onClick={() => (setEditTitle(true))}>edit</Button> */}
       </Box>
       :
       <Box>
@@ -78,7 +75,7 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
       {createButton
         ?
         <>
-          <div>{newCard}</div>
+          <div>{newLabel}</div>
         </>
         :
         <>
@@ -89,13 +86,36 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
             defaultValue=""
             size="small"
             onChange={(e) => (
-              setNewCard(e.target.value)
+              setnewLabel(e.target.value)
             )}
           />
         </>
       }
     </Box>
+  )
 
+  const createExtrasFunc = () => (
+    <Box>
+      {createButton
+        ?
+        <>
+          <div>{newLabel}</div>
+        </>
+        :
+        <>
+          <TextField
+            required
+            id="outlined-required"
+            label={"extras"}
+            defaultValue=""
+            size="small"
+            onChange={(e) => (
+              setNewExtras(e.target.value)
+            )}
+          />
+        </>
+      }
+    </Box>
   )
 
   const createButtonFunc = () => (
@@ -108,14 +128,37 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
         :
         <>
           <Button variant="" onClick={() => (
-            newCard.length > 0 ? (createCard(cardTypeCust, newCard),
+            newLabel.length > 0 ? (createCard(currentUserUID, newTitle, { label: newLabel, extra: newExtras, sets: newTitle }, cardTypeCust),
               setCreateButton(true)) : null
           )}>create card <AddIcon /></Button>
         </>
       }
     </Box>
   )
-  const createCard = (type, message) => {
+
+  const createnewLabelButton = () => (
+    <Box>
+      {createButton
+        ?
+        <>
+          <Button variant="" onClick={() => (
+            setCreateButton(false),
+            setNewTitle(customDeckTitle),
+            setnewLabel(''),
+            setNewExtras('')
+          )}>Create New Card!<AddIcon /></Button>
+        </>
+        : null
+      }
+    </Box>
+  )
+
+  const createCard = (userId, deckName, card, color) => {
+    console.log(userId, deckName, card, color)
+    // addToCustomDeck(userId, deckName, card, color)
+    //   .then(() => (console.log('card created')))
+    //   .catch((e) => (console.log(e)));
+    // expected format: userId, deckName, card, color
     // put request to add specific card to users deck depending on what cardtype it is
   }
 
@@ -131,16 +174,17 @@ export default function Custom({ gameState, selectedCustomDeck, setPageView, cus
               {addCardFunc()}
               <PlayingCard color={cardTypeCust} card={{
                 label: createPromptFunc(),
-                extra: '(ridiculous, senseless, foolish) ',
+                extra: createExtrasFunc(),
                 sets: newTitle,
               }} />
               {createButtonFunc()}
+              {createnewLabelButton()}
             </Paper>
           </Box>
         </Grid>
         <Grid item xs={8}>
           <Box>
-            <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} customDeckTitle={customDeckTitle} setCustomDecktitle={setCustomDecktitle} />
+            <ViewCards gameState={gameState} setPageView={setPageView} selectedCustomDeck={selectedCustomDeck} customDeckTitle={customDeckTitle} setCustomDecktitle={setCustomDecktitle}  currentUserUID={currentUserUID}/>
           </Box>
         </Grid>
       </Grid>

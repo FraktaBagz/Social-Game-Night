@@ -105,11 +105,18 @@ export function GameProvider({ children }) {
 
   const value = {
     getDeck,
+<<<<<<< HEAD
     getDecks,
     addToCustomDeck,
     deleteCustomDeck,
     removeFromCustomDeck,
     initializeDeck,
+=======
+    initializeDeck,
+    addToCustomDeck,
+    removeFromCustomDeck,
+    deleteCustomDeck
+>>>>>>> main
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
