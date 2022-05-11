@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth, db } from '../firebase.js';
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, updateProfile } from 'firebase/auth';
-import { collection, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc, getDocs, updateDoc, arrayUnion, arrayRemove, deleteDoc } from 'firebase/firestore';
 
 const GameContext = React.createContext();
 
@@ -25,18 +25,25 @@ export function GameProvider({ children }) {
   // get an array of all decks from a user
   function getDecks(UID) {
     let decks = [];
+    let decks2 = {}
     return getDocs(collection(db, UID))
       .then((data) => {
         data.forEach(deck => {
+          let deckName = ''
+          // decks.push(deck.data())
           if (deck.data().greenCard.length) {
-            decks.push(deck.data().greenCard[0].sets);
+            deckName = deck.data().greenCard[0].sets
+            decks.push({ [deckName]: deck.data() });
+            decks2[deckName] = deck.data()
           } else if (deck.data().redCard.length) {
-            decks.push(deck.data().redCard[0].sets);
+            deckName = deck.data().redCard[0].sets;
+            decks.push({ [deckName]: deck.data() });
+            decks2[deckName] = deck.data()
           }
         });
       })
       .then(() => {
-        return decks;
+        return decks2;
       });
   };
 
@@ -56,14 +63,14 @@ export function GameProvider({ children }) {
     let deckRef = doc(db, userId, deckName);
 
     if (color === 'green') {
-      updateDoc(deckRef, {
+      return updateDoc(deckRef, {
         greenCard: arrayUnion(card),
       })
         .catch((err) => {
           console.log(err);
         })
     } else {
-      updateDoc(deckRef, {
+      return updateDoc(deckRef, {
         redCard: arrayUnion(card),
       })
         .catch((err) => {
@@ -77,14 +84,14 @@ export function GameProvider({ children }) {
     let deckRef = doc(db, userId, deckName);
 
     if (color === 'green') {
-      setDoc(deckRef, {
+      return updateDoc(deckRef, {
         greenCard: arrayRemove(card),
       })
         .catch((err) => {
           console.log(err);
         })
     } else {
-      updateDoc(deckRef, {
+      return updateDoc(deckRef, {
         redCard: arrayRemove(card),
       })
         .catch((err) => {
