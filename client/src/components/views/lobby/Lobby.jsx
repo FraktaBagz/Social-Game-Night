@@ -86,7 +86,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             <Chat
               chatHistory={chatHistory}
               setChatHistory={setChatHistory}
-              currentUser={currentUser}
+              currentUser={currentUser || 'fart'}
               setCurrentUser={setCurrentUser}
             />
           </div>
