@@ -270,6 +270,7 @@ socket.on('chat message', function (msg) {
 
 const checkEmotes = (chatcontent) => {
   var user = chatcontent.user
+  var typoDetector = true;
   var text = chatcontent.text
   let div = document.getElementById('messageContainer')
   let li = document.createElement("li")
@@ -280,15 +281,21 @@ const checkEmotes = (chatcontent) => {
       let img = document.createElement("img")
       var emote = word.split('').slice(1).join('')
       var emoteURL = emotesObj[emote]
+      typoDetector = emoteURL;
       img.src = `${emoteURL}`
       img.height = "40"
       li.append(img)
     } else {
       li.append(`${word} `)
     }
-  })
-  div.prepend(li)
-  document.getElementById('inputChat').value = '';
+  });
+
+  if (!typoDetector) {
+    alert('Not an EMOTE!');
+  } else {
+    div.prepend(li)
+    document.getElementById('inputChat').value = '';
+  }
 }
 
 export default function Chat({ chatHistory, setChatHistory, currentUser }) {
@@ -312,10 +319,10 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   }, chatHistory)
 
   const shuffleEmotes = () => {
-    var keysArray = Object.keys(emotesObj)
-    var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)]
-    setChatContent(`${randomKey} :${randomKey}`)
-    handleSubmit(null)
+    var keysArray = Object.keys(emotesObj);
+    var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)];
+    setChatContent(`${randomKey} :${randomKey}`);
+    handleSubmit(null);
   }
   const handleSubmit = (e) => {
     if (e) {
