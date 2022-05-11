@@ -24,11 +24,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
-  // devtool: "cheap-module-eval-source-map",
+  devtool: "eval-cheap-module-source-map",
+
   // [devServer] configuration for the live server including port
   devServer: {
     // [static] config for how what to serve
