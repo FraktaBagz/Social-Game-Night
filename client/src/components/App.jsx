@@ -167,16 +167,16 @@ export default function App() {
   }, [currentUser]);
 
   socket.on("new game", (gameObj) => {
-    console.log('newGame!!')
+    console.log('newGame!!');
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);
   });
 
   socket.on('join game', (msg) => {
-    console.log('new player entered room')
+    console.log('new player entered room');
     msg = JSON.parse(msg);
-    console.log(msg)
-    setConnectedUsers([...connectedUsers, msg.user])
+    console.log(msg);
+    setConnectedUsers([...connectedUsers, msg.user]);
   })
 
   socket.on("game action", (gameObj) => {
