@@ -38,6 +38,11 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
 
   return (
     <Container style={{ textAlign: "center" }}>
+      {isJudge ? (
+        <Typography variant="h5">YOU ARE JUDGING SELECT A WINNER</Typography>
+      ) : (
+        <Typography variant="h5">WAITING FOR JUDGE TO PICK A WINNER</Typography>
+      )}
       {Object.keys(selected).length === 0 ? (
         <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
           {submittedCards.map((card) => (
