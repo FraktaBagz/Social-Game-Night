@@ -23,7 +23,7 @@ export function GameProvider({ children }) {
   }
 
   // get an array of all decks from a user
-  function getDecks = (UID) => {
+  function getDecks(UID) {
     let decks = [];
     return getDocs(collection(db, UID))
       .then((data) => {
@@ -105,18 +105,11 @@ export function GameProvider({ children }) {
 
   const value = {
     getDeck,
-<<<<<<< HEAD
     getDecks,
     addToCustomDeck,
     deleteCustomDeck,
     removeFromCustomDeck,
     initializeDeck,
-=======
-    initializeDeck,
-    addToCustomDeck,
-    removeFromCustomDeck,
-    deleteCustomDeck
->>>>>>> main
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
