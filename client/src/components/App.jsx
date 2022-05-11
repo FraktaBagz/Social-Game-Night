@@ -154,11 +154,11 @@ export default function App() {
   }
 
   useEffect(() => {
-    getDeck()
-      .then((deck) => {
-        setDefaultDeck(deck);
-      })
-      .catch((e) => console.log(e));
+    // getDeck()
+    //   .then((deck) => {
+    //     setDefaultDeck(deck);
+    //   })
+    //   .catch((e) => console.log(e));
   }, []);
 
   var handleSignUp = (event) => {
