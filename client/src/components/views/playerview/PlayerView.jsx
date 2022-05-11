@@ -12,6 +12,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { io } from "socket.io-client";
+import JudgeWaiting from '../judgeview/JudgeWaiting.jsx';
+import JudgeView from '../judgeview/JudgeView.jsx';
 const socket = io();
 
 export default function PlayerView({ gameState, connectedUsers, chatHistory, setChatHistory, customDecksSample }) {
@@ -80,7 +82,8 @@ export default function PlayerView({ gameState, connectedUsers, chatHistory, set
 
               }}/>
             )}
-          </Stack>
+          // </Stack>
+
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
