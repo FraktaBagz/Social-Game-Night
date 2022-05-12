@@ -302,13 +302,31 @@ const checkEmotes = (chatcontent) => {
     var audio = document.getElementById(`${id}`);
     audio.play();
   }
-  play('audioNewChatMessage')
+  if (user !== 'Bot') {
+    play('audioNewChatMessage')
+  }
 }
 
 export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   const [chatContent, setChatContent] = useState('');
   const [text, setText] = useState('');
   const [user, setUser] = useState(currentUser.name);
+  socket.on('player disconnected', () => {
+    var chatHistoryCopy = chatHistory
+    if (chatHistoryCopy[chatHistoryCopy.length-1].text !== "A player has disconnected!") {
+      chatHistoryCopy.push({ user: "Bot", text: "A player has disconnected!" })
+      checkEmotes({ user: "Bot", text: "A player has disconnected!" })
+      setChatHistory(chatHistoryCopy)
+    }
+  })
+  socket.once('join game', () => {
+    var chatHistoryCopy = chatHistory
+    if (chatHistoryCopy[chatHistoryCopy.length-1].text !== "A player has connected!") {
+      chatHistoryCopy.push({ user: "Bot", text: "A player has connected!" })
+      checkEmotes({ user: "Bot", text: "A player has connected!" })
+      setChatHistory(chatHistoryCopy)
+    }
+  })
 
   useEffect(() => {
     document.getElementById("inputChat")
@@ -318,12 +336,13 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
           document.getElementById("buttonChat").click();
         }
       });
+
   }, [])
   useEffect(() => {
     chatHistory.forEach((msg) => {
       checkEmotes(msg)
     })
-  }, chatHistory)
+  }, [chatHistory])
 
   const shuffleEmotes = () => {
     var keysArray = Object.keys(emotesObj);
