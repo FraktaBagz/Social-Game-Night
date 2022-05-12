@@ -20,6 +20,7 @@ import JudgeView from "../judgeview/JudgeView.jsx";
 const socket = io();
 
 export default function PlayerView({
+  setPageView,
   gameState,
   connectedUsers,
   chatHistory,
@@ -79,9 +80,28 @@ export default function PlayerView({
 
   useEffect(() => {
     if (gameState.gameState && currentUser) {
-      const judge = gameState.users[gameState.gameState.judgeIndex];
-      if (currentUser.name === judge.name) {
-        setIsJudge(true);
+      if (gameState.users[gameState.gameState.judgeIndex]){
+        const judge = gameState.users[gameState.gameState.judgeIndex];
+        if (currentUser.name === judge.name) {
+          setIsJudge(true);
+        }
+      } else {
+        // go through process of finding winner
+        // iterate through user list
+        let winners = [gameState.gameState.userInformation[0]];
+        // keep winner array
+        for (let i = 1; i < gameState.gameState.userInformation; i++) {
+          let winner = gameState.gameState.userInformation[i]
+          // if current iteration === current winner, push
+          if (winner.points > winners[0].points) {
+            // if current iteration > current winner, restart array
+            winners = [winner];
+          } else if (winner.points === winners[0].points) {
+            winners.push(winner)
+          }
+        }
+        // change page view to 'results'
+        setPageView('results');
       }
     }
     console.log("gameState---------------------------- ", gameState);
