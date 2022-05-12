@@ -75,7 +75,8 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
             <Grid item xs={12} sm={6}>
               <img src="https://www.clipartmax.com/png/full/206-2063998_retrieved-on-2017-june-14th-comparing-apples-to-oranges.png" alt="logo"></img>
               <div className="title">
-                <h1><strong>APPLES TO ORANGES!</strong></h1>
+                <span></span>
+                <h1><strong><span className="apples-logo">APPLES </span><span className="to-logo">TO </span><span className="oranges-logo">ORANGES!</span></strong></h1>
               </div>
             </Grid>
           </Grid>
