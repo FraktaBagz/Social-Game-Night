@@ -35,16 +35,9 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
   // }
 
   useEffect(() => {
-    // getUser(currentUserID)
-    //   .then((user) => {
-    //     setCurrentUser(user.data());
-    //     setIsLoaded(true);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    setIsLoaded(true);
+    if (currentUser) {
+      setIsLoaded(true);
+    }
   }, [currentUser]);
 
   if (!isLoaded) {
