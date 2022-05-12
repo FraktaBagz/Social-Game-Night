@@ -27,6 +27,7 @@ export default function PlayerView({
   customDecksSample,
   currentUser,
   setCurrentUser,
+  setGameState,
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
@@ -73,7 +74,7 @@ export default function PlayerView({
     if (isJudge) {
       if (judging) {
         playField = (
-          <JudgeView isJudge={true} submittedCards={submittedCards} />
+          <JudgeView isJudge={true} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
       } else {
         playField = <JudgeWaiting />;
@@ -81,7 +82,7 @@ export default function PlayerView({
     } else {
       if (judging) {
         playField = (
-          <JudgeView isJudge={false} submittedCards={submittedCards} />
+          <JudgeView isJudge={false} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
       } else {
         if (Object.keys(selected).length === 0) {

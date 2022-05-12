@@ -46,7 +46,7 @@ function gameHandler(msg) {
     let indexInHand = userInformation[user.name].cards.indexOf(card);
     //removed played card from hand
     //add played card to submitted cards
-    const submission = [user.name, game.gameState.userInformation[user.name].cards.splice(indexInHand, 1)];
+    const submission = [user, game.gameState.userInformation[user.name].cards.splice(indexInHand, 1)];
     console.log(submission)
 
     game.gameState.submittedCards.push(submission);
