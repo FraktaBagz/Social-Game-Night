@@ -41,16 +41,18 @@ io.on('connection', (socket) => {
   })
 
   socket.on('join game', (msg) => {
-    console.log('msg', msg);
+    console.log('A player is joining the game...', msg);
     msg = JSON.parse(msg);
     connectedUsers.push(msg.user)
-    console.log('connected users have been updated ', connectedUsers);
+    console.log('Connected users have been updated... ', connectedUsers);
     io.emit('update connected users', JSON.stringify(connectedUsers))
+    io.emit('join game')
   })
 
   socket.on('disconnect', (msg) => {
     console.log('user disconnected, requesting current users...')
     connectedUsers = [];
+    io.emit('player disconnected')
     io.emit('request current users')
   });
 

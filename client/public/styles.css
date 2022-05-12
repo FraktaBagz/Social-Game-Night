@@ -45,10 +45,15 @@
   text-align: center;
 }
 
-/* responsive styles */
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1200px) and (min-height: 900px) {
   .homepage {
-    top: 70%;
+    top: 60%;
+  }
+}
+
+@media only screen and (max-width: 1200px) and (max-height: 900px) {
+  .homepage {
+    top: 80%;
   }
 }
 
@@ -57,16 +62,24 @@
   margin: 0;
   padding: 20px;
   width: 400px;
-  position: fixed;
+  /* position: fixed; */
+  position: absolute;
   right: 0;
   display: block;
-  height: 100%;
+  /* height: calc(100% - 56px); */
+  top: 56px;
+  bottom: 0;
   overflow: hidden;
   background-color: #ECECEC;
   color: #E95D70;
 }
 
-/* lobby styles */
+/* @media only screen and (max-height: 750px) {
+  .playerListContainer {
+    height: 100%;
+  }
+} */
+
 .lobbyDiv {
   margin: 0;
   position: absolute;
@@ -189,8 +202,9 @@
 }
 
 /* lobby custom deck styles */
-.custom-deck-container {
-  padding: 20px;
+.custom-deck-page {
+  padding: 40px;
+  text-align: center;
 }
 
 .custom-deck-title {
@@ -216,4 +230,19 @@
   background-image: url(./gifs/winner2.gif);
   height: 700px;
 
+}
+/* player view styles */
+.playerViewContainer {
+  padding: 20px;
+}
+
+.player-list {
+  margin-right: 400px;
+  padding: 15px;
+  background-color: #9CE774;
+  border-radius: 15px;
+}
+
+.prompt {
+  margin: 25px;
 }
