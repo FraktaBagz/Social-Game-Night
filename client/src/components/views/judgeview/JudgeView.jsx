@@ -5,15 +5,22 @@ import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import PlayingCard from "../common/PlayingCard.jsx";
+import { io } from "socket.io-client";
+const socket = io();
 
-export default function JudgeView({ gameState, isJudge, submittedCards }) {
+export default function JudgeView({ gameState, isJudge, submittedCards, setGameState }) {
   const [selectedUser, setSelectedUser] = useState({});
   const [winningCard, setWinningCard] = useState(null);
-  const [hasPicked, setHasPicked] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
 
   const handleWinnerPicked = (e) => {
+    console.log('handleWinnerPicked fired -------')
     e.preventDefault();
+
+    gameState.gameState.winner = selectedUser;
+    setGameState(gameState);
+
+    console.log('selectUser: ', selectedUser)
     socket.emit(
       "game action",
       JSON.stringify({
@@ -22,12 +29,6 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
         user: selectedUser,
       })
     );
-    setHasPicked(true);
-  };
-
-  const handleNextRound = (e) => {
-    e.preventDefault();
-    console.log('started new Round')
     socket.emit(
       "game action",
       JSON.stringify({
@@ -55,11 +56,11 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
                 isJudge
                   ? (e) => {
                       e.preventDefault();
-                      console.log('does this work?')
+                      console.log("does this work?");
+                      setSelectedCard(card[1][0]);
                       setSelectedUser(card[0]);
                     }
                   : null
-
               }
             />
           ))}
@@ -72,7 +73,7 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
           sx={{ alignItems: "center", justifyContent: "center" }}
         >
           <PlayingCard color="red" card={selectedCard} />
-          {isJudge && !hasPicked ? (
+          {isJudge ? (
             <>
               <Button variant="contained" onClick={handleWinnerPicked}>
                 Confirm
@@ -81,18 +82,7 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
                 Deselect
               </Button>
             </>
-          ) : (
-            <>
-              {isJudge ? (
-                <>
-                  <Typography variant="h5">{`WINNER IS: ${selectedUser.name}`}</Typography>
-                  <Button onClick={handleNextRound}>Start Next Round</Button>
-                </>
-              ) : (
-                <Typography variant="h5">{`WINNER IS: ${selectedUser.name}`}</Typography>
-              )}
-            </>
-          )}
+          ) : null}
         </Stack>
       )}
     </Container>
