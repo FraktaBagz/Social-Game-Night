@@ -223,7 +223,7 @@ export default function PlayerView({
           item sm={6.3}
           sx={{
             height: "calc(100vh - 134px)",
-            backgroundColor: "#E95D70",
+            backgroundColor: "#EA9E48",
             borderRadius: "15px",
             padding: "15px",
             margin: "18px"
