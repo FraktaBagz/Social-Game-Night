@@ -51,7 +51,6 @@ export default function PlayerView({
       })
     );
     setHasPicked(true);
-
   };
 
   useEffect(() => {
@@ -63,15 +62,12 @@ export default function PlayerView({
   useEffect(() => {
     if (gameState.gameState && currentUser) {
         const judge = gameState.users[gameState.gameState.judgeIndex];
-        console.log('judge', judge, 'currentUser', currentUser)
         if (currentUser.name === judge.name) {
           setIsJudge(true)
         }
       }
   }, [gameState]);
 
-  // duplicate
-  // const { judgeIndex, judging, submittedCards, questionCard } = gameState;
   let playField;
   if (gameState.gameState && currentUser) {
     if (isJudge) {
@@ -87,14 +83,26 @@ export default function PlayerView({
         if (Object.keys(selected).length === 0) {
           playField = (
             <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
-              {gameState.gameState ? gameState.gameState.userInformation[currentUser.name].cards.map((answer) =>
-                <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
-                  e.preventDefault();
-                  console.log(answer);
-                  setSelected(answer)
-                }}/>
-              ) : <div>loading</div> }
-            </Stack>
+            {gameState.gameState ? (
+              gameState.gameState.userInformation[currentUser.name].cards.map(
+                (answer) => {
+                  answer !== null ? (
+                    <PlayingCard
+                      color="red"
+                      card={answer}
+                      handleSelectCard={(e) => {
+                        e.preventDefault();
+                        console.log(answer);
+                        setSelected(answer);
+                      }}
+                    />
+                  ) : null;
+                }
+              )
+            ) : (
+              <div>loading</div>
+            )}
+          </Stack>
           );
         } else {
           playField = (

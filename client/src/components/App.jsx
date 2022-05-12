@@ -202,21 +202,21 @@ export default function App() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log('calling get deck');
-  //   getDeck('default', 'default')
-  //     .then((deck) => {
-  //       console.log('deck', deck);
-  //       if (deck.greenCard) {
-  //         deck['questions'] = deck['greenCard'];
-  //         deck['answers'] = deck['redCard'];
-  //         delete deck['greenCard'];
-  //         delete deck['redCard'];
-  //       }
-  //       setDefaultDeck(deck);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    console.log('calling get deck');
+    getDeck('default', 'default')
+      .then((deck) => {
+        console.log('deck', deck);
+        if (deck.greenCard) {
+          deck['questions'] = deck['greenCard'];
+          deck['answers'] = deck['redCard'];
+          delete deck['greenCard'];
+          delete deck['redCard'];
+        }
+        setDefaultDeck(deck);
+      })
+      .catch((e) => console.log(e));
+  }, [isLoggedIn]);
 
   // grabs custom decks pls keep
   useEffect(() => {
