@@ -29,6 +29,7 @@ export default function PlayerView({
   setCurrentUser,
   setGameState,
 }) {
+  // const winnerRef = useRef(null);
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
   const [hasPicked, setHasPicked] = useState(false);
@@ -53,11 +54,28 @@ export default function PlayerView({
     setHasPicked(true);
   };
 
-  useEffect(() => {
-    console.log("currentUser: ", currentUser);
-    console.log("gameState: ", gameState);
-    console.log("connectedUsers: ", connectedUsers);
-  }, []);
+  // useEffect(() => {
+  //   setSelected({});
+  //   setHasPicked(false);
+  // }, []);
+  // function usePrevious(value) {
+  //   const ref = useRef();
+  //   useEffect(() => {
+  //     ref.current = value;
+  //   });
+  //   return ref.current;
+  // }
+
+  // if (gameState.gameState) {
+  //   const { winner } = gameState
+  //   const prevAmount = usePrevious({winner});
+  // }
+  // useEffect(() => {
+  //   if(prevAmount.receiveAmount !== receiveAmount) {
+
+  //   }
+
+  // }, [receiveAmount, sendAmount])
 
   useEffect(() => {
     if (gameState.gameState && currentUser) {
@@ -69,12 +87,41 @@ export default function PlayerView({
     console.log("gameState---------------------------- ", gameState);
   }, [gameState]);
 
+  // socket.on('next round', (msg) => {
+  //   setSelected({});
+  //   setHasPicked(false);
+  // })
+
+  // socket.on('new round', (msg) => {
+  //   if (gameState.gameState && currentUser) {
+  //     const judge = gameState.users[gameState.gameState.judgeIndex];
+  //     if (currentUser.name === judge.name) {
+  //       setIsJudge(true);
+  //     }
+  //   }
+  // })
+
+  // socket.on('new game', (msg) => {
+  //   if (gameState.gameState && currentUser) {
+  //     const judge = gameState.users[gameState.gameState.judgeIndex];
+  //     if (currentUser.name === judge.name) {
+  //       setIsJudge(true);
+  //     }
+  //   }
+  // })
+
   let playField;
   if (gameState.gameState && currentUser) {
     if (isJudge) {
       if (judging) {
         playField = (
-          <JudgeView isJudge={true} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
+          <JudgeView
+            isJudge={true}
+            setIsJudge={setIsJudge}
+            setGameState={setGameState}
+            gameState={gameState}
+            submittedCards={submittedCards}
+          />
         );
       } else {
         playField = <JudgeWaiting />;
@@ -82,7 +129,13 @@ export default function PlayerView({
     } else {
       if (judging) {
         playField = (
-          <JudgeView isJudge={false} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
+          <JudgeView
+            isJudge={false}
+            setIsJudge={setIsJudge}
+            setGameState={setGameState}
+            gameState={gameState}
+            submittedCards={submittedCards}
+          />
         );
       } else {
         if (Object.keys(selected).length === 0) {
@@ -136,7 +189,7 @@ export default function PlayerView({
       }
     }
   }
-  
+
   if (playField) {
     return (
       <div className="playerViewContainer">
@@ -177,7 +230,7 @@ export default function PlayerView({
           container
           direction="row"
           sx={{
-            height: "100%"
+            height: "100%",
           }}
         >
           {/* ---------------------------- LEFT SIDE ---------------------------- */}
@@ -191,19 +244,21 @@ export default function PlayerView({
                   backgroundColor: "#ECECEC",
                   padding: "15px",
                   height: "350px",
-                  borderRadius: "15px"
+                  borderRadius: "15px",
                 }}
               >
                 <Grid item xs={12}>
                   <strong>Prompt:</strong>
                   <hr />
                   <Grid item xs={12} mb={10}>
-                    {gameState.gameState ?
-                      <PlayingCard color="green" card={gameState.gameState.questionCard} />
-                      : null}
+                    {gameState.gameState ? (
+                      <PlayingCard
+                        color="green"
+                        card={gameState.gameState.questionCard}
+                      />
+                    ) : null}
                   </Grid>
                 </Grid>
-
               </Grid>
             </div>
             <Grid
@@ -212,42 +267,60 @@ export default function PlayerView({
               sx={{ alignItems: "center", justifyContent: "center" }}
             >
               <Grid item xs={12}>
-                <AvatarChipPicking
-                  userInfo={connectedUsers[judgeIndex]}
-                />
+                <AvatarChipPicking userInfo={connectedUsers[judgeIndex]} />
               </Grid>
             </Grid>
-
           </Grid>
           {/* ---------------------------- RIGHT SIDE -------------------------------- */}
           <Grid
-            item sm={6.3}
+            item
+            sm={6.3}
             sx={{
               height: "calc(100vh - 134px)",
               backgroundColor: "#E95D70",
               borderRadius: "15px",
               padding: "15px",
-              margin: "18px"
+              margin: "18px",
             }}
           >
+            <Button
+              variant="contained"
+              sx={{
+                color: "primary.contrastText",
+                backgroundColor: "secondary.main",
+                borderRadius: 15,
+              }}
+              onClick={(e) => {
+                e.preventDefault;
+                setSelected({});
+                setHasPicked(false);
+              }}
+            >
+              NEXT ROUND
+            </Button>
             {playField}
           </Grid>
         </Grid>
         <div className="playerListContainer">
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser} />
+          <Chat
+            chatHistory={chatHistory}
+            setChatHistory={setChatHistory}
+            currentUser={currentUser || "fart"}
+            setCurrentUser={setCurrentUser}
+          />
           <hr />
           <h2>Players</h2>
           <div className="playerListDiv">
             <Stack spacing={2}>
-              {connectedUsers.length ? connectedUsers.map((userObj, i) => {
-                return (
-                  <AvatarChipPicking key={i} user={userObj} />
-                )
-              }) : 'Waiting...'}
+              {connectedUsers.length
+                ? connectedUsers.map((userObj, i) => {
+                    return <AvatarChipPicking key={i} user={userObj} />;
+                  })
+                : "Waiting..."}
             </Stack>
-          </div >
+          </div>
         </div>
-      </div >
+      </div>
     );
   }
   return null;
