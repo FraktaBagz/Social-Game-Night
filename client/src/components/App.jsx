@@ -18,6 +18,7 @@ import PlayingCard from "./views/common/PlayingCard.jsx";
 import Results from "./views/results/Results.jsx";
 import { io } from "socket.io-client";
 const socket = io();
+// const socket = io('localhost:3001');
 
 const customDecksSample = {
   skips: {
@@ -104,6 +105,7 @@ const dummyWinners = [
   }
 ];
 
+// const App = function () {
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck, getDecks } = useGame();
@@ -161,6 +163,16 @@ export default function App() {
     console.log(msg);
     setConnectedUsers([...connectedUsers, msg.user]);
   })
+  socket.on('host change', (msg) => {
+    msg = JSON.parse(msg)
+    if (currentUser !== null) {
+      if (msg !== null) {
+        if (currentUser.UID === msg.UID) {
+          setHost(true)
+        }
+      }
+    }
+  })
   // useEffect(()=>{
   //   if (host) {
   //     socket.emit('update connected users', JSON.stringify(connectedUsers))
@@ -175,6 +187,17 @@ export default function App() {
     setConnectedUsers(msg)
     // }
   })
+  socket.on('update connected users2', (msg)=>{
+    msg = JSON.parse(msg)
+    console.log('the master user list:', msg)
+      setConnectedUsers(msg)
+  })
+  socket.on('request current users', ()=>{
+    console.log('Socket is requesting current user...')
+    socket.emit('rebuild current users', JSON.stringify(currentUser))
+  })
+
+
 
   socket.on('set host', () => {
     setHost(true)
@@ -398,3 +421,5 @@ export default function App() {
     </>
   );
 }
+
+// export {socket, App,};
