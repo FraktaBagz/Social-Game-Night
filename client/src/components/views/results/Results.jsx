@@ -3,6 +3,7 @@ import Chat from '../chat/Chat.jsx'
 import { io } from "socket.io-client";
 import Typography from '@mui/material/Typography';
 const socket = io();
+// import {socket} from '../../App.jsx';
 
 import { AvatarChipWaiting } from '../common/AvatarChips.jsx';
 

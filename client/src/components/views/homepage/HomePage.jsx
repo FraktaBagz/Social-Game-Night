@@ -13,6 +13,7 @@ import { useFormControl } from '@mui/material/FormControl';
 import { motion } from 'framer-motion';
 import { io } from "socket.io-client";
 const socket = io();
+// import {socket} from '../../App.jsx';
 
 
 export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState, setConnectedUsers, connectedUsers }) {
