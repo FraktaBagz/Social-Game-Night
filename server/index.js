@@ -54,14 +54,14 @@ io.on('connection', (socket) => {
     io.emit('request current users')
   });
 
-  socket.on('request current users2', (msg)=>{
+  socket.on('rebuild current users', (msg)=>{
     msg = JSON.parse(msg);
     console.log('msg', msg);
     var flag = true;
     if (msg !== null) {
       connectedUsers.forEach((user, index)=>{
         if (user !== null) {
-          if (user.name === msg.name) {
+          if (user.UID === msg.UID) {
             flag=false
           }
         }

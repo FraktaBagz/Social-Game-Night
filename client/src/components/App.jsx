@@ -17,8 +17,8 @@ import ViewCards from "./views/customdeck/ViewCards.jsx";
 import PlayingCard from "./views/common/PlayingCard.jsx";
 import Results from "./views/results/Results.jsx";
 import { io } from "socket.io-client";
-// const socket = io();
-const socket = io('localhost:3001');
+const socket = io();
+// const socket = io('localhost:3001');
 
 const customDecksSample = {
   skips: {
@@ -105,8 +105,8 @@ const dummyWinners = [
   }
 ];
 
-const App = function () {
-// export default function App() {
+// const App = function () {
+export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck, getDecks } = useGame();
   const [pageView, setPageView] = useState('SignIn');
@@ -194,7 +194,7 @@ const App = function () {
   })
   socket.on('request current users', ()=>{
     console.log('Socket is requesting current user...')
-    socket.emit('request current users2', JSON.stringify(currentUser))
+    socket.emit('rebuild current users', JSON.stringify(currentUser))
   })
 
 
@@ -422,4 +422,4 @@ const App = function () {
   );
 }
 
-export {socket, App,};
+// export {socket, App,};
