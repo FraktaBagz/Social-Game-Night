@@ -29,7 +29,6 @@ export default function PlayerView({
   setCurrentUser,
   setGameState,
 }) {
-
   // const winnerRef = useRef(null);
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
@@ -78,7 +77,6 @@ export default function PlayerView({
 
   // }, [receiveAmount, sendAmount])
 
-
   useEffect(() => {
     if (gameState.gameState && currentUser) {
       const judge = gameState.users[gameState.gameState.judgeIndex];
@@ -117,7 +115,13 @@ export default function PlayerView({
     if (isJudge) {
       if (judging) {
         playField = (
-          <JudgeView isJudge={true} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
+          <JudgeView
+            isJudge={true}
+            setIsJudge={setIsJudge}
+            setGameState={setGameState}
+            gameState={gameState}
+            submittedCards={submittedCards}
+          />
         );
       } else {
         playField = <JudgeWaiting />;
@@ -125,7 +129,13 @@ export default function PlayerView({
     } else {
       if (judging) {
         playField = (
-          <JudgeView isJudge={false} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
+          <JudgeView
+            isJudge={false}
+            setIsJudge={setIsJudge}
+            setGameState={setGameState}
+            gameState={gameState}
+            submittedCards={submittedCards}
+          />
         );
       } else {
         if (Object.keys(selected).length === 0) {
@@ -225,6 +235,19 @@ export default function PlayerView({
           </Grid>
           {/* ---------------------------- MIDDLE -------------------------------- */}
           <Grid item xs={6}>
+            <Button
+              variant="contained"
+              sx={{
+                color: "primary.contrastText",
+                backgroundColor: "secondary.main",
+                borderRadius: 15,
+              }}
+              onClick={(e) => {
+                e.preventDefault;
+                setSelected({});
+                setHasPicked(false);
+              }}
+            >NEXT ROUND</Button>
             {playField}
           </Grid>
           {/* ---------------------------- RIGHT SIDE ---------------------------- */}
