@@ -109,8 +109,8 @@ const dummyWinners = [
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck, getDecks } = useGame();
-  const [pageView, setPageView] = useState('SignIn');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [pageView, setPageView] = useState('CustomDeck');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
@@ -340,7 +340,7 @@ export default function App() {
           customDecks={customDecks}
           setSelectedCustomDeck={setSelectedCustomDeck}
           setCustomDeckTitle={setCustomDeckTitle}
-          currentUserUID={currentUser.UID}
+          // currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "Custom" ? (
