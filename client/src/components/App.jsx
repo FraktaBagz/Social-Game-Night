@@ -143,72 +143,52 @@ export default function App() {
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
-    console.log("currentUser: ", currentUser);
     if (currentUser) {
       console.log("currentUser Name: ", currentUser.name);
       console.log("currentUser ID: ", currentUser.UID);
     }
-  }, [currentUser]);
-
-
-  socket.on("new game", (gameObj) => {
-    console.log('newGame!!');
-    gameObj = JSON.parse(gameObj);
-    setGameState(gameObj);
-    setPageView('PlayerView');
-  });
-
-  socket.on('join game', (msg) => {
-    console.log('new player entered room');
-    msg = JSON.parse(msg);
-    console.log(msg);
-    setConnectedUsers([...connectedUsers, msg.user]);
-  })
-  socket.on('host change', (msg) => {
-    msg = JSON.parse(msg)
-    if (currentUser !== null) {
-      if (msg !== null) {
-        if (currentUser.UID === msg.UID) {
-          setHost(true)
+    socket.on("new game", (gameObj) => {
+      console.log('Starting new game...');
+      gameObj = JSON.parse(gameObj);
+      setGameState(gameObj);
+      setPageView('PlayerView');
+    });
+    socket.on('join game', (msg) => {
+      console.log('A new player has entered the room');
+      msg = JSON.parse(msg);
+      setConnectedUsers([...connectedUsers, msg.user]);
+    })
+    socket.on('host change', (msg) => {
+      msg = JSON.parse(msg)
+      if (currentUser !== null) {
+        if (msg !== null) {
+          if (currentUser.UID === msg.UID) {
+            setHost(true)
+          }
         }
       }
-    }
-  })
-  // useEffect(()=>{
-  //   if (host) {
-  //     socket.emit('update connected users', JSON.stringify(connectedUsers))
-  //   }
-  // }, [connectedUsers])
-
-  socket.on('update connected users', (msg) => {
-    msg = JSON.parse(msg)
-    // console.log('the master user list:', msg)
-    // if ((msg.length !== connectedUsers.length) && !host) {
-    //   console.log('166')
-    setConnectedUsers(msg)
-    // }
-  })
-  socket.on('update connected users2', (msg)=>{
-    msg = JSON.parse(msg)
-    // console.log('the master user list:', msg)
+    })
+    socket.on('update connected users', (msg) => {
+      msg = JSON.parse(msg)
       setConnectedUsers(msg)
-  })
-  socket.on('request current users', ()=>{
-    console.log('Socket is requesting current user...')
-    socket.emit('rebuild current users', JSON.stringify(currentUser))
-  })
-
-
-
-  socket.on('set host', () => {
-    setHost(true)
-  })
-
-  socket.on("game action", (gameObj) => {
-    console.log('gameAction received');
-    gameObj = JSON.parse(gameObj);
-    setGameState(gameObj);
-  });
+    })
+    socket.on('update connected users2', (msg)=>{
+      msg = JSON.parse(msg)
+        setConnectedUsers(msg)
+    })
+    socket.on('request current users', ()=>{
+      console.log('Socket is requesting current user...')
+      socket.emit('rebuild current users', JSON.stringify(currentUser))
+    })
+    socket.on('set host', () => {
+      setHost(true)
+    })
+    socket.on("game action", (gameObj) => {
+      console.log('gameAction received...');
+      gameObj = JSON.parse(gameObj);
+      setGameState(gameObj);
+    });
+  }, [currentUser]);
 
   function handleLogState() {
     if (isLoggedIn) {
@@ -226,10 +206,8 @@ export default function App() {
   }
 
   useEffect(() => {
-    console.log('calling get deck');
     getDeck('default', 'default')
       .then((deck) => {
-        console.log('deck', deck);
         if (deck.greenCard) {
           deck['questions'] = deck['greenCard'];
           deck['answers'] = deck['redCard'];
@@ -243,12 +221,9 @@ export default function App() {
 
   // grabs custom decks pls keep
   useEffect(() => {
-    console.log('calling get custom decks');
     if (currentUser) {
-      console.log(currentUser.UID)
       getDecks(currentUser.UID)
         .then((usersCustomDecks) => {
-          console.log('custom deck', usersCustomDecks);
           setCustomDecks(usersCustomDecks);
           setDeletedCard(false);
           setPostCard(false);
