@@ -59,33 +59,33 @@ export default function PlayerView({
     console.log("connectedUsers: ", connectedUsers);
   }, []);
 
-  // useEffect(() => {
+  useEffect(() => {
+    if (gameState.gameState && currentUser) {
+      const judge = gameState.users[gameState.gameState.judgeIndex];
+      if (currentUser.name === judge.name) {
+        setIsJudge(true);
+      }
+    }
+    console.log("gameState---------------------------- ", gameState);
+  }, [gameState]);
+
+  // socket.on('new round', (msg) => {
   //   if (gameState.gameState && currentUser) {
   //     const judge = gameState.users[gameState.gameState.judgeIndex];
   //     if (currentUser.name === judge.name) {
   //       setIsJudge(true);
   //     }
   //   }
-  //   console.log("gameState---------------------------- ", gameState);
-  // }, []);
+  // })
 
-  socket.on('new round', (msg) => {
-    if (gameState.gameState && currentUser) {
-      const judge = gameState.users[gameState.gameState.judgeIndex];
-      if (currentUser.name === judge.name) {
-        setIsJudge(true);
-      }
-    }
-  })
-
-  socket.on('new game', (msg) => {
-    if (gameState.gameState && currentUser) {
-      const judge = gameState.users[gameState.gameState.judgeIndex];
-      if (currentUser.name === judge.name) {
-        setIsJudge(true);
-      }
-    }
-  })
+  // socket.on('new game', (msg) => {
+  //   if (gameState.gameState && currentUser) {
+  //     const judge = gameState.users[gameState.gameState.judgeIndex];
+  //     if (currentUser.name === judge.name) {
+  //       setIsJudge(true);
+  //     }
+  //   }
+  // })
 
   let playField;
   if (gameState.gameState && currentUser) {
