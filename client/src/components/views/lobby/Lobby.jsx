@@ -89,7 +89,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             >
               <Button type="submit" fullWidth variant="contained" sx={sx}
                 onClick={() => {
-                  setPageView('HomePage')
+                  createGame();
                 }}>
                 Leave Game
               </Button>
