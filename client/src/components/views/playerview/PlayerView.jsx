@@ -250,4 +250,5 @@ export default function PlayerView({
       </div >
     );
   }
+  return null;
 }
