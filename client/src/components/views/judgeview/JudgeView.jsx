@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import PlayingCard from "../common/PlayingCard.jsx";
 
 export default function JudgeView({ gameState, isJudge, submittedCards }) {
-  const [selected, setSelected] = useState({});
+  const [selectedUser, setSelectedUser] = useState({});
   const [winningCard, setWinningCard] = useState(null);
   const [hasPicked, setHasPicked] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
@@ -45,19 +45,21 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
       ) : (
         <Typography variant="h5">WAITING FOR JUDGE TO PICK A WINNER</Typography>
       )}
-      {Object.keys(selected).length === 0 ? (
+      {Object.keys(selectedCard).length === 0 ? (
         <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
           {submittedCards.map((card) => (
             <PlayingCard
               color="red"
-              card={card}
+              card={card[1][0]}
               handleSelectCard={
                 isJudge
                   ? (e) => {
                       e.preventDefault();
-                      setSelectedUser(card.user);
+                      console.log('does this work?')
+                      setSelectedUser(card[0]);
                     }
                   : null
+
               }
             />
           ))}
@@ -75,7 +77,7 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
               <Button variant="contained" onClick={handleWinnerPicked}>
                 Confirm
               </Button>
-              <Button variant="contained" onClick={() => setSelected({})}>
+              <Button variant="contained" onClick={() => setSelectedCard({})}>
                 Deselect
               </Button>
             </>
