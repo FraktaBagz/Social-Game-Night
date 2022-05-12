@@ -114,9 +114,9 @@ export default function JudgeView({
               </Button>
             </>
           ) : null}
-          <Button variant="contained" onClick={handleNextRound}>
+          {/* <Button variant="contained" onClick={handleNextRound}>
             NEXT ROUND
-          </Button>
+          </Button> */}
         </Stack>
       )}
     </Container>
