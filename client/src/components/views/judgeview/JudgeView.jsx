@@ -8,7 +8,7 @@ import PlayingCard from "../common/PlayingCard.jsx";
 import { io } from "socket.io-client";
 const socket = io();
 
-export default function JudgeView({ gameState, isJudge, submittedCards, setGameState }) {
+export default function JudgeView({ gameState, setIsJudge, isJudge, submittedCards, setGameState }) {
   const [selectedUser, setSelectedUser] = useState({});
   const [winningCard, setWinningCard] = useState(null);
   const [selectedCard, setSelectedCard] = useState({});
@@ -16,10 +16,6 @@ export default function JudgeView({ gameState, isJudge, submittedCards, setGameS
   const handleWinnerPicked = (e) => {
     console.log('handleWinnerPicked fired -------')
     e.preventDefault();
-
-    gameState.gameState.winner = selectedUser;
-    setGameState(gameState);
-
     console.log('selectUser: ', selectedUser)
     socket.emit(
       "game action",
@@ -29,6 +25,9 @@ export default function JudgeView({ gameState, isJudge, submittedCards, setGameS
         user: selectedUser,
       })
     );
+    setIsJudge(false);
+
+    console.log('use effect here----------------------------------------- ')
     socket.emit(
       "game action",
       JSON.stringify({
@@ -38,6 +37,18 @@ export default function JudgeView({ gameState, isJudge, submittedCards, setGameS
       })
     );
   };
+
+  // useEffect(() => {
+  //   console.log('use effect here----------------------------------------- ')
+  //   socket.emit(
+  //     "game action",
+  //     JSON.stringify({
+  //       action: "new round",
+  //       game: gameState,
+  //       user: selectedUser,
+  //     })
+  //   );
+  // }, [gameState.winner])
 
   return (
     <Container style={{ textAlign: "center" }}>

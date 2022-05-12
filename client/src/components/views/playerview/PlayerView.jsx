@@ -74,7 +74,7 @@ export default function PlayerView({
     if (isJudge) {
       if (judging) {
         playField = (
-          <JudgeView isJudge={true} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
+          <JudgeView isJudge={true} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
       } else {
         playField = <JudgeWaiting />;
@@ -82,7 +82,7 @@ export default function PlayerView({
     } else {
       if (judging) {
         playField = (
-          <JudgeView isJudge={false} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
+          <JudgeView isJudge={false} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
       } else {
         if (Object.keys(selected).length === 0) {
