@@ -46,7 +46,6 @@ export function AuthProvider({ children }) {
             title: '',
           });
         })
-    })
       .catch((err) => {
         throw err;
       });
