@@ -27,6 +27,18 @@ export default function JudgeView({ gameState, setIsJudge, isJudge, submittedCar
     );
     setIsJudge(false);
 
+    // console.log('use effect here----------------------------------------- ')
+    // socket.emit(
+    //   "game action",
+    //   JSON.stringify({
+    //     action: "new round",
+    //     game: gameState,
+    //     user: selectedUser,
+    //   })
+    // );
+  };
+
+  useEffect(() => {
     console.log('use effect here----------------------------------------- ')
     socket.emit(
       "game action",
@@ -36,19 +48,7 @@ export default function JudgeView({ gameState, setIsJudge, isJudge, submittedCar
         user: selectedUser,
       })
     );
-  };
-
-  // useEffect(() => {
-  //   console.log('use effect here----------------------------------------- ')
-  //   socket.emit(
-  //     "game action",
-  //     JSON.stringify({
-  //       action: "new round",
-  //       game: gameState,
-  //       user: selectedUser,
-  //     })
-  //   );
-  // }, [gameState.winner])
+  }, [gameState.winner])
 
   return (
     <Container style={{ textAlign: "center" }}>
