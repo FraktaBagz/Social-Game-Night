@@ -9,7 +9,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const PlayingCard = ({ color, card, handleSelectCard }) => {
-
+  // bad code -- need to add func as prop but sucks!
+  let handleFunc = handleSelectCard || (() => {});
   // card object structure:
   // label: 'some prompt',
   // extra: '(ridiculous, senseless, foolish) ',
@@ -22,11 +23,11 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
     cardColor = 'secondary.main'
   }
 
-  console.log(card)
+  // console.log(card)
 
   return (
     <Box>
-      <Paper sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }} elevation={4}>
+      <Paper onClick={handleFunc} sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }} elevation={4}>
         <Box sx={{ pt: 1, pl: 1, pr: 1, pb: 0, overflow: 'hidden' }}>
           <Typography variant='h4'>{card.label}</Typography>
         </Box>
@@ -40,18 +41,6 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
               {card.sets}
               {/* Sets goes here */}
             </Typography>
-            {handleSelectCard ?
-              <Button
-                onClick={handleSelectCard}
-                contained
-                sx={{
-                  color: 'primary.contrastText',
-                  borderRadius: 15,
-                }}
-              >
-                Select Card
-              </Button>
-              : <></>}
           </Box>
         </Card>
       </Paper>

@@ -65,10 +65,7 @@ export default function PlayerView({
         setIsJudge(true);
       }
     }
-    console.log(
-      "array of cards ",
-      gameState.gameState.userInformation[currentUser.name].cards
-    );
+    console.log("gameState---------------------------- ", gameState);
   }, [gameState]);
 
   let playField;
@@ -150,7 +147,7 @@ export default function PlayerView({
           sx={{ flexWrap: "wrap", ml: 2 }}
         >
           {connectedUsers.map((user, index) => (
-            <AvatarChipPicking key={index} userInfo={user} />
+            <AvatarChipPicking key={index} user={user} />
           ))}
         </Stack>
 
@@ -177,7 +174,7 @@ export default function PlayerView({
               </Grid>
               <Grid item xs={12}>
                 {gameState.gameState ? (
-                  <AvatarChipPicking userInfo={connectedUsers[judgeIndex]} />
+                  <AvatarChipPicking user={connectedUsers[judgeIndex]} />
                 ) : null}
               </Grid>
             </Grid>
