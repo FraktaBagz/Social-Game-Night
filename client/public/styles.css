@@ -224,27 +224,6 @@
   background-size: cover;
 }
 
-.results-message-container {
-  /* background-color: white; */
-  background-image: url(./gifs/winner2.gif);
-  color: black;
-  margin: 0;
-  padding: 20px;
-  border-style: solid;
-  border-width: 0.8px;
-  border-color: #CED4DA;
-  overflow: scroll;
-  height: 200px;
-  font-size: 18px;
-  display: flex;
-  flex-direction: column-reverse;
-  list-style: none;
-  -ms-overflow-style: none;
-  /* Internet Explorer 10+ */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
 .results-page {
   /* background-color: #9CE774; */
   background-image: url(./gifs/winner2.gif);

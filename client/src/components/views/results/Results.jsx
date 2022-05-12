@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ResultsChat from './results_chat/ResultsChat.jsx'
+import Chat from '../chat/Chat.jsx'
 import { io } from "socket.io-client";
 import Typography from '@mui/material/Typography';
 const socket = io();
@@ -31,7 +31,7 @@ export default function Results ({ winner, chatHistory, setChatHistory, currentU
           <i>IS THE WINNER!!!</i>
         </Typography>
         <div style={{marginTop: '1px'}}>
-      <ResultsChat
+      <Chat
         buttonStyle={buttonStyle}
         chatHistory={chatHistory}
         setChatHistory={setChatHistory}
