@@ -10,7 +10,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const PlayingCard = ({ color, card, handleSelectCard }) => {
   // bad code -- need to add func as prop but sucks!
-  let handleFunc = handleSelectCard || (() => {});
+  // let handleFunc = handleSelectCard || (() => {});
   // card object structure:
   // label: 'some prompt',
   // extra: '(ridiculous, senseless, foolish) ',
@@ -25,7 +25,7 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
 
   return (
     <Box>
-      <Paper onClick={handleFunc} sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }} elevation={4}>
+      <Paper sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }} elevation={4}>
         <Box sx={{ pt: 1, pl: 1, pr: 1, pb: 0, overflow: 'hidden' }}>
           <Typography variant='h4'>{card.label}</Typography>
         </Box>
@@ -42,6 +42,18 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
           </Box>
         </Card>
       </Paper>
+      {handleSelectCard ?
+              <Button
+                onClick={handleSelectCard}
+                contained
+                sx={{
+                  color: 'primary.contrastText',
+                  borderRadius: 15,
+                }}
+              >
+                Select Card
+              </Button>
+              : <></>}
     </Box>
   )
 
