@@ -13,11 +13,9 @@ judge chooses winning card
 winner gets a point
 next round starts
 */
-// const io = require('socket.io')
 const { Game } = require('./gameService');
 const { getCollection } = require('../data/dbHelpers')
 
-// const socket = io()
 
 drawRandomCard = (deckArray) => {
   let randomIndex = Math.floor((deckArray.length - 0.0000001) * Math.random())
@@ -29,7 +27,6 @@ function gameHandler(msg) {
   //each object must have an 'action' and 'game' property
   //depending on the action, it might also need a user and card property
   msg = JSON.parse(msg);
-  console.log('game action msg');
   const { action, game, user, card } = msg;
   const { gameState: { currentDeck, judgeIndex, judge, judging, userInformation, questionCard, submittedCards, finished, winner }, users, } = game;
 
@@ -83,11 +80,7 @@ function gameHandler(msg) {
       }
     })
     game.gameState.submittedCards = [];
-    // if (judgeIndex === game.users.length + 1) {
-    //   io.emit('game over');
-    // } else {
-    //   io.emit('next round');
-    // }
+
   }
 
   return game;

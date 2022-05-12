@@ -90,6 +90,7 @@ export default function PlayerView({
   }, [gameState]);
 
   socket.on('next round', () => {
+    console.log('new round')
     setSelected({});
     setHasPicked(false);
   })
