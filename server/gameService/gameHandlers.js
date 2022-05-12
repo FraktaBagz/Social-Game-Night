@@ -38,6 +38,13 @@ function gameHandler(msg) {
       game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
     })
     //the question card is drawn
+    // clean up the gameState object for next round
+    console.log('Cleaning up the round data for next round.')
+    game.gameState.judging = false;
+    game.gameState.hasntPicked = [];
+    game.gameState.submittedCards = [];
+    game.gameState.winner = null;
+    game.gameState.finished = false;
     game.gameState.questionCard = drawRandomCard(currentDeck.questions)
   }
   //each user will play a card, we add that card to submittedCards, when submitted cards length is = to # of players - judge, change judging to true
@@ -46,7 +53,7 @@ function gameHandler(msg) {
     let indexInHand = userInformation[user.name].cards.indexOf(card);
     //removed played card from hand
     //add played card to submitted cards
-    const submission = [user.name, game.gameState.userInformation[user.name].cards.splice(indexInHand, 1)];
+    const submission = [user, game.gameState.userInformation[user.name].cards.splice(indexInHand, 1)];
     console.log(submission)
 
     game.gameState.submittedCards.push(submission);
@@ -61,6 +68,7 @@ function gameHandler(msg) {
   //judge chooses a card,
   //the client will send a msg with the winner's username and the winning card
   if (action === 'judge selection') {
+    console.log(msg);
     game.gameState.winner = user;
     game.gameState.userInformation[user.name].points += 1;
     game.gameState.judging = false;

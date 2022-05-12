@@ -27,6 +27,7 @@ export default function PlayerView({
   customDecksSample,
   currentUser,
   setCurrentUser,
+  setGameState,
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
@@ -58,22 +59,40 @@ export default function PlayerView({
     console.log("connectedUsers: ", connectedUsers);
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (gameState.gameState && currentUser) {
+  //     const judge = gameState.users[gameState.gameState.judgeIndex];
+  //     if (currentUser.name === judge.name) {
+  //       setIsJudge(true);
+  //     }
+  //   }
+  //   console.log("gameState---------------------------- ", gameState);
+  // }, []);
+
+  socket.on('new round', (msg) => {
     if (gameState.gameState && currentUser) {
       const judge = gameState.users[gameState.gameState.judgeIndex];
       if (currentUser.name === judge.name) {
         setIsJudge(true);
       }
     }
-    console.log("gameState---------------------------- ", gameState);
-  }, [gameState]);
+  })
+
+  socket.on('new game', (msg) => {
+    if (gameState.gameState && currentUser) {
+      const judge = gameState.users[gameState.gameState.judgeIndex];
+      if (currentUser.name === judge.name) {
+        setIsJudge(true);
+      }
+    }
+  })
 
   let playField;
   if (gameState.gameState && currentUser) {
     if (isJudge) {
       if (judging) {
         playField = (
-          <JudgeView isJudge={true} submittedCards={submittedCards} />
+          <JudgeView isJudge={true} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
       } else {
         playField = <JudgeWaiting />;
@@ -81,7 +100,7 @@ export default function PlayerView({
     } else {
       if (judging) {
         playField = (
-          <JudgeView isJudge={false} submittedCards={submittedCards} />
+          <JudgeView isJudge={false} setIsJudge={setIsJudge} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
       } else {
         if (Object.keys(selected).length === 0) {

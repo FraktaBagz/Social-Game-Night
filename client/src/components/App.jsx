@@ -298,6 +298,7 @@ export default function App() {
           setChatHistory={setChatHistory}
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
+          setGameState={setGameState}
         />
       ) : null}
       {pageView === "Lobby" ? (
