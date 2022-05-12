@@ -32,7 +32,10 @@ export function AuthProvider({ children }) {
   }, []);
 
   function signUp(email, password, name) {
-    return createUserWithEmailAndPassword(auth, email, password)
+    return setPersistence(auth, inMemoryPersistence)
+      .then(() => {
+        return createUserWithEmailAndPassword(auth, email, password)
+      })
       .then((userCredential) => {
         let user = userCredential.user;
 
@@ -49,9 +52,13 @@ export function AuthProvider({ children }) {
   }
 
   function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password).catch((err) => {
-      throw err;
-    });
+    return setPersistence(auth, inMemoryPersistence)
+      .then(() => {
+        return signInWithEmailAndPassword(auth, email, password)
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 
   function signInAsAnonymous(guestName) {
