@@ -99,7 +99,8 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                 <Button
                   onClick={() => {
                     setPageView('Lobby')
-                    setConnectedUsers([...connectedUsers, currentUser])
+                    console.log('joining game')
+                    socket.emit('join game', JSON.stringify({ user: currentUser })) 
                   }}
                   value="user"
                   fullWidth
@@ -128,12 +129,10 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                 <Button
                   // type="submit"
                   onClick={() => {
-                    // setJoiningGame(true);
                     setPageView('Lobby')
                     console.log('joining game')
                     socket.emit('join game', JSON.stringify({ user: currentUser }))
                   }}
-                  //later it should be just 'currentUser'
                   fullWidth
                   variant="contained"
                   sx={{

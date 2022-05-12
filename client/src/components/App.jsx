@@ -155,6 +155,7 @@ export default function App() {
     console.log('newGame!!');
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);
+    setPageView('PlayerView');
   });
 
   socket.on('join game', (msg) => {
@@ -224,21 +225,21 @@ export default function App() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log('calling get deck');
-  //   getDeck('default', 'default')
-  //     .then((deck) => {
-  //       console.log('deck', deck);
-  //       if (deck.greenCard) {
-  //         deck['questions'] = deck['greenCard'];
-  //         deck['answers'] = deck['redCard'];
-  //         delete deck['greenCard'];
-  //         delete deck['redCard'];
-  //       }
-  //       setDefaultDeck(deck);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    console.log('calling get deck');
+    getDeck('default', 'default')
+      .then((deck) => {
+        console.log('deck', deck);
+        if (deck.greenCard) {
+          deck['questions'] = deck['greenCard'];
+          deck['answers'] = deck['redCard'];
+          delete deck['greenCard'];
+          delete deck['redCard'];
+        }
+        setDefaultDeck(deck);
+      })
+      .catch((e) => console.log(e));
+  }, [isLoggedIn]);
 
   // grabs custom decks pls keep
   useEffect(() => {
