@@ -201,8 +201,9 @@
 }
 
 /* lobby custom deck styles */
-.custom-deck-container {
-  padding: 20px;
+.custom-deck-page {
+  padding: 40px;
+  text-align: center;
 }
 
 .custom-deck-title {
@@ -214,9 +215,9 @@
   padding: 20px;
 }
 
-.playerViewContainer .player-view-subcontainer {
+/* .playerViewContainer .player-view-subcontainer {
   display: inline-block;
-}
+} */
 
 .player-list {
   margin-right: 400px;

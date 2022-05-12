@@ -34,8 +34,6 @@ export default function PlayerView({
 
   const { judgeIndex, judging, submittedCards, questionCard } = gameState;
 
-
-
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
     console.log(selected);
@@ -122,20 +120,28 @@ export default function PlayerView({
 
   return (
     <div className="playerViewContainer">
-      <div className="player-view-subcontainer">
-        <Stack
+      {/* <Stack
           className="player-list"
           direction="row"
           spacing={2}
           mt={2}
           mb={2}
           sx={{ flexWrap: "wrap", ml: 2 }}
-        >
-          {/* {connectedUsers.map((user, index) => (
+        > */}
+      {/* {connectedUsers.map((user, index) => (
             <AvatarChipPicking key={index} userInfo={user} />
           ))} */}
 
-          {/* SAMPLE */}
+      {/* SAMPLE */}
+      {/* <AvatarChipPicking
+            user={connectedUsers[judgeIndex]}
+          />
+          <AvatarChipPicking
+            userInfo={connectedUsers[judgeIndex]}
+          />
+          <AvatarChipPicking
+            userInfo={connectedUsers[judgeIndex]}
+          />
           <AvatarChipPicking
             userInfo={connectedUsers[judgeIndex]}
           />
@@ -145,69 +151,79 @@ export default function PlayerView({
           <AvatarChipPicking
             userInfo={connectedUsers[judgeIndex]}
           />
-        </Stack>
+        </Stack> */}
 
-        <Grid
-          container
-          direction="row"
-          alignSelf="flex-end"
-          sx={{ alignItems: "flex-end" }}
-        >
-          {/* ---------------------------- LEFT SIDE ---------------------------- */}
-          <Grid item xs={3}>
-            <div className="prompt">
-              <Grid
-                container
-                direction="column"
-                sx={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#ECECEC",
-                  padding: "15px",
-                  height: "346px",
-                  borderRadius: "15px"
-                }}
-              >
-                <Grid item xs={12}>
-                  Prompt:
-                </Grid>
-
-              </Grid>
-            </div>
+      <Grid
+        container
+        direction="row"
+        sx={{
+          height: "100%"
+        }}
+      >
+        {/* ---------------------------- LEFT SIDE ---------------------------- */}
+        <Grid item sm={3}>
+          <div className="prompt">
             <Grid
               container
               direction="column"
-              sx={{ alignItems: "center", justifyContent: "center" }}
+              sx={{
+                // justifyContent: "center",
+                backgroundColor: "#ECECEC",
+                padding: "15px",
+                height: "350px",
+                borderRadius: "15px"
+              }}
             >
-              <Grid item xs={12} mb={10}>
-                {gameState.gameState ?
-                  <PlayingCard color="green" card={gameState.gameState.questionCard} />
-                  : null}
-              </Grid>
               <Grid item xs={12}>
-                <AvatarChipPicking
-                  userInfo={connectedUsers[judgeIndex]}
-                />
+                Prompt:
               </Grid>
+
+            </Grid>
+          </div>
+          <Grid
+            container
+            direction="column"
+            sx={{ alignItems: "center", justifyContent: "center" }}
+          >
+            <Grid item xs={12} mb={10}>
+              {gameState.gameState ?
+                <PlayingCard color="green" card={gameState.gameState.questionCard} />
+                : null}
+            </Grid>
+            <Grid item xs={12}>
+              <AvatarChipPicking
+                userInfo={connectedUsers[judgeIndex]}
+              />
             </Grid>
           </Grid>
-          {/* ---------------------------- RIGHT SIDE -------------------------------- */}
-          <Grid
-            item xs={5.7}
-            sx={{
-              width: "100%",
-              height: "60vh",
-              backgroundColor: "#E95D70",
-              borderRadius: "15px",
-              padding: "15px"
-            }}
-          >
-            {playField}
-          </Grid>
         </Grid>
-      </div>
-      <div className="playerListContainer player-view-subcontainer">
+        {/* ---------------------------- RIGHT SIDE -------------------------------- */}
+        <Grid
+          item sm={6.3}
+          sx={{
+            height: "calc(100vh - 134px)",
+            backgroundColor: "#E95D70",
+            borderRadius: "15px",
+            padding: "15px",
+            margin: "18px"
+          }}
+        >
+          {playField}
+        </Grid>
+      </Grid>
+      <div className="playerListContainer">
         <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser} />
+        <hr />
+        <h2>Players</h2>
+        <div className="playerListDiv">
+          <Stack spacing={2}>
+            {connectedUsers.length ? connectedUsers.map((userObj, i) => {
+              return (
+                <AvatarChipPicking key={i} user={userObj} />
+              )
+            }) : 'Waiting...'}
+          </Stack>
+        </div >
       </div>
     </div >
   );
