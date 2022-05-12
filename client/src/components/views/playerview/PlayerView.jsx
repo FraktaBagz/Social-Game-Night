@@ -136,116 +136,118 @@ export default function PlayerView({
       }
     }
   }
+  
+  if (playField) {
+    return (
+      <div className="playerViewContainer">
+        {/* <Stack
+            className="player-list"
+            direction="row"
+            spacing={2}
+            mt={2}
+            mb={2}
+            sx={{ flexWrap: "wrap", ml: 2 }}
+          > */}
+        {/* {connectedUsers.map((user, index) => (
+              <AvatarChipPicking key={index} userInfo={user} />
+            ))} */}
 
-  return (
-    <div className="playerViewContainer">
-      {/* <Stack
-          className="player-list"
+        {/* SAMPLE */}
+        {/* <AvatarChipPicking
+              user={connectedUsers[judgeIndex]}
+            />
+            <AvatarChipPicking
+              userInfo={connectedUsers[judgeIndex]}
+            />
+            <AvatarChipPicking
+              userInfo={connectedUsers[judgeIndex]}
+            />
+            <AvatarChipPicking
+              userInfo={connectedUsers[judgeIndex]}
+            />
+            <AvatarChipPicking
+              userInfo={connectedUsers[judgeIndex]}
+            />
+            <AvatarChipPicking
+              userInfo={connectedUsers[judgeIndex]}
+            />
+          </Stack> */}
+
+        <Grid
+          container
           direction="row"
-          spacing={2}
-          mt={2}
-          mb={2}
-          sx={{ flexWrap: "wrap", ml: 2 }}
-        > */}
-      {/* {connectedUsers.map((user, index) => (
-            <AvatarChipPicking key={index} userInfo={user} />
-          ))} */}
+          sx={{
+            height: "100%"
+          }}
+        >
+          {/* ---------------------------- LEFT SIDE ---------------------------- */}
+          <Grid item sm={3}>
+            <div className="prompt">
+              <Grid
+                container
+                direction="column"
+                sx={{
+                  alignItems: "center",
+                  backgroundColor: "#ECECEC",
+                  padding: "15px",
+                  height: "350px",
+                  borderRadius: "15px"
+                }}
+              >
+                <Grid item xs={12}>
+                  <strong>Prompt:</strong>
+                  <hr />
+                  <Grid item xs={12} mb={10}>
+                    {gameState.gameState ?
+                      <PlayingCard color="green" card={gameState.gameState.questionCard} />
+                      : null}
+                  </Grid>
+                </Grid>
 
-      {/* SAMPLE */}
-      {/* <AvatarChipPicking
-            user={connectedUsers[judgeIndex]}
-          />
-          <AvatarChipPicking
-            userInfo={connectedUsers[judgeIndex]}
-          />
-          <AvatarChipPicking
-            userInfo={connectedUsers[judgeIndex]}
-          />
-          <AvatarChipPicking
-            userInfo={connectedUsers[judgeIndex]}
-          />
-          <AvatarChipPicking
-            userInfo={connectedUsers[judgeIndex]}
-          />
-          <AvatarChipPicking
-            userInfo={connectedUsers[judgeIndex]}
-          />
-        </Stack> */}
-
-      <Grid
-        container
-        direction="row"
-        sx={{
-          height: "100%"
-        }}
-      >
-        {/* ---------------------------- LEFT SIDE ---------------------------- */}
-        <Grid item sm={3}>
-          <div className="prompt">
+              </Grid>
+            </div>
             <Grid
               container
               direction="column"
-              sx={{
-                alignItems: "center",
-                backgroundColor: "#ECECEC",
-                padding: "15px",
-                height: "350px",
-                borderRadius: "15px"
-              }}
+              sx={{ alignItems: "center", justifyContent: "center" }}
             >
               <Grid item xs={12}>
-                <strong>Prompt:</strong>
-                <hr />
-                <Grid item xs={12} mb={10}>
-                  {gameState.gameState ?
-                    <PlayingCard color="green" card={gameState.gameState.questionCard} />
-                    : null}
-                </Grid>
+                <AvatarChipPicking
+                  userInfo={connectedUsers[judgeIndex]}
+                />
               </Grid>
+            </Grid>
 
-            </Grid>
-          </div>
-          <Grid
-            container
-            direction="column"
-            sx={{ alignItems: "center", justifyContent: "center" }}
-          >
-            <Grid item xs={12}>
-              <AvatarChipPicking
-                userInfo={connectedUsers[judgeIndex]}
-              />
-            </Grid>
           </Grid>
-
+          {/* ---------------------------- RIGHT SIDE -------------------------------- */}
+          <Grid
+            item sm={6.3}
+            sx={{
+              height: "calc(100vh - 134px)",
+              backgroundColor: "#E95D70",
+              borderRadius: "15px",
+              padding: "15px",
+              margin: "18px"
+            }}
+          >
+            {playField}
+          </Grid>
         </Grid>
-        {/* ---------------------------- RIGHT SIDE -------------------------------- */}
-        <Grid
-          item sm={6.3}
-          sx={{
-            height: "calc(100vh - 134px)",
-            backgroundColor: "#E95D70",
-            borderRadius: "15px",
-            padding: "15px",
-            margin: "18px"
-          }}
-        >
-          {playField}
-        </Grid>
-      </Grid>
-      <div className="playerListContainer">
-        <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser} />
-        <hr />
-        <h2>Players</h2>
-        <div className="playerListDiv">
-          <Stack spacing={2}>
-            {connectedUsers.length ? connectedUsers.map((userObj, i) => {
-              return (
-                <AvatarChipPicking key={i} user={userObj} />
-              )
-            }) : 'Waiting...'}
-          </Stack>
-        </div >
-      </div>
-    </div >
-  );
+        <div className="playerListContainer">
+          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser} />
+          <hr />
+          <h2>Players</h2>
+          <div className="playerListDiv">
+            <Stack spacing={2}>
+              {connectedUsers.length ? connectedUsers.map((userObj, i) => {
+                return (
+                  <AvatarChipPicking key={i} user={userObj} />
+                )
+              }) : 'Waiting...'}
+            </Stack>
+          </div >
+        </div>
+      </div >
+    );
+  }
 }
