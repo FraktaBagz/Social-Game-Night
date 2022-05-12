@@ -26,17 +26,16 @@ export default function PlayerView({
   setChatHistory,
   customDecksSample,
   currentUser,
-  setCurrentUser
+  setCurrentUser,
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
   const [hasPicked, setHasPicked] = useState(false);
 
   if (gameState.gameState) {
-    var { judgeIndex, judging, submittedCards, questionCard } = gameState.gameState;
+    var { judgeIndex, judging, submittedCards, questionCard } =
+      gameState.gameState;
   }
-
-
 
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
@@ -61,48 +60,55 @@ export default function PlayerView({
 
   useEffect(() => {
     if (gameState.gameState && currentUser) {
-        const judge = gameState.users[gameState.gameState.judgeIndex];
-        if (currentUser.name === judge.name) {
-          setIsJudge(true)
-        }
+      const judge = gameState.users[gameState.gameState.judgeIndex];
+      if (currentUser.name === judge.name) {
+        setIsJudge(true);
       }
+    }
+    console.log("gameState---------------------------- ", gameState);
   }, [gameState]);
 
   let playField;
   if (gameState.gameState && currentUser) {
     if (isJudge) {
       if (judging) {
-        playField = <JudgeView isJudge={true} submittedCards={submittedCards} />;
+        playField = (
+          <JudgeView isJudge={true} submittedCards={submittedCards} />
+        );
       } else {
         playField = <JudgeWaiting />;
       }
     } else {
       if (judging) {
-        playField = <JudgeView isJudge={false} submittedCards={submittedCards} />;
+        playField = (
+          <JudgeView isJudge={false} submittedCards={submittedCards} />
+        );
       } else {
         if (Object.keys(selected).length === 0) {
           playField = (
             <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
-            {gameState.gameState ? (
-              gameState.gameState.userInformation[currentUser.name].cards.map(
-                (answer) => {
-                  answer !== null ? (
-                    <PlayingCard
-                      color="red"
-                      card={answer}
-                      handleSelectCard={(e) => {
-                        e.preventDefault();
-                        console.log(answer);
-                        setSelected(answer);
-                      }}
-                    />
-                  ) : null;
-                }
-              )
-            ) : (
-              <div>loading</div>
-            )}
-          </Stack>
+              {gameState.gameState ? (
+                gameState.gameState.userInformation[currentUser.name].cards.map(
+                  (answer) => {
+                    if (answer !== null) {
+                      return (
+                        <PlayingCard
+                          color="red"
+                          card={answer}
+                          handleSelectCard={(e) => {
+                            e.preventDefault();
+                            console.log(answer);
+                            setSelected(answer);
+                          }}
+                        />
+                      );
+                    }
+                  }
+                )
+              ) : (
+                <div>loading</div>
+              )}
+            </Stack>
           );
         } else {
           playField = (
@@ -112,9 +118,8 @@ export default function PlayerView({
               mt={2}
               sx={{ alignItems: "center", justifyContent: "center" }}
             >
-
               <PlayingCard color="red" card={selected} />
-              {!hasPicked ?
+              {!hasPicked ? (
                 <>
                   <Button variant="contained" onClick={handleConfirmSelection}>
                     Confirm
@@ -123,7 +128,7 @@ export default function PlayerView({
                     Deselect
                   </Button>
                 </>
-              : null}
+              ) : null}
             </Stack>
           );
         }
@@ -132,58 +137,64 @@ export default function PlayerView({
   }
 
   if (playField) {
-   return (
-    <div className="PlayerViewContainer">
-      <Stack
-        direction="row"
-        spacing={2}
-        mt={2}
-        mb={40}
-        sx={{ flexWrap: "wrap", ml: 2 }}
-      >
-        {connectedUsers.map((user, index) => (
-          <AvatarChipPicking key={index} userInfo={user} />
-        ))}
-      </Stack>
+    return (
+      <div className="PlayerViewContainer">
+        <Stack
+          direction="row"
+          spacing={2}
+          mt={2}
+          mb={40}
+          sx={{ flexWrap: "wrap", ml: 2 }}
+        >
+          {connectedUsers.map((user, index) => (
+            <AvatarChipPicking key={index} user={user} />
+          ))}
+        </Stack>
 
-      <Grid
-        container
-        direction="row"
-        alignSelf="flex-end"
-        sx={{ alignItems: "flex-end" }}
-      >
-        {/* ---------------------------- LEFT SIDE ---------------------------- */}
-        <Grid item xs={3}>
-          <Grid
-            container
-            direction="column"
-            sx={{ alignItems: "center", justifyContent: "center" }}
-          >
-            <Grid item xs={12} mb={10}>
-              {gameState.gameState ?
-                <PlayingCard color="green" card={gameState.gameState.questionCard} />
-                : null}
-            </Grid>
-            <Grid item xs={12}>
-              {gameState.gameState ?
-                <AvatarChipPicking
-                  userInfo={connectedUsers[judgeIndex]}
-                />
-              : null}
+        <Grid
+          container
+          direction="row"
+          alignSelf="flex-end"
+          sx={{ alignItems: "flex-end" }}
+        >
+          {/* ---------------------------- LEFT SIDE ---------------------------- */}
+          <Grid item xs={3}>
+            <Grid
+              container
+              direction="column"
+              sx={{ alignItems: "center", justifyContent: "center" }}
+            >
+              <Grid item xs={12} mb={10}>
+                {gameState.gameState ? (
+                  <PlayingCard
+                    color="green"
+                    card={gameState.gameState.questionCard}
+                  />
+                ) : null}
+              </Grid>
+              <Grid item xs={12}>
+                {gameState.gameState ? (
+                  <AvatarChipPicking user={connectedUsers[judgeIndex]} />
+                ) : null}
+              </Grid>
             </Grid>
           </Grid>
+          {/* ---------------------------- MIDDLE -------------------------------- */}
+          <Grid item xs={6}>
+            {playField}
+          </Grid>
+          {/* ---------------------------- RIGHT SIDE ---------------------------- */}
+          <Grid item xs={3}>
+            <Chat
+              chatHistory={chatHistory}
+              setChatHistory={setChatHistory}
+              currentUser={currentUser || "fart"}
+              setCurrentUser={setCurrentUser}
+            />
+          </Grid>
+          {/* -------------------------------------------------------------------- */}
         </Grid>
-        {/* ---------------------------- MIDDLE -------------------------------- */}
-        <Grid item xs={6}>
-          {playField}
-        </Grid>
-        {/* ---------------------------- RIGHT SIDE ---------------------------- */}
-        <Grid item xs={3}>
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser}/>
-        </Grid>
-        {/* -------------------------------------------------------------------- */}
-      </Grid>
-    </div>
+      </div>
     );
   }
   return null;
