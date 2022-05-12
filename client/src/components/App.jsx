@@ -143,22 +143,19 @@ export default function App() {
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
-    console.log("currentUser: ", currentUser);
     if (currentUser) {
       console.log("currentUser Name: ", currentUser.name);
       console.log("currentUser ID: ", currentUser.UID);
     }
     socket.on("new game", (gameObj) => {
-      console.log('newGame!!');
+      console.log('Starting new game...');
       gameObj = JSON.parse(gameObj);
       setGameState(gameObj);
       setPageView('PlayerView');
     });
-
     socket.on('join game', (msg) => {
-      console.log('new player entered room');
+      console.log('A new player has entered the room');
       msg = JSON.parse(msg);
-      console.log(msg);
       setConnectedUsers([...connectedUsers, msg.user]);
     })
     socket.on('host change', (msg) => {
@@ -187,7 +184,7 @@ export default function App() {
       setHost(true)
     })
     socket.on("game action", (gameObj) => {
-      console.log('gameAction received');
+      console.log('gameAction received...');
       gameObj = JSON.parse(gameObj);
       setGameState(gameObj);
     });
@@ -209,10 +206,8 @@ export default function App() {
   }
 
   useEffect(() => {
-    console.log('calling get deck');
     getDeck('default', 'default')
       .then((deck) => {
-        console.log('deck', deck);
         if (deck.greenCard) {
           deck['questions'] = deck['greenCard'];
           deck['answers'] = deck['redCard'];
@@ -226,12 +221,9 @@ export default function App() {
 
   // grabs custom decks pls keep
   useEffect(() => {
-    console.log('calling get custom decks');
     if (currentUser) {
-      console.log(currentUser.UID)
       getDecks(currentUser.UID)
         .then((usersCustomDecks) => {
-          console.log('custom deck', usersCustomDecks);
           setCustomDecks(usersCustomDecks);
           setDeletedCard(false);
           setPostCard(false);
