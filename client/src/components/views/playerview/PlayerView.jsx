@@ -60,12 +60,12 @@ export default function PlayerView({
 
   useEffect(() => {
     if (gameState.gameState) {
-        const judge = gameState.users[gameState.gameState.judgeIndex];
-        console.log('judge', judge.name, 'currentUser', currentUser.name)
-        if (currentUser.name === judge.name) {
-          setIsJudge(true)
-        }
+      const judge = gameState.users[gameState.gameState.judgeIndex];
+      console.log('judge', judge.name, 'currentUser', currentUser.name)
+      if (currentUser.name === judge.name) {
+        setIsJudge(true)
       }
+    }
   }, [gameState]);
 
   // duplicate
@@ -90,8 +90,8 @@ export default function PlayerView({
                 e.preventDefault();
                 console.log(answer);
                 setSelected(answer)
-              }}/>
-            ) : <div>loading</div> }
+              }} />
+            ) : <div>loading</div>}
           </Stack>
         );
       } else {
@@ -113,7 +113,7 @@ export default function PlayerView({
                   Deselect
                 </Button>
               </>
-            : null}
+              : null}
           </Stack>
         );
       }
@@ -121,54 +121,94 @@ export default function PlayerView({
   }
 
   return (
-    <div className="PlayerViewContainer">
-      <Stack
-        direction="row"
-        spacing={2}
-        mt={2}
-        mb={40}
-        sx={{ flexWrap: "wrap", ml: 2 }}
-      >
-        {connectedUsers.map((user, index) => (
-          <AvatarChipPicking key={index} userInfo={user} />
-        ))}
-      </Stack>
+    <div className="playerViewContainer">
+      <div className="player-view-subcontainer">
+        <Stack
+          className="player-list"
+          direction="row"
+          spacing={2}
+          mt={2}
+          mb={2}
+          sx={{ flexWrap: "wrap", ml: 2 }}
+        >
+          {/* {connectedUsers.map((user, index) => (
+            <AvatarChipPicking key={index} userInfo={user} />
+          ))} */}
 
-      <Grid
-        container
-        direction="row"
-        alignSelf="flex-end"
-        sx={{ alignItems: "flex-end" }}
-      >
-        {/* ---------------------------- LEFT SIDE ---------------------------- */}
-        <Grid item xs={3}>
-          <Grid
-            container
-            direction="column"
-            sx={{ alignItems: "center", justifyContent: "center" }}
-          >
-            <Grid item xs={12} mb={10}>
-              {gameState.gameState ?
-                <PlayingCard color="green" card={gameState.gameState.questionCard} />
-                : null}
-            </Grid>
-            <Grid item xs={12}>
-              <AvatarChipPicking
-                userInfo={connectedUsers[judgeIndex]}
-              />
+          {/* SAMPLE */}
+          <AvatarChipPicking
+            userInfo={connectedUsers[judgeIndex]}
+          />
+          <AvatarChipPicking
+            userInfo={connectedUsers[judgeIndex]}
+          />
+          <AvatarChipPicking
+            userInfo={connectedUsers[judgeIndex]}
+          />
+        </Stack>
+
+        <Grid
+          container
+          direction="row"
+          alignSelf="flex-end"
+          sx={{ alignItems: "flex-end" }}
+        >
+          {/* ---------------------------- LEFT SIDE ---------------------------- */}
+          <Grid item xs={3}>
+            <div className="prompt">
+              <Grid
+                container
+                direction="column"
+                sx={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#ECECEC",
+                  padding: "15px",
+                  height: "346px",
+                  borderRadius: "15px"
+                }}
+              >
+                <Grid item xs={12}>
+                  Prompt:
+                </Grid>
+
+              </Grid>
+            </div>
+            <Grid
+              container
+              direction="column"
+              sx={{ alignItems: "center", justifyContent: "center" }}
+            >
+              <Grid item xs={12} mb={10}>
+                {gameState.gameState ?
+                  <PlayingCard color="green" card={gameState.gameState.questionCard} />
+                  : null}
+              </Grid>
+              <Grid item xs={12}>
+                <AvatarChipPicking
+                  userInfo={connectedUsers[judgeIndex]}
+                />
+              </Grid>
             </Grid>
           </Grid>
+          {/* ---------------------------- RIGHT SIDE -------------------------------- */}
+          <Grid
+            item xs={5.7}
+            sx={{
+              width: "100%",
+              height: "60vh",
+              backgroundColor: "#E95D70",
+              borderRadius: "15px",
+              padding: "15px"
+            }}
+          >
+            {playField}
+          </Grid>
         </Grid>
-        {/* ---------------------------- MIDDLE -------------------------------- */}
-        <Grid item xs={6}>
-          {playField}
-        </Grid>
-        {/* ---------------------------- RIGHT SIDE ---------------------------- */}
-        <Grid item xs={3}>
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser}/>
-        </Grid>
-        {/* -------------------------------------------------------------------- */}
-      </Grid>
-    </div>
+      </div>
+      <div className="playerListContainer player-view-subcontainer">
+        <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser} />
+      </div>
+    </div >
   );
 }
