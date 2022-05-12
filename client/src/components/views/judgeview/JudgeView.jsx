@@ -27,6 +27,7 @@ export default function JudgeView({ gameState, isJudge, submittedCards }) {
 
   const handleNextRound = (e) => {
     e.preventDefault();
+    console.log('started new Round')
     socket.emit(
       "game action",
       JSON.stringify({

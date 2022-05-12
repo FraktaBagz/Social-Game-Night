@@ -26,15 +26,13 @@ export default function PlayerView({
   setChatHistory,
   customDecksSample,
   currentUser,
-  setCurrentUser
+  setCurrentUser,
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
   const [hasPicked, setHasPicked] = useState(false);
 
   const { judgeIndex, judging, submittedCards, questionCard } = gameState;
-
-
 
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
@@ -49,7 +47,6 @@ export default function PlayerView({
       })
     );
     setHasPicked(true);
-
   };
 
   useEffect(() => {
@@ -60,12 +57,12 @@ export default function PlayerView({
 
   useEffect(() => {
     if (gameState.gameState) {
-        const judge = gameState.users[gameState.gameState.judgeIndex];
-        console.log('judge', judge.name, 'currentUser', currentUser.name)
-        if (currentUser.name === judge.name) {
-          setIsJudge(true)
-        }
+      const judge = gameState.users[gameState.gameState.judgeIndex];
+      console.log("judge", judge.name, "currentUser", currentUser.name);
+      if (currentUser.name === judge.name) {
+        setIsJudge(true);
       }
+    }
   }, [gameState]);
 
   // duplicate
@@ -85,13 +82,25 @@ export default function PlayerView({
       if (Object.keys(selected).length === 0) {
         playField = (
           <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
-            {gameState.gameState ? gameState.gameState.userInformation[currentUser.name].cards.map((answer) =>
-              <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
-                e.preventDefault();
-                console.log(answer);
-                setSelected(answer)
-              }}/>
-            ) : <div>loading</div> }
+            {gameState.gameState ? (
+              gameState.gameState.userInformation[currentUser.name].cards.map(
+                (answer) => {
+                  answer !== null ? (
+                    <PlayingCard
+                      color="red"
+                      card={answer}
+                      handleSelectCard={(e) => {
+                        e.preventDefault();
+                        console.log(answer);
+                        setSelected(answer);
+                      }}
+                    />
+                  ) : null;
+                }
+              )
+            ) : (
+              <div>loading</div>
+            )}
           </Stack>
         );
       } else {
@@ -102,9 +111,8 @@ export default function PlayerView({
             mt={2}
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
-
             <PlayingCard color="red" card={selected} />
-            {!hasPicked ?
+            {!hasPicked ? (
               <>
                 <Button variant="contained" onClick={handleConfirmSelection}>
                   Confirm
@@ -113,7 +121,7 @@ export default function PlayerView({
                   Deselect
                 </Button>
               </>
-            : null}
+            ) : null}
           </Stack>
         );
       }
@@ -148,14 +156,15 @@ export default function PlayerView({
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
             <Grid item xs={12} mb={10}>
-              {gameState.gameState ?
-                <PlayingCard color="green" card={gameState.gameState.questionCard} />
-                : null}
+              {gameState.gameState ? (
+                <PlayingCard
+                  color="green"
+                  card={gameState.gameState.questionCard}
+                />
+              ) : null}
             </Grid>
             <Grid item xs={12}>
-              <AvatarChipPicking
-                userInfo={connectedUsers[judgeIndex]}
-              />
+              <AvatarChipPicking userInfo={connectedUsers[judgeIndex]} />
             </Grid>
           </Grid>
         </Grid>
@@ -165,7 +174,12 @@ export default function PlayerView({
         </Grid>
         {/* ---------------------------- RIGHT SIDE ---------------------------- */}
         <Grid item xs={3}>
-          <Chat chatHistory={chatHistory} setChatHistory={setChatHistory} currentUser={currentUser || 'fart'} setCurrentUser={setCurrentUser}/>
+          <Chat
+            chatHistory={chatHistory}
+            setChatHistory={setChatHistory}
+            currentUser={currentUser || "fart"}
+            setCurrentUser={setCurrentUser}
+          />
         </Grid>
         {/* -------------------------------------------------------------------- */}
       </Grid>

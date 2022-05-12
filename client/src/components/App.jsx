@@ -20,7 +20,7 @@ import { io } from "socket.io-client";
 const socket = io();
 
 const customDecksSample = {
-  skips: {
+  skip: {
     questions: [
       {
         label: 'skiplabel1',
