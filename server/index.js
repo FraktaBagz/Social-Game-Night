@@ -33,10 +33,10 @@ io.on('connection', (socket) => {
   //it will always only return a game object
 
   socket.on('game action', (msg) => {
-    console.log('hi', msg)
-    if (msg.action === 'judge selection') {
+    msg2 = JSON.parse(msg);
+    if (msg2.action === 'judge selection') {
 
-      if (msg.game.gameState.judgeIndex === msg.game.users.length + 1) {
+      if (msg2.game.gameState.judgeIndex === msg2.game.users.length + 1) {
         io.emit('game over');
       } else {
         console.log('emitting next round')
