@@ -322,7 +322,7 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
     var keysArray = Object.keys(emotesObj);
     var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)];
     // setChatContent(`${randomKey} :${randomKey}`);
-    handleSubmit(null, `${randomKey} :${randomKey}`);
+    handleSubmit(null, ':' + `${randomKey}`);
   }
   const handleSubmit = (e, emojishortcut) => {
     if (e) {
