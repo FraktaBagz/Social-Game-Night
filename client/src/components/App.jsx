@@ -145,6 +145,7 @@ export default function App() {
     console.log('newGame!!');
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);
+    setPageView('PlayerView');
   });
 
   socket.on('join game', (msg) => {
