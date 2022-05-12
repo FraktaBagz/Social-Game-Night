@@ -13,9 +13,11 @@ judge chooses winning card
 winner gets a point
 next round starts
 */
-
+// const io = require('socket.io')
 const { Game } = require('./gameService');
 const { getCollection } = require('../data/dbHelpers')
+
+// const socket = io()
 
 drawRandomCard = (deckArray) => {
   let randomIndex = Math.floor((deckArray.length - 0.0000001) * Math.random())
@@ -73,17 +75,19 @@ function gameHandler(msg) {
     game.gameState.userInformation[user.name].points += 1;
     game.gameState.judging = false;
     game.gameState.judgeIndex += 1;
+    console.log('new round')
+    game.gameState.questionCard = drawRandomCard(currentDeck.questions)
     users.forEach((user) => {
       if (game.gameState.userInformation[user.name].cards.length === 6) {
         game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
       }
     })
     game.gameState.submittedCards = [];
-    if (judgeIndex === game.users.length + 1) {
-      return 'game over';
-    } else {
-      return 'next round';
-    }
+    // if (judgeIndex === game.users.length + 1) {
+    //   io.emit('game over');
+    // } else {
+    //   io.emit('next round');
+    // }
   }
 
   return game;

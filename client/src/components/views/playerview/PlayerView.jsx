@@ -29,6 +29,8 @@ export default function PlayerView({
   setCurrentUser,
   setGameState,
 }) {
+
+  // const winnerRef = useRef(null);
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
   const [hasPicked, setHasPicked] = useState(false);
@@ -53,11 +55,29 @@ export default function PlayerView({
     setHasPicked(true);
   };
 
-  useEffect(() => {
-    console.log("currentUser: ", currentUser);
-    console.log("gameState: ", gameState);
-    console.log("connectedUsers: ", connectedUsers);
-  }, []);
+  // useEffect(() => {
+  //   setSelected({});
+  //   setHasPicked(false);
+  // }, []);
+  // function usePrevious(value) {
+  //   const ref = useRef();
+  //   useEffect(() => {
+  //     ref.current = value;
+  //   });
+  //   return ref.current;
+  // }
+
+  // if (gameState.gameState) {
+  //   const { winner } = gameState
+  //   const prevAmount = usePrevious({winner});
+  // }
+  // useEffect(() => {
+  //   if(prevAmount.receiveAmount !== receiveAmount) {
+
+  //   }
+
+  // }, [receiveAmount, sendAmount])
+
 
   useEffect(() => {
     if (gameState.gameState && currentUser) {
