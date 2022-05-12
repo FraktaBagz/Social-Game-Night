@@ -43,7 +43,6 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
     //   .catch((err) => {
     //     console.log(err);
     //   });
-    console.log('here in homepage', currentUser)
 
     setIsLoaded(true);
   }, [currentUser]);
@@ -99,8 +98,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                 <Button
                   onClick={() => {
                     setPageView('Lobby')
-                    console.log('joining game')
-                    socket.emit('join game', JSON.stringify({ user: currentUser })) 
+                    socket.emit('join game', JSON.stringify({ user: currentUser }))
                   }}
                   value="user"
                   fullWidth
@@ -130,7 +128,6 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                   // type="submit"
                   onClick={() => {
                     setPageView('Lobby')
-                    console.log('joining game')
                     socket.emit('join game', JSON.stringify({ user: currentUser }))
                   }}
                   fullWidth
