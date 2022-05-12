@@ -62,7 +62,7 @@ function gameHandler(msg) {
   //the client will send a msg with the winner's username and the winning card
   if (action === 'judge selection') {
     game.gameState.winner = user;
-    game.gameState.userInformation[user.UID].points += 1;
+    game.gameState.userInformation[user.name].points += 1;
     game.gameState.judging = false;
     game.gameState.judgeIndex += 1;
   }
