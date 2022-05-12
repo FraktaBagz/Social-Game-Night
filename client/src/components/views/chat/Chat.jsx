@@ -325,17 +325,24 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   const shuffleEmotes = () => {
     var keysArray = Object.keys(emotesObj);
     var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)];
-    setChatContent(`${randomKey} :${randomKey}`);
-    handleSubmit(null);
+    // setChatContent(`${randomKey} :${randomKey}`);
+    handleSubmit(null, `${randomKey} :${randomKey}`);
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, emojishortcut) => {
     if (e) {
       e.preventDefault();
     }
-    socket.emit('chat message', JSON.stringify({ user: user, text: chatContent }));
-    var chatHistoryCopy = chatHistory
-    chatHistoryCopy.push({ user: `${user}`, text: `${chatContent}` })
-    setChatHistory(chatHistoryCopy)
+    if (emojishortcut) {
+      socket.emit('chat message', JSON.stringify({user : user, text: emojishortcut}));
+      var chatHistoryCopy = chatHistory
+      chatHistoryCopy.push({ user: `${user}`, text: `${emojishortcut}` })
+      setChatHistory(chatHistoryCopy)
+    } else {
+      socket.emit('chat message', JSON.stringify({ user: user, text: chatContent }));
+      var chatHistoryCopy = chatHistory
+      chatHistoryCopy.push({ user: `${user}`, text: `${chatContent}` })
+      setChatHistory(chatHistoryCopy)
+    }
   }
   var count = 0;
   return (
