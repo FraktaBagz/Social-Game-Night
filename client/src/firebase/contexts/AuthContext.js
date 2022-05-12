@@ -52,10 +52,10 @@ export function AuthProvider({ children }) {
   }
 
   function login(email, password) {
-    return setPersistence(auth, inMemoryPersistence)
-      .then(() => {
+    // return setPersistence(auth, inMemoryPersistence)
+    //   .then(() => {
         return signInWithEmailAndPassword(auth, email, password)
-      })
+      // })
       .catch((err) => {
         throw err;
       });

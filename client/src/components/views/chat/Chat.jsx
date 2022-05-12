@@ -301,7 +301,7 @@ const checkEmotes = (chatcontent) => {
 export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   const [chatContent, setChatContent] = useState('');
   const [text, setText] = useState('');
-  const [user, setUser] = useState(currentUser.name);
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     document.getElementById("inputChat")
@@ -317,6 +317,10 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
       checkEmotes(msg)
     })
   }, chatHistory)
+
+  useEffect(() => {
+    currentUser ? setUser(currentUser.name) : null;
+  }, [currentUser])
 
   const shuffleEmotes = () => {
     var keysArray = Object.keys(emotesObj);
