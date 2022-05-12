@@ -108,6 +108,11 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
           <div className="playerListDiv">
             <Stack spacing={2}>
               {connectedUsers.length ? connectedUsers.map((userObj, i) => {
+                function play(id) {
+                  var audio = document.getElementById(`${id}`);
+                  audio.play();
+                }
+                play('audioNewPlayerJoin')
                 return (
                   <AvatarChipPicking key={i} user={userObj} />
                 )
