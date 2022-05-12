@@ -18,6 +18,7 @@ import PlayingCard from "./views/common/PlayingCard.jsx";
 import Results from "./views/results/Results.jsx";
 import { io } from "socket.io-client";
 const socket = io();
+// const socket = io('localhost:3001');
 
 const customDecksSample = {
   skips: {
@@ -104,6 +105,7 @@ const dummyWinners = [
   }
 ];
 
+// const App = function () {
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck, getDecks } = useGame();
@@ -153,6 +155,7 @@ export default function App() {
     console.log('newGame!!');
     gameObj = JSON.parse(gameObj);
     setGameState(gameObj);
+    setPageView('PlayerView');
   });
 
   socket.on('join game', (msg) => {
@@ -160,6 +163,16 @@ export default function App() {
     msg = JSON.parse(msg);
     console.log(msg);
     setConnectedUsers([...connectedUsers, msg.user]);
+  })
+  socket.on('host change', (msg) => {
+    msg = JSON.parse(msg)
+    if (currentUser !== null) {
+      if (msg !== null) {
+        if (currentUser.UID === msg.UID) {
+          setHost(true)
+        }
+      }
+    }
   })
   // useEffect(()=>{
   //   if (host) {
@@ -169,12 +182,23 @@ export default function App() {
 
   socket.on('update connected users', (msg) => {
     msg = JSON.parse(msg)
-    console.log('the master user list:', msg)
+    // console.log('the master user list:', msg)
     // if ((msg.length !== connectedUsers.length) && !host) {
     //   console.log('166')
     setConnectedUsers(msg)
     // }
   })
+  socket.on('update connected users2', (msg)=>{
+    msg = JSON.parse(msg)
+    // console.log('the master user list:', msg)
+      setConnectedUsers(msg)
+  })
+  socket.on('request current users', ()=>{
+    console.log('Socket is requesting current user...')
+    socket.emit('rebuild current users', JSON.stringify(currentUser))
+  })
+
+
 
   socket.on('set host', () => {
     setHost(true)
@@ -201,21 +225,21 @@ export default function App() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log('calling get deck');
-  //   getDeck('default', 'default')
-  //     .then((deck) => {
-  //       console.log('deck', deck);
-  //       if (deck.greenCard) {
-  //         deck['questions'] = deck['greenCard'];
-  //         deck['answers'] = deck['redCard'];
-  //         delete deck['greenCard'];
-  //         delete deck['redCard'];
-  //       }
-  //       setDefaultDeck(deck);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    console.log('calling get deck');
+    getDeck('default', 'default')
+      .then((deck) => {
+        console.log('deck', deck);
+        if (deck.greenCard) {
+          deck['questions'] = deck['greenCard'];
+          deck['answers'] = deck['redCard'];
+          delete deck['greenCard'];
+          delete deck['redCard'];
+        }
+        setDefaultDeck(deck);
+      })
+      .catch((e) => console.log(e));
+  }, [isLoggedIn]);
 
   // grabs custom decks pls keep
   useEffect(() => {
@@ -398,3 +422,5 @@ export default function App() {
     </>
   );
 }
+
+// export {socket, App,};

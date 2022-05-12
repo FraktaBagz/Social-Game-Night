@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import { io } from "socket.io-client";
 const socket = io();
+// import {socket} from '../../App.jsx';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -29,7 +30,7 @@ const sx = {
   }
 }
 
-export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDecktitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck, currentUser, setCurrentUser }) {
+export default function Lobby({ theme, gameState, setPageView, customDecks, setSelectedCustomDeck, setCustomDeckTitle, chatHistory, setChatHistory, name, host, connectedUsers, defaultDeck, currentUser, setCurrentUser }) {
   const [gameCode, setGameCode] = useState('12345');
 
   function createGame() {
@@ -76,7 +77,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                 <Button type="submit" fullWidth variant="contained" sx={sx}
                   onClick={() => {
                     createGame();
-                    setPageView('PlayerView');
+                    // setPageView('PlayerView');
                   }}>
                   Start Game!
                 </Button>
@@ -88,7 +89,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
             >
               <Button type="submit" fullWidth variant="contained" sx={sx}
                 onClick={() => {
-                  setPageView('HomePage')
+                  createGame();
                 }}>
                 Leave Game
               </Button>
