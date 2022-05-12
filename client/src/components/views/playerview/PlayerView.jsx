@@ -295,21 +295,6 @@ export default function PlayerView({
               margin: "18px",
             }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                color: "primary.contrastText",
-                backgroundColor: "secondary.main",
-                borderRadius: 15,
-              }}
-              onClick={(e) => {
-                e.preventDefault;
-                setSelected({});
-                setHasPicked(false);
-              }}
-            >
-              NEXT ROUND
-            </Button>
             {playField}
           </Grid>
         </Grid>

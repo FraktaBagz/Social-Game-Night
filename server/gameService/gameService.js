@@ -49,7 +49,13 @@ let Game = function (users, deck) {
     for (let user in this.gameState.userInformation) {
       this.gameState.hasPicked.push('user');
       console.log(`${user} adds a card to pile.`)
-      this.gameState.submittedCards.push([this.drawRandomCard(this.gameState.userInformation[user].cards), user])
+      let userObj;
+      for (let i = 0; i < this.user.length; i++) {
+        if (this.user[i].name === user) {
+          userObj = this.user[i]
+        }
+      }
+      this.gameState.submittedCards.push([this.drawRandomCard(this.gameState.userInformation[user].cards), userObj])
     }
 
     // check all clients have submitted
