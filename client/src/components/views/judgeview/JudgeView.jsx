@@ -8,15 +8,21 @@ import PlayingCard from "../common/PlayingCard.jsx";
 import { io } from "socket.io-client";
 const socket = io();
 
-export default function JudgeView({ gameState, setIsJudge, isJudge, submittedCards, setGameState }) {
+export default function JudgeView({
+  gameState,
+  setIsJudge,
+  isJudge,
+  submittedCards,
+  setGameState,
+}) {
   const [selectedUser, setSelectedUser] = useState({});
   const [winningCard, setWinningCard] = useState(null);
   const [selectedCard, setSelectedCard] = useState({});
 
   const handleWinnerPicked = (e) => {
-    console.log('handleWinnerPicked fired -------')
+    console.log("handleWinnerPicked fired -------");
     e.preventDefault();
-    console.log('selectUser: ', selectedUser)
+    console.log("selectUser: ", selectedUser);
     socket.emit(
       "game action",
       JSON.stringify({
@@ -26,6 +32,9 @@ export default function JudgeView({ gameState, setIsJudge, isJudge, submittedCar
       })
     );
     setIsJudge(false);
+    setWinningCard(null);
+    setSelectedCard({});
+    setSelected({});
 
     // console.log('use effect here----------------------------------------- ')
     // socket.emit(
@@ -38,17 +47,28 @@ export default function JudgeView({ gameState, setIsJudge, isJudge, submittedCar
     // );
   };
 
-  useEffect(() => {
-    console.log('use effect here----------------------------------------- ')
-    socket.emit(
-      "game action",
-      JSON.stringify({
-        action: "new round",
-        game: gameState,
-        user: selectedUser,
-      })
-    );
-  }, [gameState.winner])
+  const handleNextRound = (e) => {
+    // socket.emit(
+    //   "game action",
+    //   JSON.stringify({
+    //     action: "new round",
+    //     game: gameState,
+    //     user: selectedUser,
+    //   })
+    // );
+  };
+
+  // useEffect(() => {
+  //   console.log('use effect here----------------------------------------- ')
+  //   socket.emit(
+  //     "game action",
+  //     JSON.stringify({
+  //       action: "new round",
+  //       game: gameState,
+  //       user: selectedUser,
+  //     })
+  //   );
+  // }, [gameState.winner])
 
   return (
     <Container style={{ textAlign: "center" }}>
@@ -94,6 +114,9 @@ export default function JudgeView({ gameState, setIsJudge, isJudge, submittedCar
               </Button>
             </>
           ) : null}
+          <Button variant="contained" onClick={handleNextRound}>
+            NEXT ROUND
+          </Button>
         </Stack>
       )}
     </Container>

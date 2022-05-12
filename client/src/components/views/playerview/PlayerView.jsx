@@ -53,11 +53,11 @@ export default function PlayerView({
     setHasPicked(true);
   };
 
-  useEffect(() => {
-    console.log("currentUser: ", currentUser);
-    console.log("gameState: ", gameState);
-    console.log("connectedUsers: ", connectedUsers);
-  }, []);
+  // useEffect(() => {
+  //   console.log("currentUser: ", currentUser);
+  //   console.log("gameState: ", gameState);
+  //   console.log("connectedUsers: ", connectedUsers);
+  // }, []);
 
   useEffect(() => {
     if (gameState.gameState && currentUser) {
