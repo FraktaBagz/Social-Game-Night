@@ -13,6 +13,7 @@ import { useFormControl } from '@mui/material/FormControl';
 import { motion } from 'framer-motion';
 import { io } from "socket.io-client";
 const socket = io();
+// import {socket} from '../../App.jsx';
 
 
 export default function HomePage({ currentUser, setCurrentUser, setPageView, theme, handleLogState, setConnectedUsers, connectedUsers }) {
@@ -42,7 +43,6 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
     //   .catch((err) => {
     //     console.log(err);
     //   });
-    console.log('here in homepage', currentUser)
 
     setIsLoaded(true);
   }, [currentUser]);
@@ -98,7 +98,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                 <Button
                   onClick={() => {
                     setPageView('Lobby')
-                    setConnectedUsers([...connectedUsers, currentUser])
+                    socket.emit('join game', JSON.stringify({ user: currentUser }))
                   }}
                   value="user"
                   fullWidth
@@ -127,12 +127,9 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                 <Button
                   // type="submit"
                   onClick={() => {
-                    // setJoiningGame(true);
                     setPageView('Lobby')
-                    console.log('joining game')
                     socket.emit('join game', JSON.stringify({ user: currentUser }))
                   }}
-                  //later it should be just 'currentUser'
                   fullWidth
                   variant="contained"
                   sx={{

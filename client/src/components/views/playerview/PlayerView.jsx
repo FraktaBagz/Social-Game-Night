@@ -26,13 +26,17 @@ export default function PlayerView({
   setChatHistory,
   customDecksSample,
   currentUser,
-  setCurrentUser
+  setCurrentUser,
+  setGameState,
 }) {
   const [selected, setSelected] = useState({});
   const [isJudge, setIsJudge] = useState(false);
   const [hasPicked, setHasPicked] = useState(false);
 
-  const { judgeIndex, judging, submittedCards, questionCard } = gameState;
+  if (gameState.gameState) {
+    var { judgeIndex, judging, submittedCards, questionCard } =
+      gameState.gameState;
+  }
 
   const handleConfirmSelection = (e) => {
     //selcted state contains the card object to submit to socket.io
@@ -47,7 +51,6 @@ export default function PlayerView({
       })
     );
     setHasPicked(true);
-
   };
 
   useEffect(() => {
@@ -57,63 +60,79 @@ export default function PlayerView({
   }, []);
 
   useEffect(() => {
-    if (gameState.gameState) {
+    if (gameState.gameState && currentUser) {
       const judge = gameState.users[gameState.gameState.judgeIndex];
-      console.log('judge', judge.name, 'currentUser', currentUser.name)
       if (currentUser.name === judge.name) {
-        setIsJudge(true)
+        setIsJudge(true);
       }
     }
+    console.log("gameState---------------------------- ", gameState);
   }, [gameState]);
 
-  // duplicate
-  // const { judgeIndex, judging, submittedCards, questionCard } = gameState;
-
   let playField;
-  if (isJudge) {
-    if (judging) {
-      playField = <JudgeView isJudge={true} submittedCards={submittedCards} />;
-    } else {
-      playField = <JudgeWaiting />;
-    }
-  } else {
-    if (judging) {
-      playField = <JudgeView isJudge={false} submittedCards={submittedCards} />;
-    } else {
-      if (Object.keys(selected).length === 0) {
+  if (gameState.gameState && currentUser) {
+    if (isJudge) {
+      if (judging) {
         playField = (
-          <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
-            {gameState.gameState ? gameState.gameState.userInformation[currentUser.name].cards.map((answer) =>
-              <PlayingCard color='red' card={answer} handleSelectCard={(e) => {
-                e.preventDefault();
-                console.log(answer);
-                setSelected(answer)
-              }} />
-            ) : <div>loading</div>}
-          </Stack>
+          <JudgeView isJudge={true} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
       } else {
+        playField = <JudgeWaiting />;
+      }
+    } else {
+      if (judging) {
         playField = (
-          <Stack
-            direction="column"
-            spacing={2}
-            mt={2}
-            sx={{ alignItems: "center", justifyContent: "center" }}
-          >
-
-            <PlayingCard color="red" card={selected} />
-            {!hasPicked ?
-              <>
-                <Button variant="contained" onClick={handleConfirmSelection}>
-                  Confirm
-                </Button>
-                <Button variant="contained" onClick={() => setSelected({})}>
-                  Deselect
-                </Button>
-              </>
-              : null}
-          </Stack>
+          <JudgeView isJudge={false} setGameState={setGameState} gameState={gameState} submittedCards={submittedCards} />
         );
+      } else {
+        if (Object.keys(selected).length === 0) {
+          playField = (
+            <Stack direction="row" spacing={2} mt={2} sx={{ flexWrap: "wrap" }}>
+              {gameState.gameState ? (
+                gameState.gameState.userInformation[currentUser.name].cards.map(
+                  (answer) => {
+                    if (answer !== null) {
+                      return (
+                        <PlayingCard
+                          color="red"
+                          card={answer}
+                          handleSelectCard={(e) => {
+                            e.preventDefault();
+                            console.log(answer);
+                            setSelected(answer);
+                          }}
+                        />
+                      );
+                    }
+                  }
+                )
+              ) : (
+                <div>loading</div>
+              )}
+            </Stack>
+          );
+        } else {
+          playField = (
+            <Stack
+              direction="column"
+              spacing={2}
+              mt={2}
+              sx={{ alignItems: "center", justifyContent: "center" }}
+            >
+              <PlayingCard color="red" card={selected} />
+              {!hasPicked ? (
+                <>
+                  <Button variant="contained" onClick={handleConfirmSelection}>
+                    Confirm
+                  </Button>
+                  <Button variant="contained" onClick={() => setSelected({})}>
+                    Deselect
+                  </Button>
+                </>
+              ) : null}
+            </Stack>
+          );
+        }
       }
     }
   }
@@ -196,6 +215,20 @@ export default function PlayerView({
               />
             </Grid>
           </Grid>
+          {/* ---------------------------- MIDDLE -------------------------------- */}
+          <Grid item xs={6}>
+            {playField}
+          </Grid>
+          {/* ---------------------------- RIGHT SIDE ---------------------------- */}
+          <Grid item xs={3}>
+            <Chat
+              chatHistory={chatHistory}
+              setChatHistory={setChatHistory}
+              currentUser={currentUser || "fart"}
+              setCurrentUser={setCurrentUser}
+            />
+          </Grid>
+          {/* -------------------------------------------------------------------- */}
         </Grid>
         {/* ---------------------------- RIGHT SIDE -------------------------------- */}
         <Grid
