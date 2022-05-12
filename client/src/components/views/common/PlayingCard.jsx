@@ -22,7 +22,7 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
     cardColor = 'secondary.main'
   }
 
-  // console.log(card)
+  console.log(card)
 
   return (
     <Box>
