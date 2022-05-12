@@ -106,24 +106,23 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               setDeckTitle(e.target.value)
             )} />
           <Button variant="outlined" onClick={() => (setPageView('Custom'),
-          console.log('userid: ', typeof(currentUserUID), `${currentUserUID}`, 'title"', typeof(deckTitle), deckTitle ),
-          initializeDeck(`${currentUserUID}`, deckTitle),
-          setSelectedCustomDeck({
-            [deckTitle]: {
-              greenCard: [
-                {
+            console.log('userid: ', typeof (currentUserUID), `${currentUserUID}`, 'title"', typeof (deckTitle), deckTitle),
+            initializeDeck(`${currentUserUID}`, deckTitle),
+            setSelectedCustomDeck({
+              [deckTitle]: {
+                greenCard: [
+                  {
+                    label: 'some prompt',
+                    extra: '(ridiculous, senseless, foolish) ',
+                    sets: 'default green',
+                  }
+                ], redCard: [{
                   label: 'some prompt',
                   extra: '(ridiculous, senseless, foolish) ',
                   sets: 'default green',
-                }
-
-              ], redCard: [{
-                label: 'some prompt',
-                extra: '(ridiculous, senseless, foolish) ',
-                sets: 'default green',
-              }]
-            }
-          }))}>save</Button>
+                }]
+              }
+            }))}>save</Button>
         </Item>
       </Stack>
     </Container >
