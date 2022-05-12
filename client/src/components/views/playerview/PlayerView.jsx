@@ -186,7 +186,7 @@ export default function PlayerView({
               container
               direction="column"
               sx={{
-                // justifyContent: "center",
+                alignItems: "center",
                 backgroundColor: "#ECECEC",
                 padding: "15px",
                 height: "350px",
@@ -194,7 +194,13 @@ export default function PlayerView({
               }}
             >
               <Grid item xs={12}>
-                Prompt:
+                <strong>Prompt:</strong>
+                <hr />
+                <Grid item xs={12} mb={10}>
+                  {gameState.gameState ?
+                    <PlayingCard color="green" card={gameState.gameState.questionCard} />
+                    : null}
+                </Grid>
               </Grid>
 
             </Grid>
@@ -204,31 +210,13 @@ export default function PlayerView({
             direction="column"
             sx={{ alignItems: "center", justifyContent: "center" }}
           >
-            <Grid item xs={12} mb={10}>
-              {gameState.gameState ?
-                <PlayingCard color="green" card={gameState.gameState.questionCard} />
-                : null}
-            </Grid>
             <Grid item xs={12}>
               <AvatarChipPicking
                 userInfo={connectedUsers[judgeIndex]}
               />
             </Grid>
           </Grid>
-          {/* ---------------------------- MIDDLE -------------------------------- */}
-          <Grid item xs={6}>
-            {playField}
-          </Grid>
-          {/* ---------------------------- RIGHT SIDE ---------------------------- */}
-          <Grid item xs={3}>
-            <Chat
-              chatHistory={chatHistory}
-              setChatHistory={setChatHistory}
-              currentUser={currentUser || "fart"}
-              setCurrentUser={setCurrentUser}
-            />
-          </Grid>
-          {/* -------------------------------------------------------------------- */}
+
         </Grid>
         {/* ---------------------------- RIGHT SIDE -------------------------------- */}
         <Grid

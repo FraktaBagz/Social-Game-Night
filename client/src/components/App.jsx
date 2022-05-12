@@ -172,11 +172,11 @@ export default function App() {
       msg = JSON.parse(msg)
       setConnectedUsers(msg)
     })
-    socket.on('update connected users2', (msg)=>{
+    socket.on('update connected users2', (msg) => {
       msg = JSON.parse(msg)
-        setConnectedUsers(msg)
+      setConnectedUsers(msg)
     })
-    socket.on('request current users', ()=>{
+    socket.on('request current users', () => {
       console.log('Socket is requesting current user...')
       socket.emit('rebuild current users', JSON.stringify(currentUser))
     })

@@ -215,10 +215,6 @@
   padding: 20px;
 }
 
-/* .playerViewContainer .player-view-subcontainer {
-  display: inline-block;
-} */
-
 .player-list {
   margin-right: 400px;
   padding: 15px;
@@ -227,5 +223,5 @@
 }
 
 .prompt {
-  margin: 15px;
+  margin: 25px;
 }

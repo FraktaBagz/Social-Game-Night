@@ -36,71 +36,6 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
   // }
 
   return (
-    // <div className="custom-deck-page">
-    //   <h1 className="custom-deck-title"><strong>Choose Your Deck!</strong></h1>
-    //   <Container
-    //     className="custom-deck-container"
-    //     sx={{
-    //       width: '75%',
-    //       height: '650px',
-    //       backgroundColor: 'info.main',
-    //       borderRadius: '15px',
-    //       padding: '20px',
-    //       marginTop: '40px',
-    //       textAlign: 'center'
-    //     }} >
-
-    //     <Stack
-    //       direction={{ xs: 'column', sm: 'row' }}
-    //       spacing={{ xs: 1, sm: 2, md: 4 }}
-    //     >
-    //       {decks.map(deck => (
-    //         <div key={deck}>
-    //           <Item
-    //             type="submit"
-    //             fullWidth
-    //             variant="contained"
-    //             sx={{
-    //               mt: 3,
-    //               mb: 2,
-    //               width: 75,
-    //               height: 25,
-    //               borderRadius: 4,
-    //               backgroundColor: "primary.main",
-    //               '&:hover': {
-    //                 backgroundColor: 'primary.contrastText',
-    //               },
-    //             }}
-    //             onClick={() => (
-    //               setSelectedCustomDeck({ [deck]: customDecks[deck] }),
-    //               setCustomDecktitle(deck)
-    //             )}>{deck}'s
-    //           </Item>
-    //           <span>Total Cards: {(customDecks[deck].questions).length + (customDecks[deck].answers).length}</span>
-    //           <Button type="submit"
-    //             fullWidth
-    //             variant="contained"
-    //             sx={{
-    //               mt: 3,
-    //               mb: 2,
-    //               width: 75,
-    //               height: 25,
-    //               borderRadius: 4,
-    //               backgroundColor: "secondary.main",
-    //               '&:hover': {
-    //                 backgroundColor: 'primary.grey',
-    //               },
-    //             }} onClick={() => (
-    //               setPageView('Custom'),
-    //               setSelectedCustomDeck({ [deck]: customDecks[deck] }),
-    //               setCustomDecktitle(deck)
-    //             )}>Edit
-    //           </Button>
-    //         </div>
-    //       ))}
-    //       <Item onClick={() => (setPageView('Custom'), setCustomDecktitle(''), setSelectedCustomDeck({
-    //         'title here': {
-    //           questions: [
     <Container
       className="custom-deck-container"
       sx={{
@@ -181,18 +116,12 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                     extra: '(ridiculous, senseless, foolish) ',
                     sets: 'default green',
                   }
-
-                  // ], answers: [{
                 ], redCard: [{
                   label: 'some prompt',
                   extra: '(ridiculous, senseless, foolish) ',
                   sets: 'default green',
                 }]
               }
-              //       }))}>+</Item>
-              //     </Stack>
-              //   </Container >
-              // </div>
             }))}>save</Button>
         </Item>
       </Stack>
