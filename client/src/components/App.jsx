@@ -163,6 +163,16 @@ const App = function () {
     console.log(msg);
     setConnectedUsers([...connectedUsers, msg.user]);
   })
+  socket.on('host change', (msg) => {
+    msg = JSON.parse(msg)
+    if (currentUser !== null) {
+      if (msg !== null) {
+        if (currentUser.UID === msg.UID) {
+          setHost(true)
+        }
+      }
+    }
+  })
   // useEffect(()=>{
   //   if (host) {
   //     socket.emit('update connected users', JSON.stringify(connectedUsers))
@@ -180,15 +190,14 @@ const App = function () {
   socket.on('update connected users2', (msg)=>{
     msg = JSON.parse(msg)
     console.log('the master user list:', msg)
-    // if ((msg.length !== connectedUsers.length) && !host) {
-    //   console.log('166')
       setConnectedUsers(msg)
-    // }
   })
   socket.on('request current users', ()=>{
     console.log('Socket is requesting current user...')
     socket.emit('request current users2', JSON.stringify(currentUser))
   })
+
+
 
   socket.on('set host', () => {
     setHost(true)

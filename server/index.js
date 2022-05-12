@@ -69,6 +69,7 @@ io.on('connection', (socket) => {
       if (flag) {
         connectedUsers.push(msg)
         io.emit('update connected users2', JSON.stringify(connectedUsers))
+        io.emit('host change', JSON.stringify(connectedUsers[0]))
       }
     }
   })
