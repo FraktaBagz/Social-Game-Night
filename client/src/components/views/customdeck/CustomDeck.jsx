@@ -261,7 +261,6 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               justifyContent="center"
               alignItems="center"
               sx={{
-
                 width: 140,
               }}>
               <Stack
