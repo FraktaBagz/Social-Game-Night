@@ -128,7 +128,8 @@
 
 /* lobby chat/users styles */
 .messageContainer {
-  background-color: white;
+  /* background-color: white; */
+  background-image: url(./gifs/winner2.gif);
   color: black;
   margin: 0;
   padding: 20px;
