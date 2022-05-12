@@ -51,7 +51,7 @@ const Item = styled(Paper)(({ theme }) => ({
 // });
 
 
-export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDeckTitle, previousView, currentUserUID }) {
+export default function CustomDeck({ setPageView, customDecks, setSelectedCustomDeck, customDeckTitle, setCustomDeckTitle, previousView, currentUserUID, pageView }) {
   const deckNames = Object.keys(customDecks);
   const [decks, setDecks] = useState(deckNames);
   const [deckTitle, setDeckTitle] = useState('');
@@ -62,7 +62,6 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
   }, [customDecks])
 
   return (
-
     <Container
       justifyContent="center"
       alignItems="center"
@@ -84,18 +83,29 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
             justifyContent="center"
             alignItems="center"
           >
-            <Typography
-              align="center"
-              color="secondary.main"
-              variant="h3">Choose your pack</Typography>
+            {pageView === 'CustomDeck'
+              ? <Typography
+                align="center"
+                color="secondary.main"
+                variant="h3">
+                Customize Your Pack!
+              </Typography>
+              : <Typography
+                align="center"
+                color="secondary.main"
+                variant="h3">
+                Choose Your Pack!
+              </Typography>
+            }
           </Container>
+
           <Container
             justifyContent="center"
             alignItems="center"
             sx={{
               width: '50vw',
               height: 300,
-              backgroundColor: 'primary.main',
+              backgroundColor: 'info.main',
             }}
           >
             <Stack
@@ -108,6 +118,61 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                   justifyContent="space-evenly"
                   direction="row"
                   spacing={8}>
+                  <Box textAlign='center'>
+                    <Item
+                      type="submit"
+                      variant="contained"
+                      sx={{
+                        mt: 3,
+                        mb: 2,
+                        width: 140,
+                        height: 192,
+                        borderRadius: 4,
+                        backgroundColor: "background.default",
+                        '&:hover': {
+                          backgroundColor: 'primary.contrastText',
+                        },
+                      }}
+                      onClick={() => (
+                        setSelectedCustomDeck({ [deck]: customDecks[deck] }),
+                        setCustomDeckTitle(deck)
+                      )}>
+                      <Typography align="center"
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                        }}
+                        justify="center"
+                      >{deck}</Typography>
+                    </Item>
+                    <Typography align="center">Total Cards: {(customDecks[deck].greenCard).length + (customDecks[deck].redCard).length}</Typography>
+                    {pageView === 'CustomDeck' ? <Button type="submit"
+                      variant="contained"
+                      align="center"
+                      sx={{
+                        justifyContent: 'center',
+                        width: 75,
+                        height: 25,
+                        borderRadius: 4,
+                        backgroundColor: "secondary.main",
+                        '&:hover': {
+                          backgroundColor: 'primary.grey',
+                        },
+                      }} onClick={() => (
+                        setPageView('Custom'),
+                        setSelectedCustomDeck({ [deck]: customDecks[deck] }),
+                        setCustomDeckTitle(deck)
+                      )}>Edit
+                    </Button> : null}
+                  </Box>
+
+                </Stack>
+
+              ))}
+
+              {pageView === 'CustomDeck' ?
                 <Item
                   type="submit"
                   fullWidth
@@ -119,43 +184,61 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                     height: 192,
                     borderRadius: 4,
                     backgroundColor: "background.default",
-                    '&:hover': {
-                      backgroundColor: 'primary.contrastText',
-                    },
                   }}
-                  onClick={() => (
-                    setSelectedCustomDeck({ [deck]: customDecks[deck] }),
-                    setCustomDeckTitle(deck)
-                  )}>
-                    {deck}
-                  </Item>
-                  <Item>
-                    {deck}
-                  </Item>
-                  <Item>
-                    {deck}
-                  </Item>
-                </Stack>
+                >
+                  <Typography align="center"
+                    sx={{
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                    }}
+                    justify="center"
+                  >
+                    <Stack
+                      spacing={2}
+                      direction="column"
+                      justifyContent="center"
+                      alignItems="center"
+                      sx={{ height: '95%' }}
+                    >
+                      <TextField
+                        required
+                        id="outlined-required"
+                        label="Pack Title"
+                        defaultValue={customDeckTitle}
+                        onChange={(e) => (
+                          setCustomDeckTitle(e.target.value),
+                          setDeckTitle(e.target.value)
+                        )} />
+                      <Button variant="outlined" onClick={() => (setPageView('Custom'),
+                        console.log('userid: ', typeof (currentUserUID), `${currentUserUID}`, 'title"', typeof (deckTitle), deckTitle),
+                        initializeDeck(`${currentUserUID}`, deckTitle),
+                        setSelectedCustomDeck({
+                          [deckTitle]: {
+                            greenCard: [
+                              {
+                                label: 'adjective',
+                                extra: '(synonyms) ',
+                                sets: deckTitle,
+                              }
 
-              ))}
+                            ], redCard: [{
+                              label: 'noun',
+                              extra: 'sentence',
+                              sets: deckTitle,
+                            }]
+                          }
+                        }))}>save<AddIcon /></Button>
+                    </Stack>
+                  </Typography>
 
-
-
-
-              <Item>
-                create new here
-              </Item>
+                </Item>
+                : null
+              }
             </Stack>
-            DECKS HERE
           </Container>
-
-
         </Stack>
-
-
-
-
-
       </Box>
 
 
@@ -317,7 +400,7 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                             sets: deckTitle,
                           }]
                         }
-                      }))}>save</Button>
+                      }))}> <AddIcon /></Button>
                   </Stack>
                 </Item>
                 <Typography>Total Cards: 0</Typography>
