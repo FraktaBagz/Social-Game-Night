@@ -9,7 +9,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const PlayingCard = ({ color, card, handleSelectCard }) => {
-
+  // bad code -- need to add func as prop but sucks!
+  // let handleFunc = handleSelectCard || (() => {});
   // card object structure:
   // label: 'some prompt',
   // extra: '(ridiculous, senseless, foolish) ',
@@ -40,7 +41,10 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
               {card.sets}
               {/* Sets goes here */}
             </Typography>
-            {handleSelectCard ?
+          </Box>
+        </Card>
+      </Paper>
+      {handleSelectCard ?
               <Button
                 onClick={handleSelectCard}
                 contained
@@ -52,9 +56,6 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
                 Select Card
               </Button>
               : <></>}
-          </Box>
-        </Card>
-      </Paper>
     </Box>
   )
 

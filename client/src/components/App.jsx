@@ -182,7 +182,7 @@ export default function App() {
 
   socket.on('update connected users', (msg) => {
     msg = JSON.parse(msg)
-    console.log('the master user list:', msg)
+    // console.log('the master user list:', msg)
     // if ((msg.length !== connectedUsers.length) && !host) {
     //   console.log('166')
     setConnectedUsers(msg)
@@ -190,7 +190,7 @@ export default function App() {
   })
   socket.on('update connected users2', (msg)=>{
     msg = JSON.parse(msg)
-    console.log('the master user list:', msg)
+    // console.log('the master user list:', msg)
       setConnectedUsers(msg)
   })
   socket.on('request current users', ()=>{
@@ -323,6 +323,7 @@ export default function App() {
           setChatHistory={setChatHistory}
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
+          setGameState={setGameState}
         />
       ) : null}
       {pageView === "Lobby" ? (
