@@ -7,6 +7,8 @@ import { styled } from '@mui/material/styles';
 // import emotesObj2 from './Emotes.jsx';
 import { io } from "socket.io-client";
 const socket = io();
+import chatmessage from './chatmessage.mp3'
+import playerjoin from './playerjoin.mp3'
 
 var BSB = {
   backgroundColor: '#1cd9ff'
@@ -296,6 +298,11 @@ const checkEmotes = (chatcontent) => {
     div.prepend(li)
     document.getElementById('inputChat').value = '';
   }
+  function play(id) {
+    var audio = document.getElementById(`${id}`);
+    audio.play();
+  }
+  play('audioNewChatMessage')
 }
 
 export default function Chat({ chatHistory, setChatHistory, currentUser }) {
@@ -389,6 +396,12 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
           </div>
         </div>
       </div>
+      {/* <audio id="audioNewChatMessage" src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"/> */}
+       {/* <audio id="audioNewChatMessage" src="/soundeffects/chatmessage.mp3"/> */}
+       {/* <audio id="audioNewChatMessage" src="./chatmessage.mp3"/> */}
+       <audio id="audioNewChatMessage" src={chatmessage}/>
+       <audio id="audioNewPlayerJoin" src={playerjoin}/>
+
     </>
   )
 }
