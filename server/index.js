@@ -32,7 +32,13 @@ io.on('connection', (socket) => {
   //when the server gets a 'game action' message, it will send the given obj to be processed by a game logic handler in the handlers file
   //it will always only return a game object
   socket.on('game action', (msg) => {
-    io.emit('game action', JSON.stringify(gameHandler(msg)))
+    if (gameHandler(msg) === 'next round') {
+      io.emit('next round')
+    } else if (gameHandler(msg) === 'game over') {
+      io.emit('game over')
+    } else {
+      io.emit('game action', JSON.stringify(gameHandler(msg)))
+    }
   })
 
   socket.on('new game', (msg) => {

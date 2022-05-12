@@ -34,19 +34,19 @@ function gameHandler(msg) {
   //start a round
   //everyone draws a card
   if (action === 'new round') {
-    console.log('new round')
-    users.forEach((user) => {
-      game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
-    })
-    //the question card is drawn
-    // clean up the gameState object for next round
-    // console.log('Cleaning up the round data for next round.')
-    // game.gameState.judging = false;
-    // game.gameState.hasntPicked = [];
-    // game.gameState.submittedCards = [];
-    // game.gameState.winner = null;
-    // game.gameState.finished = false;
-    game.gameState.questionCard = drawRandomCard(currentDeck.questions)
+    console.log('new round... \n but nothing happened')
+    // users.forEach((user) => {
+    //   game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
+    // })
+    // //the question card is drawn
+    // // clean up the gameState object for next round
+    // // console.log('Cleaning up the round data for next round.')
+    // // game.gameState.judging = false;
+    // // game.gameState.hasntPicked = [];
+    // // game.gameState.submittedCards = [];
+    // // game.gameState.winner = null;
+    // // game.gameState.finished = false;
+    // game.gameState.questionCard = drawRandomCard(currentDeck.questions)
   }
   //each user will play a card, we add that card to submittedCards, when submitted cards length is = to # of players - judge, change judging to true
   if (action === 'play card') {
@@ -73,6 +73,17 @@ function gameHandler(msg) {
     game.gameState.userInformation[user.name].points += 1;
     game.gameState.judging = false;
     game.gameState.judgeIndex += 1;
+    users.forEach((user) => {
+      if (game.gameState.userInformation[user.name].cards.length === 6) {
+        game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
+      }
+    })
+    game.gameState.submittedCards = [];
+    if (judgeIndex === game.users.length + 1) {
+      return 'game over';
+    } else {
+      return 'next round';
+    }
   }
 
   return game;
