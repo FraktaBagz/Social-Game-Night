@@ -61,7 +61,7 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                 mt: 3,
                 mb: 2,
                 width: 75,
-                height: 25,
+                height: 125,
                 borderRadius: 4,
                 backgroundColor: "primary.main",
                 '&:hover': {
@@ -73,7 +73,7 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                 setCustomDeckTitle(deck)
               )}>{deck}'s
             </Item>
-            <span>Total Cards: {(customDecks[deck].greenCard).length + (customDecks[deck].redCard).length}</span>
+            <Typography>Total Cards: {(customDecks[deck].greenCard).length + (customDecks[deck].redCard).length}</Typography>
             <Button type="submit"
               fullWidth
               variant="contained"
@@ -95,36 +95,54 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
             </Button>
           </div>
         ))}
-        <Item >
-          <TextField
-            required
-            id="outlined-required"
-            label="Deck Title"
-            defaultValue={customDeckTitle}
-            onChange={(e) => (
-              setCustomDeckTitle(e.target.value),
-              setDeckTitle(e.target.value)
-            )} />
-          <Button variant="outlined" onClick={() => (setPageView('Custom'),
-          console.log('userid: ', typeof(currentUserUID), `${currentUserUID}`, 'title"', typeof(deckTitle), deckTitle ),
-          initializeDeck(`${currentUserUID}`, deckTitle),
-          setSelectedCustomDeck({
-            [deckTitle]: {
-              greenCard: [
-                {
-                  label: 'some prompt',
-                  extra: '(ridiculous, senseless, foolish) ',
-                  sets: 'default green',
-                }
+        <Container>
+          <Item
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 3,
+              mb: 2,
+              width: 75,
+              height: 125,
+              borderRadius: 4,
+              backgroundColor: "primary.main",
+              '&:hover': {
+                backgroundColor: 'primary.contrastText',
+              },
+            }}
+          >
+            <TextField
+              required
+              id="outlined-required"
+              label="Deck Title"
+              defaultValue={customDeckTitle}
+              onChange={(e) => (
+                setCustomDeckTitle(e.target.value),
+                setDeckTitle(e.target.value)
+              )} />
+            <Button variant="outlined" onClick={() => (setPageView('Custom'),
+              console.log('userid: ', typeof (currentUserUID), `${currentUserUID}`, 'title"', typeof (deckTitle), deckTitle),
+              initializeDeck(`${currentUserUID}`, deckTitle),
+              setSelectedCustomDeck({
+                [deckTitle]: {
+                  greenCard: [
+                    {
+                      label: 'adjective',
+                      extra: '(synonyms) ',
+                      sets: deckTitle,
+                    }
 
-              ], redCard: [{
-                label: 'some prompt',
-                extra: '(ridiculous, senseless, foolish) ',
-                sets: 'default green',
-              }]
-            }
-          }))}>save</Button>
-        </Item>
+                  ], redCard: [{
+                    label: 'noun',
+                    extra: 'sentence',
+                    sets: deckTitle,
+                  }]
+                }
+              }))}>save</Button>
+            <span>Total Cards: 0</span>
+          </Item>
+        </Container>
       </Stack>
     </Container >
   )

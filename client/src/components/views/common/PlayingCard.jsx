@@ -22,8 +22,6 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
     cardColor = 'secondary.main'
   }
 
-  // console.log(card)
-
   return (
     <Box>
       <Paper sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }} elevation={4}>
