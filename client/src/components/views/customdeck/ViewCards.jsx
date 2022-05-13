@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import PlayingCard from '../common/PlayingCard.jsx';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -59,62 +60,68 @@ export default function ViewCards({
   }
 
   return (
-    <Container
+    <Box
       maxWidth="sm"
     >
-      <Typography>AllCards in deck</Typography>
-      <Typography onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</Typography>
-      <Typography variant="h1">{deckName}</Typography>
-      <Typography>Questions</Typography>
-      <Container>
-        <Stack direction="row" spacing={2}>
-          {deck.greenCard.length > 0
-            ?
-            deck.greenCard.map((question, key) => (
-              <Container key={key}>
-                <Typography onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: question.label, extra: question.extra, sets: question.sets }, 'green'))}><DeleteIcon /></Typography>
-                <Item >{question.label}</Item>
+      {/* <Typography>all cards in pack</Typography> */}
+      {/* <Typography onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</Typography> */}
+      <Typography variant="h3">{deckName}</Typography>
+      <Stack direction="row" spacing={2}>
+        <Container>
+          <Typography>Questions</Typography>
+          <Stack direction="column" spacing={2}>
+            {deck.greenCard.length > 0
+              ?
+              deck.greenCard.map((question, key) => (
+                <Box key={key}>
+                  <Typography onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: question.label, extra: question.extra, sets: question.sets }, 'green'))}><DeleteIcon /></Typography>
+                  <PlayingCard color="green" card={{
+                    label: question.label,
+                    extra: question.extra,
+                    sets: question.sets,
+                  }} />
+                </Box>
+              ))
+              :
+              <Box>
+                <DeleteIcon />
                 <PlayingCard color="green" card={{
-                  label: question.label,
-                  extra: question.extra,
-                  sets: question.sets,
+                  label: 'adjective',
+                  extra: '(synonyms) ',
+                  sets: 'deck title',
                 }} />
-              </Container>
-            ))
-            :
-            <PlayingCard color="green" card={{
-              label: 'adjective',
-              extra: '(synonyms) ',
-              sets: 'deck title',
-            }} />
-          }
-        </Stack>
-      </Container>
-      <Typography>Answers</Typography>
-      <Container>
-        <Stack direction="row" spacing={2}>
-          {deck.redCard.length > 0
-            ?
-            deck.redCard.map((answer, key) => (
-              <Container key={key}>
-                <Typography onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: answer.label, extra: answer.extra, sets: answer.sets }, 'red'))}><DeleteIcon /></Typography>
-                <Item>{answer.label}</Item>
+              </Box>
+            }
+          </Stack>
+        </Container>
+        <Container>
+          <Typography>Answers</Typography>
+          <Stack direction="row" spacing={2}>
+            {deck.redCard.length > 0
+              ?
+              deck.redCard.map((answer, key) => (
+                <Box key={key}>
+                  <Typography onClick={() => (deletecard(currentUserUID, customDeckTitle, { label: answer.label, extra: answer.extra, sets: answer.sets }, 'red'))}><DeleteIcon /></Typography>
+                  <PlayingCard color="red" card={{
+                    label: answer.label,
+                    extra: answer.extra,
+                    sets: answer.sets,
+                  }} />
+                </Box>
+              ))
+              :
+              <Box>
+                <DeleteIcon />
                 <PlayingCard color="red" card={{
-                  label: answer.label,
-                  extra: answer.extra,
-                  sets: answer.sets,
+                  label: 'noun',
+                  extra: 'sentence',
+                  sets: 'deck title',
                 }} />
-              </Container>
-            ))
-            :
-            <PlayingCard color="red" card={{
-              label: 'noun',
-              extra: 'sentence',
-              sets: 'deck title',
-            }} />
-          }
-        </Stack>
-      </Container>
-    </Container>
+              </Box>
+            }
+          </Stack>
+        </Container>
+      </Stack>
+    </Box>
   )
 }
