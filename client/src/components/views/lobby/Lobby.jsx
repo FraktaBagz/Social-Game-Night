@@ -54,6 +54,14 @@ export default function Lobby({
   setCurrentUser,
 }) {
   const [gameCode, setGameCode] = useState("12345");
+  const [isEnough, setIsEnough] = useState(false);
+
+  useEffect(() => {
+    console.log(connectedUsers.length)
+    if (connectedUsers.length > 2) {
+      setIsEnough(true);
+    }
+  }, [connectedUsers])
 
   function createGame() {
     socket.emit(
@@ -104,6 +112,8 @@ export default function Lobby({
             {host ? (
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1 }}>
                 <Button
+                  disabled={!isEnough}
+
                   type="submit"
                   fullWidth
                   variant="contained"
