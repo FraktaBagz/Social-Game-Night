@@ -80,7 +80,7 @@ export default function PlayerView({
 
   useEffect(() => {
     if (gameState.gameState && currentUser) {
-      if (gameState.users[gameState.gameState.judgeIndex]){
+      if (gameState.users[gameState.gameState.judgeIndex]) {
         const judge = gameState.users[gameState.gameState.judgeIndex];
         if (currentUser.name === judge.name) {
           setIsJudge(true);
@@ -205,39 +205,6 @@ export default function PlayerView({
   if (playField) {
     return (
       <div className="playerViewContainer">
-        {/* <Stack
-            className="player-list"
-            direction="row"
-            spacing={2}
-            mt={2}
-            mb={2}
-            sx={{ flexWrap: "wrap", ml: 2 }}
-          > */}
-        {/* {connectedUsers.map((user, index) => (
-              <AvatarChipPicking key={index} userInfo={user} />
-            ))} */}
-
-        {/* SAMPLE */}
-        {/* <AvatarChipPicking
-              user={connectedUsers[judgeIndex]}
-            />
-            <AvatarChipPicking
-              userInfo={connectedUsers[judgeIndex]}
-            />
-            <AvatarChipPicking
-              userInfo={connectedUsers[judgeIndex]}
-            />
-            <AvatarChipPicking
-              userInfo={connectedUsers[judgeIndex]}
-            />
-            <AvatarChipPicking
-              userInfo={connectedUsers[judgeIndex]}
-            />
-            <AvatarChipPicking
-              userInfo={connectedUsers[judgeIndex]}
-            />
-          </Stack> */}
-
         <Grid
           container
           direction="row"
@@ -285,32 +252,17 @@ export default function PlayerView({
           </Grid>
           {/* ---------------------------- RIGHT SIDE -------------------------------- */}
           <Grid
-            item
-            sm={6.3}
+            item sm={6.3}
             sx={{
               height: "calc(100vh - 134px)",
-              backgroundColor: "#E95D70",
+              backgroundColor: "#EA9E48",
               borderRadius: "15px",
               padding: "15px",
-              margin: "18px",
+              margin: "18px"
             }}
           >
             {playField}
           </Grid>
-
-        </Grid>
-        {/* ---------------------------- RIGHT SIDE -------------------------------- */}
-        <Grid
-          item sm={6.3}
-          sx={{
-            height: "calc(100vh - 134px)",
-            backgroundColor: "#EA9E48",
-            borderRadius: "15px",
-            padding: "15px",
-            margin: "18px"
-          }}
-        >
-          {playField}
         </Grid>
         <div className="playerListContainer">
           <Chat
