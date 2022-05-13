@@ -42,9 +42,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
 
   if (!isLoaded) {
     return (
-      <div>
-        Loading...
-      </div>
+      <div className="loading"></div>
     );
   }
 
