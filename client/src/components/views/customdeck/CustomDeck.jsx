@@ -104,7 +104,7 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
             alignItems="center"
             sx={{
               width: '50vw',
-              overflow: 'auto',
+              // overflow: 'auto',
               position: 'relative',
               height: 300,
               // background: 'linear-gradient(0deg, #fe6b8b 30%, #ff8e53 90%)',
@@ -118,7 +118,7 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               spacing={6}
               sx={{
                 width: "max-content",
-                overflow: "scroll",
+                // overflow: "scroll",
                 position:'absolute',
               }}
             >

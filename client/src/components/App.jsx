@@ -365,6 +365,7 @@ export default function App() {
           setPageView={setPageView}
           customDecks={customDecks}
           defaultDeck={defaultDeck}
+          selectedCustomDeck={selectedCustomDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
           setCustomDeckTitle={setCustomDeckTitle}
           currentUser={currentUser}
