@@ -36,7 +36,7 @@ export default function Results ({ winner, chatHistory, setChatHistory, currentU
           <Typography variant='subtitle1'>
             <i>IS THE WINNER!!!</i>
           </Typography>
-          <div style={{marginTop: '1px'}}>
+          <div style={{marginTop: '1px', paddingTop: '75px'}}>
         <Chat
           buttonStyle={buttonStyle}
           chatHistory={chatHistory}
