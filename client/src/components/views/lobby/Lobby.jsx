@@ -134,7 +134,8 @@ export default function Lobby({
                 variant="contained"
                 sx={sx}
                 onClick={() => {
-                  createGame();
+                  setPageView('HomePage')
+                  // createGame();
                 }}
               >
                 Leave Game
