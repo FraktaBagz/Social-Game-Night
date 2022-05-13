@@ -297,6 +297,20 @@ export default function PlayerView({
           >
             {playField}
           </Grid>
+
+        </Grid>
+        {/* ---------------------------- RIGHT SIDE -------------------------------- */}
+        <Grid
+          item sm={6.3}
+          sx={{
+            height: "calc(100vh - 134px)",
+            backgroundColor: "#EA9E48",
+            borderRadius: "15px",
+            padding: "15px",
+            margin: "18px"
+          }}
+        >
+          {playField}
         </Grid>
         <div className="playerListContainer">
           <Chat
@@ -311,8 +325,8 @@ export default function PlayerView({
             <Stack spacing={2}>
               {connectedUsers.length
                 ? connectedUsers.map((userObj, i) => {
-                    return <AvatarChipPicking key={i} user={userObj} />;
-                  })
+                  return <AvatarChipPicking key={i} user={userObj} />;
+                })
                 : "Waiting..."}
             </Stack>
           </div>

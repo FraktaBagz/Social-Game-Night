@@ -24,37 +24,38 @@ const PlayingCard = ({ color, card, handleSelectCard }) => {
   }
 
   return (
-    <Box>
+    <Box sx={{ ml: 2 }}>
       <Paper sx={{ borderRadius: 0, width: 275, height: 175, textAlign: 'right' }} elevation={4}>
         <Box sx={{ pt: 1, pl: 1, pr: 1, pb: 0, overflow: 'hidden' }}>
-          <Typography variant='h4'>{card.label}</Typography>
+          <Typography variant='h6'>{card.label}</Typography>
         </Box>
         <Card sx={{ mt: 0, ml: 1, mr: 1, height: 115, bgcolor: cardColor }}>
-          <Box component={Stack} direction="column" justifyContent="center" sx={{ textAlign: "left" }}>
-            <Typography variant='h6'>
+          <Box component={Stack} direction="column" justifyContent="center" sx={{ textAlign: "left", padding: "5px" }}>
+            <Typography variant='subtitle1'>
               {card.extra}
               {/* Extra goes here pr */}
             </Typography>
-            <Typography variant='subtitle1'>
+            {/* <Typography variant='subtitle1'>
               {card.sets}
-              {/* Sets goes here */}
-            </Typography>
+            </Typography> */}
           </Box>
         </Card>
       </Paper>
-      {handleSelectCard ?
-              <Button
-                onClick={handleSelectCard}
-                contained
-                sx={{
-                  color: 'primary.contrastText',
-                  borderRadius: 15,
-                }}
-              >
-                Select Card
-              </Button>
-              : <></>}
-    </Box>
+      {
+        handleSelectCard ?
+          <Button
+            onClick={handleSelectCard}
+            contained
+            sx={{
+              color: 'primary.contrastText',
+              borderRadius: 15,
+            }}
+          >
+            Select Card
+          </Button>
+          : <></>
+      }
+    </Box >
   )
 
 }
