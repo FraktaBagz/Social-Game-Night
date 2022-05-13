@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+
+import { useGame } from "../../../firebase/contexts/GameContext.js";
+
+import ViewCards from './ViewCards.jsx';
+import PlayingCard from '../common/PlayingCard.jsx';
+
+// MUI
+// Styles
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+// Layout
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+// Inputs
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+// Data Display
+import Typography from '@mui/material/Typography';
+// Icons
 import AddIcon from '@mui/icons-material/Add';
-import ViewCards from './ViewCards.jsx';
-import PlayingCard from '../common/PlayingCard.jsx';
-
-import { useGame } from "../../../firebase/contexts/GameContext.js";
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 export default function Custom({ gameState, setSelectedCustomDeck, selectedCustomDeck, setPageView, customDeckTitle, setCustomDeckTitle, previousView, currentUserUID, setDeletedCard, setPostCard }) {
   const { addToCustomDeck, getDeck } = useGame();
@@ -52,18 +62,16 @@ export default function Custom({ gameState, setSelectedCustomDeck, selectedCusto
 
   const addCardFunc = () => (
     <Box>
-      <Box>
+      <Box sx={{ p: 2 }}>
         {cardTypeCust === 'green' ?
           <Stack direction="row" spacing={2}>
-            <Button variant="contained">Question</Button>
-            <Button variant="outlined" onClick={() => (setCardTypeCust('red'))}>Answer</Button>
+            <Button variant="contained">adjective</Button>
+            <Button variant="outlined" onClick={() => (setCardTypeCust('red'))}>    noun    </Button>
           </Stack>
           :
           <Stack direction="row" spacing={2}>
-            <Button variant="outlined" onClick={() => (setCardTypeCust('green'))}>Question</Button>
-            <Button variant="contained">
-              Answer
-            </Button>
+            <Button variant="outlined" onClick={() => (setCardTypeCust('green'))}>adjective</Button>
+            <Button variant="contained">    noun    </Button>
           </Stack>
         }
       </Box>
@@ -82,7 +90,7 @@ export default function Custom({ gameState, setSelectedCustomDeck, selectedCusto
           <TextField
             required
             id="outlined-required"
-            label={"NEW " + cardTypeCust}
+            label={"NEW " + cardTypeCust.toUpperCase()}
             defaultValue=""
             size="small"
             onChange={(e) => (
@@ -122,9 +130,7 @@ export default function Custom({ gameState, setSelectedCustomDeck, selectedCusto
     <Box>
       {createButton
         ?
-        <>
-          <div>created!</div>
-        </>
+        null
         :
         <>
           <Button variant="" onClick={() => (
@@ -176,12 +182,13 @@ export default function Custom({ gameState, setSelectedCustomDeck, selectedCusto
 
   return (
     <Container>
-      <Button variant="outlined" onClick={() => (setPageView(`${previousView}`), setCustomDeckTitle(''))}>back to {previousView} page</Button>
+      <Button variant="outlined" onClick={() => (setPageView(`${previousView}`), setCustomDeckTitle(''))}>back to {previousView}<SportsEsportsIcon /></Button>
+      <Button variant="outlined" onClick={() => (setPageView('CustomDeck'), setCustomDeckTitle(''))}>back to custom pack<AutoFixHighIcon /></Button>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Box>
-            <Typography variant="h3">custom cards</Typography>
-            <Paper elevation={(5)}>
+            <Typography variant="h3">Add a Card!</Typography>
+            <Paper sx={{ width: 305 }} elevation={(5)}>
               {editTitleFunc()}
               {addCardFunc()}
               <PlayingCard color={cardTypeCust} card={{

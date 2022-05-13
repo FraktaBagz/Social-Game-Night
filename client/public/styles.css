@@ -221,14 +221,19 @@
 }
 
 .custom-deck-title {
+  /* top: 76px;
+  position: absolute;
+  left: 50%;
+  transform: translate(0, -50%); */
   color: #E95D70;
 }
 
 .winner-container {
-  margin-left: 25%;
+  /* margin-left: 25%; */
   background-image: url(./gifs/kirbyR.gif);
-  width: 50%;
-  height: 600px;
+  position: relative;
+  width: 600px;
+  height: 550px;
   border-radius: 5%;
   image-rendering: auto;
   image-rendering: crisp-edges;
@@ -240,8 +245,10 @@
 
 .results-page {
   /* background-color: #9CE774; */
+  display: flex;
+  justify-content: center;
   background-image: url(./gifs/winner2.gif);
-  height: 700px;
+  height: 1000px;
 
 }
 

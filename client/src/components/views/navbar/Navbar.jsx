@@ -70,7 +70,7 @@ const Navbar = ({ handleViewClick, pageView }) => {
             <div className="navbar-nav">
               <a className={pageView === "HomePage" ? "nav-link active" : "nav-link"} onClick={() => handleViewClick("HomePage")}>Home</a>
               <a className={pageView === "Lobby" ? "nav-link active" : "nav-link"} onClick={() => handleViewClick("Lobby")}>Lobby</a>
-              <a className={pageView === "CustomDeck" ? "nav-link active" : "nav-link"} onClick={() => handleViewClick("CustomDeck")}>Custom Decks</a>
+              <a className={pageView === "CustomDeck" ? "nav-link active" : "nav-link"} onClick={() => handleViewClick("CustomDeck")}>Custom Packs</a>
               <a className="nav-link" onClick={handleClickOpen}>Rules</a>
             </div>
           </div>
