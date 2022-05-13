@@ -59,17 +59,17 @@ io.on('connection', (socket) => {
   socket.on('join game', (msg) => {
     console.log('A player is joining the game...', msg);
     msg = JSON.parse(msg);
-    connectedUsers.push(msg.user)
+    connectedUsers.push(msg.user);
     console.log('Connected users have been updated... ', connectedUsers);
-    io.emit('update connected users', JSON.stringify(connectedUsers))
-    io.emit('join game')
+    io.emit('update connected users', JSON.stringify(connectedUsers));
+    io.emit('join game');
   })
 
   socket.on('disconnect', (msg) => {
-    console.log('user disconnected, requesting current users...')
+    console.log('user disconnected, requesting current users...');
     connectedUsers = [];
-    io.emit('player disconnected')
-    io.emit('request current users')
+    io.emit('player disconnected');
+    io.emit('request current users');
   });
 
   socket.on('rebuild current users', (msg)=>{
@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
             flag=false
           }
         }
-      })
+      });
       if (flag) {
         connectedUsers.push(msg)
         io.emit('update connected users2', JSON.stringify(connectedUsers))

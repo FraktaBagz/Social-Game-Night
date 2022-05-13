@@ -265,7 +265,6 @@ var emotesObj = {
   twitchRaid: 'https://static-cdn.jtvnw.net/emoticons/v1/62836/1.0'
 }
 socket.on('chat message', function (msg) {
-  // setMessages([...messages, JSON.parse(msg)]);
   var msg = JSON.parse(msg)
   checkEmotes(msg)
 });
@@ -296,11 +295,9 @@ const checkEmotes = (chatcontent) => {
     alert('Not an EMOTE!');
   } else {
     div.prepend(li)
-    document.getElementById('inputChat').value = '';
   }
   function play(id) {
-    var audio = document.getElementById(`${id}`);
-    audio.play();
+    document.getElementById(`${id}`).play();
   }
   if (user !== 'Bot') {
     play('audioNewChatMessage')
@@ -313,7 +310,7 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   const [user, setUser] = useState('');
   socket.on('player disconnected', () => {
     var chatHistoryCopy = chatHistory
-    if (chatHistoryCopy[chatHistoryCopy.length-1].text !== "A player has disconnected!") {
+    if (chatHistoryCopy[chatHistoryCopy.length - 1].text !== "A player has disconnected!") {
       chatHistoryCopy.push({ user: "Bot", text: "A player has disconnected!" })
       checkEmotes({ user: "Bot", text: "A player has disconnected!" })
       setChatHistory(chatHistoryCopy)
@@ -321,7 +318,7 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   })
   socket.once('join game', () => {
     var chatHistoryCopy = chatHistory
-    if (chatHistoryCopy[chatHistoryCopy.length-1].text !== "A player has connected!") {
+    if (chatHistoryCopy[chatHistoryCopy.length - 1].text !== "A player has connected!") {
       chatHistoryCopy.push({ user: "Bot", text: "A player has connected!" })
       checkEmotes({ user: "Bot", text: "A player has connected!" })
       setChatHistory(chatHistoryCopy)
@@ -336,8 +333,8 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
           document.getElementById("buttonChat").click();
         }
       });
-
   }, [])
+
   useEffect(() => {
     chatHistory.forEach((msg) => {
       checkEmotes(msg)
@@ -351,23 +348,35 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   const shuffleEmotes = () => {
     var keysArray = Object.keys(emotesObj);
     var randomKey = keysArray[Math.floor(Math.random() * keysArray.length)];
-    // setChatContent(`${randomKey} :${randomKey}`);
     handleSubmit(null, ':' + `${randomKey}`);
   }
+
+
   const handleSubmit = (e, emojishortcut) => {
     if (e) {
       e.preventDefault();
     }
     if (emojishortcut) {
-      socket.emit('chat message', JSON.stringify({user : user, text: emojishortcut}));
+      socket.emit('chat message', JSON.stringify({ user: user, text: emojishortcut }));
       var chatHistoryCopy = chatHistory
       chatHistoryCopy.push({ user: `${user}`, text: `${emojishortcut}` })
       setChatHistory(chatHistoryCopy)
     } else {
-      socket.emit('chat message', JSON.stringify({ user: user, text: chatContent }));
-      var chatHistoryCopy = chatHistory
-      chatHistoryCopy.push({ user: `${user}`, text: `${chatContent}` })
-      setChatHistory(chatHistoryCopy)
+      var array = chatContent.split(' ');
+      var typoDetector = '1';
+      array.forEach((word) => {
+        if (word[0] === ':') {
+          var emote = word.split('').slice(1).join('')
+          var emoteURL = emotesObj[emote]
+          typoDetector = emoteURL;
+        }
+      });
+      if (!typoDetector) {
+        alert('Not an EMOTE!');
+      } else {
+        document.getElementById('inputChat').value = '';
+        socket.emit('chat message', JSON.stringify({ user: user, text: chatContent }));
+      }
     }
   }
   var count = 0;
@@ -419,12 +428,8 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
           </div>
         </div>
       </div>
-      {/* <audio id="audioNewChatMessage" src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3"/> */}
-       {/* <audio id="audioNewChatMessage" src="/soundeffects/chatmessage.mp3"/> */}
-       {/* <audio id="audioNewChatMessage" src="./chatmessage.mp3"/> */}
-       <audio id="audioNewChatMessage" src={chatmessage}/>
-       <audio id="audioNewPlayerJoin" src={playerjoin}/>
-
+      <audio id="audioNewChatMessage" src={chatmessage} />
+      <audio id="audioNewPlayerJoin" src={playerjoin} />
     </>
   )
 }
