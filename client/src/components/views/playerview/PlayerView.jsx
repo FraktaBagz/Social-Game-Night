@@ -100,6 +100,8 @@ export default function PlayerView({
             winners.push(winner)
           }
         }
+        // set winner in gameState to the winners
+        gameState.gameState.winner = winners;
         // change page view to 'results'
         setPageView('results');
       }
