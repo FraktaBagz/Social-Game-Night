@@ -30,6 +30,20 @@
   color: #EA9E48;
 }
 
+/* loading */
+.loading {
+  height: 100px;
+  width: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url(./gifs/loading.gif);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
 /* homepage styles */
 .homepage {
   width: 80%;
@@ -207,6 +221,10 @@
 }
 
 .custom-deck-title {
+  /* top: 76px;
+  position: absolute;
+  left: 50%;
+  transform: translate(0, -50%); */
   color: #E95D70;
 }
 
@@ -230,6 +248,7 @@
   height: 700px;
 
 }
+
 /* player view styles */
 .playerViewContainer {
   padding: 20px;

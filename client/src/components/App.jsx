@@ -72,6 +72,57 @@ const customDecksSample = {
         sets: 'default red',
       },]
   },
+  skipgma: {
+    // questions: [
+    greenCard: [
+      {
+        label: 'skiplabel1',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default green',
+      },
+      {
+        label: '2some prompt',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default green',
+      },
+      {
+        label: '3some prompt',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default green',
+      },],
+    // answers: [
+    redCard: [
+      {
+        label: '1Absurd',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default red',
+      },
+      {
+        label: '2Abundant',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default red',
+      },
+      {
+        label: '3Addictive',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default red',
+      },
+      {
+        label: '4Absurd',
+        extra: '4(ridiculous, senseless, foolish) ',
+        sets: '4default red',
+      },
+      {
+        label: '5bundant',
+        extra: '5(plentiful, ample, numerous) ',
+        sets: '5default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },]
+  },
 }
 
 const customUserInfo = {
@@ -340,6 +391,7 @@ export default function App() {
           customDecks={customDecks}
           setSelectedCustomDeck={setSelectedCustomDeck}
           setCustomDeckTitle={setCustomDeckTitle}
+          pageView={pageView}
           currentUserUID={currentUser.UID}
         />
       ) : null}
