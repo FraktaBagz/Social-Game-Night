@@ -50,6 +50,7 @@ export default function PlayerView({
         game: gameState,
         user: currentUser,
         card: selected,
+        cardIndex: gameState.gameState.userInformation[currentUser.name].cards.indexOf(selected)
       })
     );
     setHasPicked(true);
