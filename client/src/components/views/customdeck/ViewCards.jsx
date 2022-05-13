@@ -1,17 +1,25 @@
-// CUSTOM DECK PAGE VIEW
+// CUSTOM DECK PAGE VIEW ALL CARDS
 import React, { useState, useEffect } from 'react';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+
 import PlayingCard from '../common/PlayingCard.jsx';
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import { useGame } from "../../../firebase/contexts/GameContext.js";
+
+// MUI
+// Styles
+import { styled } from '@mui/material/styles';
+// Layout
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+// Inputs
+import Button from '@mui/material/Button';
+// Data Display
+import Typography from '@mui/material/Typography';
+// Icons
+import DeleteIcon from '@mui/icons-material/Delete';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
