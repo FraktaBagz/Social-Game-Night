@@ -52,6 +52,7 @@ export default function Lobby({
   defaultDeck,
   currentUser,
   setCurrentUser,
+  selectedCustomDeck
 }) {
   const [gameCode, setGameCode] = useState("12345");
   const [isEnough, setIsEnough] = useState(false);
@@ -64,10 +65,19 @@ export default function Lobby({
   }, [connectedUsers])
 
   function createGame() {
-    socket.emit(
-      "new game",
-      JSON.stringify({ users: connectedUsers, deck: defaultDeck })
-    );
+    if (selectedCustomDeck) {
+      let keys = Object.keys(selectedCustomDeck)
+      let stackedAnswers = defaultDeck.answers.concat(selectedCustomDeck[keys[0]].redCard);
+      let stackedQuestions = defaultDeck.questions.concat(selectedCustomDeck[keys[0]].greenCard);
+      let gameCards = {
+        questions: stackedQuestions,
+        answers: stackedAnswers
+      }
+      socket.emit(
+        "new game",
+        JSON.stringify({ users: connectedUsers, deck: gameCards })
+      );
+    }
   }
 
   function handleCodeClick() {
