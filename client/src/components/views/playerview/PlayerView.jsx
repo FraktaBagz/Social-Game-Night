@@ -110,11 +110,13 @@ export default function PlayerView({
     console.log("gameState---------------------------- ", gameState);
   }, [gameState]);
 
-  socket.on('next round', () => {
-    console.log('new round')
-    setSelected({});
-    setHasPicked(false);
-  })
+  useEffect(() => {
+    socket.on('next round', () => {
+      console.log('new round')
+      setSelected({});
+      setHasPicked(false);
+    })
+  }, []);
 
   // socket.on('new game', (msg) => {
   //   if (gameState.gameState && currentUser) {
