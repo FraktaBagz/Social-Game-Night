@@ -31,13 +31,29 @@ io.on('connection', (socket) => {
   });
   //when the server gets a 'game action' message, it will send the given obj to be processed by a game logic handler in the handlers file
   //it will always only return a game object
+
   socket.on('game action', (msg) => {
+    msg2 = JSON.parse(msg);
+    if (msg2.action === 'judge selection') {
+
+      if (msg2.game.gameState.judgeIndex === msg2.game.users.length + 1) {
+        io.emit('game over');
+      } else {
+        console.log('emitting next round')
+        io.emit('next round', '');
+      }
+    }
     io.emit('game action', JSON.stringify(gameHandler(msg)))
   })
 
   socket.on('new game', (msg) => {
     console.log('new game');
     io.emit('new game', JSON.stringify(newGame(msg)))
+  })
+
+  socket.on('next round', () => {
+    console.log('i heard theres a new round - index')
+    io.emit('next round', '');
   })
 
   socket.on('join game', (msg) => {

@@ -224,6 +224,26 @@
   color: #E95D70;
 }
 
+.winner-container {
+  margin-left: 25%;
+  background-image: url(./gifs/kirbyR.gif);
+  width: 50%;
+  height: 600px;
+  border-radius: 5%;
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: smooth;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.results-page {
+  /* background-color: #9CE774; */
+  background-image: url(./gifs/winner2.gif);
+  height: 700px;
+
+}
 /* player view styles */
 .playerViewContainer {
   padding: 20px;

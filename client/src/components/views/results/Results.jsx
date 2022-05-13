@@ -22,15 +22,15 @@ const buttonStyle = {
 export default function Results ({ winner, chatHistory, setChatHistory, currentUser, setCurrentUser }) {
 
   return (
-    <div>
-      <div>
+    <div className='results-page'>
+    <div className='winner-container'>
         {winner.map(eachWinner => {
           return <AvatarChipWaiting user={eachWinner}/>
         })}
         <Typography variant='subtitle1'>
           <i>IS THE WINNER!!!</i>
         </Typography>
-      </div>
+        <div style={{marginTop: '1px'}}>
       <Chat
         buttonStyle={buttonStyle}
         chatHistory={chatHistory}
@@ -38,6 +38,8 @@ export default function Results ({ winner, chatHistory, setChatHistory, currentU
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
       />
+        </div>
+    </div>
     </div>
   );
 }
