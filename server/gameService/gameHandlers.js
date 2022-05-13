@@ -13,11 +13,9 @@ judge chooses winning card
 winner gets a point
 next round starts
 */
-// const io = require('socket.io')
 const { Game } = require('./gameService');
 const { getCollection } = require('../data/dbHelpers')
 
-// const socket = io()
 
 drawRandomCard = (deckArray) => {
   let randomIndex = Math.floor((deckArray.length - 0.0000001) * Math.random())
@@ -36,19 +34,19 @@ function gameHandler(msg) {
   //start a round
   //everyone draws a card
   if (action === 'new round') {
-    console.log('new round')
-    users.forEach((user) => {
-      game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
-    })
-    //the question card is drawn
-    // clean up the gameState object for next round
-    // console.log('Cleaning up the round data for next round.')
-    // game.gameState.judging = false;
-    // game.gameState.hasntPicked = [];
-    game.gameState.submittedCards = [];
-    // game.gameState.winner = null;
-    // game.gameState.finished = false;
-    game.gameState.questionCard = drawRandomCard(currentDeck.questions)
+    console.log('new round... \n but nothing happened')
+    // users.forEach((user) => {
+    //   game.gameState.userInformation[user.name].cards.push(drawRandomCard(currentDeck.answers))
+    // })
+    // //the question card is drawn
+    // // clean up the gameState object for next round
+    // // console.log('Cleaning up the round data for next round.')
+    // // game.gameState.judging = false;
+    // // game.gameState.hasntPicked = [];
+    // // game.gameState.submittedCards = [];
+    // // game.gameState.winner = null;
+    // // game.gameState.finished = false;
+    // game.gameState.questionCard = drawRandomCard(currentDeck.questions)
   }
   //each user will play a card, we add that card to submittedCards, when submitted cards length is = to # of players - judge, change judging to true
   if (action === 'play card') {
@@ -89,11 +87,7 @@ function gameHandler(msg) {
       }
     })
     game.gameState.submittedCards = [];
-    // if (judgeIndex === game.users.length + 1) {
-    //   io.emit('game over');
-    // } else {
-    //   io.emit('next round');
-    // }
+
   }
 
   return game;

@@ -310,7 +310,7 @@ const checkEmotes = (chatcontent) => {
 export default function Chat({ chatHistory, setChatHistory, currentUser }) {
   const [chatContent, setChatContent] = useState('');
   const [text, setText] = useState('');
-  const [user, setUser] = useState(currentUser.name);
+  const [user, setUser] = useState('');
   socket.on('player disconnected', () => {
     var chatHistoryCopy = chatHistory
     if (chatHistoryCopy[chatHistoryCopy.length-1].text !== "A player has disconnected!") {
@@ -343,6 +343,10 @@ export default function Chat({ chatHistory, setChatHistory, currentUser }) {
       checkEmotes(msg)
     })
   }, [chatHistory])
+
+  useEffect(() => {
+    currentUser ? setUser(currentUser.name) : null;
+  }, [currentUser])
 
   const shuffleEmotes = () => {
     var keysArray = Object.keys(emotesObj);

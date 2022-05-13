@@ -39,13 +39,13 @@ export function AuthProvider({ children }) {
       .then((userCredential) => {
         let user = userCredential.user;
 
-        return setDoc(doc(db, "users", user.uid), {
-          name: name,
-          UID: user.uid,
-          avatar: '',
-          title: '',
-        });
-      })
+          return setDoc(doc(db, "users", user.uid), {
+            name: name,
+            UID: user.uid,
+            avatar: '',
+            title: '',
+          });
+        })
       .catch((err) => {
         throw err;
       });
