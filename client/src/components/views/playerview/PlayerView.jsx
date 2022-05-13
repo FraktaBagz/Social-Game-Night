@@ -281,7 +281,7 @@ export default function PlayerView({
               sx={{ alignItems: "center", justifyContent: "center" }}
             >
               <Grid item xs={12}>
-                <AvatarChipPicking userInfo={connectedUsers[judgeIndex]} />
+                <AvatarChipPicking user={connectedUsers[judgeIndex]} />
               </Grid>
             </Grid>
           </Grid>

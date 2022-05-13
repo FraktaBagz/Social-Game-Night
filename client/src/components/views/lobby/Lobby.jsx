@@ -110,7 +110,9 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
               {connectedUsers.length ? connectedUsers.map((userObj, i) => {
                 function play(id) {
                   var audio = document.getElementById(`${id}`);
-                  audio.play();
+                  if (audio) {
+                    audio.play();
+                  };
                 }
                 play('audioNewPlayerJoin')
                 return (
