@@ -30,7 +30,7 @@ function gameHandler(msg) {
   //depending on the action, it might also need a user and card property
   msg = JSON.parse(msg);
   console.log('game action msg');
-  const { action, game, user, card } = msg;
+  const { action, game, user, card, cardIndex } = msg;
   const { gameState: { currentDeck, judgeIndex, judge, judging, userInformation, questionCard, submittedCards, finished, winner }, users, } = game;
 
   //start a round
@@ -52,16 +52,22 @@ function gameHandler(msg) {
   }
   //each user will play a card, we add that card to submittedCards, when submitted cards length is = to # of players - judge, change judging to true
   if (action === 'play card') {
+    // console.log(msg)
+    console.log('card from front end', card);
     //find index of played card in hand
-    let indexInHand = userInformation[user.name].cards.indexOf(card);
+    // let indexInHand = userInformation[user.name].cards.indexOf(card);
+    let indexInHand = cardIndex
+    console.log('card index from client, ', cardIndex)
     //removed played card from hand
     //add played card to submitted cards
     const submission = [user, game.gameState.userInformation[user.name].cards.splice(indexInHand, 1)];
+    console.log('card after splice', submission);
 
     game.gameState.submittedCards.push(submission);
     console.log(`${submission[0]}, has played ${submission[1]}`)
     //set judging to true
     if (game.gameState.submittedCards.length === users.length -1) {
+      console.log('submitted cards arr', game.gameState.submittedCards)
       game.gameState.judging = true;
       console.log('all players have submitted cards, judging will commence')
     }

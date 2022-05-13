@@ -49,6 +49,7 @@ export default function PlayerView({
         game: gameState,
         user: currentUser,
         card: selected,
+        cardIndex: gameState.gameState.userInformation[currentUser.name].cards.indexOf(selected)
       })
     );
     setHasPicked(true);
@@ -287,7 +288,7 @@ export default function PlayerView({
               variant="contained"
               sx={{
                 color: "primary.contrastText",
-                backgroundColor: "secondary.main",
+                backgroundColor: "primary.main",
                 borderRadius: 15,
               }}
               onClick={(e) => {
