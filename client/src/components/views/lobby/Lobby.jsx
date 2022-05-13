@@ -162,7 +162,7 @@ export default function Lobby({
                       }
                     }
                     play("audioNewPlayerJoin");
-                    return <AvatarChipPicking key={i} user={userObj} />;
+                    return <AvatarChipWaiting key={i} user={userObj} />;
                   })
                 : "Waiting..."}
             </Stack>
