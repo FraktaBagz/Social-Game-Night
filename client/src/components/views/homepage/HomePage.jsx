@@ -159,11 +159,16 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                     borderRadius: 8,
                   }}
                 >
+                  <Avatar
+                    src={currentUser ? currentUser.avatar : null}
+                    sx={{
+                      width: 60,
+                      height: 60,
+                      border: "3px solid black"
+                    }}
+                  />
                   <Typography component="h1" variant="h5">
-                    Avatar
-                  </Typography>
-                  <Typography component="h1" variant="h5">
-                    {currentUser ? currentUser.name : 'Display Name'}
+                    <strong>{currentUser && currentUser.name.length ? currentUser.name : 'Guest'}</strong>
                   </Typography>
                   <Button sx={{ color: "#000000" }} onClick={handleLogOut}>
                     LOG OUT
