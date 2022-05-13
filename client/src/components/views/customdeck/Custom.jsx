@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+
+import { useGame } from "../../../firebase/contexts/GameContext.js";
+
+import ViewCards from './ViewCards.jsx';
+import PlayingCard from '../common/PlayingCard.jsx';
+
+// MUI
+// Styles
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+// Layout
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+// Inputs
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+// Data Display
+import Typography from '@mui/material/Typography';
+// Icons
 import AddIcon from '@mui/icons-material/Add';
-import ViewCards from './ViewCards.jsx';
-import PlayingCard from '../common/PlayingCard.jsx';
-
-import { useGame } from "../../../firebase/contexts/GameContext.js";
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 export default function Custom({ gameState, setSelectedCustomDeck, selectedCustomDeck, setPageView, customDeckTitle, setCustomDeckTitle, previousView, currentUserUID, setDeletedCard, setPostCard }) {
   const { addToCustomDeck, getDeck } = useGame();
@@ -172,8 +182,8 @@ export default function Custom({ gameState, setSelectedCustomDeck, selectedCusto
 
   return (
     <Container>
-      <Button variant="outlined" onClick={() => (setPageView(`${previousView}`), setCustomDeckTitle(''))}>back to {previousView} page</Button>
-      <Button variant="outlined" onClick={() => (setPageView('CustomDeck'), setCustomDeckTitle(''))}>back to custom pack page</Button>
+      <Button variant="outlined" onClick={() => (setPageView(`${previousView}`), setCustomDeckTitle(''))}>back to {previousView}<SportsEsportsIcon /></Button>
+      <Button variant="outlined" onClick={() => (setPageView('CustomDeck'), setCustomDeckTitle(''))}>back to custom pack<AutoFixHighIcon /></Button>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Box>
