@@ -162,24 +162,26 @@ export default function App() {
   const { getUser, getDeck, getDecks } = useGame();
   const [pageView, setPageView] = useState('SignIn');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [pageView, setPageView] = useState('Custom');
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
-    dummy: {
+    title: {
       // questions: [
       greenCard: [
         {
-          label: 'some prompt',
-          extra: '(obsessive, consuming, captivating) ',
-          sets: 'default green',
+          label: 'adjective',
+          extra: '(synonyms) ',
+          sets: 'deck title',
         }],
       // answers: [
       redCard: [
         {
-          label: 'Addictive',
-          extra: '(obsessive, consuming, captivating) ',
-          sets: 'default red',
+          label: 'noun',
+          extra: 'sentence',
+          sets: 'deck title',
         }]
     },
   });
