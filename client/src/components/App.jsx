@@ -169,20 +169,8 @@ export default function App() {
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     title: {
-      // questions: [
-      greenCard: [
-        {
-          label: 'adjective',
-          extra: '(synonyms) ',
-          sets: 'deck title',
-        }],
-      // answers: [
-      redCard: [
-        {
-          label: 'noun',
-          extra: 'sentence',
-          sets: 'deck title',
-        }]
+      greenCard: [],
+      redCard: []
     },
   });
   const [deletedCard, setDeletedCard] = useState(false);

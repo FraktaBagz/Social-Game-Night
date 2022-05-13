@@ -30,7 +30,7 @@ const AvatarChipWaiting = ({ user, picking, score }) => {
           </Box>
         </Box>
         <Box>
-          <Typography variant='h6'>{visibleScore}</Typography>
+          <Typography variant='h6' sx={{ pt: 1.3 }}>{visibleScore}</Typography>
         </Box>
       </Card>
     </Box>
@@ -60,7 +60,7 @@ const AvatarChipPicking = ({ user, picking, score }) => {
           </Box>
         </Box>
         <Box>
-          <Typography variant='h6'>{visibleScore}</Typography>
+          <Typography variant='h6' sx={{ pt: 1.3 }}>{visibleScore}</Typography>
         </Box>
       </Card>
     </Box>
