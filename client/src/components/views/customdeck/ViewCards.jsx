@@ -83,9 +83,9 @@ export default function ViewCards({
             ))
             :
             <PlayingCard color="green" card={{
-              label: 'label',
-              extra: 'extra',
-              sets: 'sets',
+              label: 'adjective',
+              extra: '(synonyms) ',
+              sets: 'deck title',
             }} />
           }
         </Stack>
@@ -108,9 +108,9 @@ export default function ViewCards({
             ))
             :
             <PlayingCard color="red" card={{
-              label: 'label',
-              extra: 'extra',
-              sets: 'sets',
+              label: 'noun',
+              extra: 'sentence',
+              sets: 'deck title',
             }} />
           }
         </Stack>
