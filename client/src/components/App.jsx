@@ -160,8 +160,8 @@ const dummyWinners = [
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck, getDecks } = useGame();
-  const [pageView, setPageView] = useState('results');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [pageView, setPageView] = useState('SignIn');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
