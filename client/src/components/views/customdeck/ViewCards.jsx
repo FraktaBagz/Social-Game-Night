@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import PlayingCard from '../common/PlayingCard.jsx';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import { useGame } from "../../../firebase/contexts/GameContext.js";
 
@@ -66,10 +67,23 @@ export default function ViewCards({
       {/* <Typography>all cards in pack</Typography> */}
       {/* <Typography onClick={() => (setPageView('CustomDeck'))}>back to custom deck page</Typography> */}
       <Typography variant="h3">{deckName}</Typography>
-      <Stack direction="row" spacing={2}>
-        <Container>
-          <Typography>Questions</Typography>
-          <Stack direction="column" spacing={2}>
+      <Stack direction="row" spacing={2}
+      >
+        <Container
+          sx={{
+            width: '120%',
+          }}
+        >
+          <Typography>Adjective</Typography>
+          <Typography>{deck.greenCard.length}<ContentCopyIcon /></Typography>
+          <Stack direction="column" spacing={2}
+            sx={{
+              height: '100vh',
+              width: '110%',
+              overflow: 'auto',
+              position: 'relative',
+            }}
+          >
             {deck.greenCard.length > 0
               ?
               deck.greenCard.map((question, key) => (
@@ -94,9 +108,21 @@ export default function ViewCards({
             }
           </Stack>
         </Container>
-        <Container>
-          <Typography>Answers</Typography>
-          <Stack direction="row" spacing={2}>
+        <Container
+          sx={{
+            width: '120%',
+          }}
+        >
+          <Typography>Noun</Typography>
+          <Typography>{(deck.redCard).length}<ContentCopyIcon /></Typography>
+          <Stack direction="column" spacing={2}
+            sx={{
+              height: '100vh',
+              width: '110%',
+              overflow: 'auto',
+              position: 'relative',
+            }}
+          >
             {deck.redCard.length > 0
               ?
               deck.redCard.map((answer, key) => (
