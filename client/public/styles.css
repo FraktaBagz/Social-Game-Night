@@ -38,7 +38,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-image: url(./loading.gif);
+  background-image: url(./gifs/loading.gif);
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -244,6 +244,7 @@
   height: 700px;
 
 }
+
 /* player view styles */
 .playerViewContainer {
   padding: 20px;

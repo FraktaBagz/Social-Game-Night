@@ -164,7 +164,7 @@ export default function HomePage({ currentUser, setCurrentUser, setPageView, the
                     sx={{
                       width: 60,
                       height: 60,
-                      border: "3px solid black"
+                      border: "2px solid black"
                     }}
                   />
                   <Typography component="h1" variant="h5">
