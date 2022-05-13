@@ -281,7 +281,7 @@ export default function PlayerView({
               sx={{ alignItems: "center", justifyContent: "center" }}
             >
               <Grid item xs={12}>
-                <AvatarChipPicking userInfo={connectedUsers[judgeIndex]} />
+                <AvatarChipWaiting user={connectedUsers[judgeIndex]} />
               </Grid>
             </Grid>
           </Grid>
@@ -327,7 +327,7 @@ export default function PlayerView({
             <Stack spacing={2}>
               {connectedUsers.length
                 ? connectedUsers.map((userObj, i) => {
-                  return <AvatarChipPicking key={i} user={userObj} />;
+                  return <AvatarChipPicking key={i} user={userObj} score={gameState.gameState.userInformation[userObj.name].points} />;
                 })
                 : "Waiting..."}
             </Stack>

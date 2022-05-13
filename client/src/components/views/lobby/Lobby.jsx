@@ -114,7 +114,7 @@ export default function Lobby({ theme, gameState, setPageView, customDecks, setS
                 }
                 play('audioNewPlayerJoin')
                 return (
-                  <AvatarChipPicking key={i} user={userObj} />
+                  <AvatarChipWaiting key={i} user={userObj} />
                 )
               }) : 'Waiting...'}
             </Stack>
