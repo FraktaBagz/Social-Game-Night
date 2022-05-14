@@ -322,12 +322,17 @@ export default function App() {
   const [customDecks, setCustomDecks] = useState(customDecksSample);
   const [selectedCustomDeck, setSelectedCustomDeck] = useState({
     title: {
+<<<<<<< HEAD
       // questions: [
       greenCard: [
       ],
       // answers: [
       redCard: [
       ]
+=======
+      greenCard: [],
+      redCard: []
+>>>>>>> main
     },
   });
   const [deletedCard, setDeletedCard] = useState(false);
@@ -510,6 +515,7 @@ export default function App() {
           setPageView={setPageView}
           customDecks={customDecks}
           defaultDeck={defaultDeck}
+          selectedCustomDeck={selectedCustomDeck}
           setSelectedCustomDeck={setSelectedCustomDeck}
           setCustomDeckTitle={setCustomDeckTitle}
           currentUser={currentUser}
