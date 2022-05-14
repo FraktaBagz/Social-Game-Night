@@ -145,6 +145,7 @@ export default function Lobby({
                 sx={sx}
                 onClick={() => {
                   createGame();
+                  // setPageView('HomePage')
                 }}
               >
                 Leave Game

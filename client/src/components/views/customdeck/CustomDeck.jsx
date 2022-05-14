@@ -110,6 +110,19 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
               // background: 'linear-gradient(0deg, #fe6b8b 30%, #ff8e53 90%)',
               background: 'linear-gradient(to left, rgba(246, 246, 246, 0.632) 0%, rgba(0,0,0,0) 20%)',
               backgroundColor: 'info.main',
+
+              // '&::-webkit-scrollbar': {
+              //   width: '0em',
+              //   height: '0em'
+              // },
+              // // '&::-webkit-scrollbar-track': {
+              // //   boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+              // //   webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+              // // },
+              // '&::-webkit-scrollbar-thumb': {
+              //   backgroundColor: '#ffffff0',
+              //   outline: '0px solid slategrey'
+              // }
             }}
           >
             <Stack
@@ -120,6 +133,18 @@ export default function CustomDeck({ setPageView, customDecks, setSelectedCustom
                 width: "max-content",
                 // overflow: "scroll",
                 position:'absolute',
+                // '&::-webkit-scrollbar': {
+                //   width: '0em',
+                //   height: '0em'
+                // },
+                // '&::-webkit-scrollbar-track': {
+                //   boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+                //   webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+                // },
+                // '&::-webkit-scrollbar-thumb': {
+                //   backgroundColor: '#ffffff0',
+                //   outline: '0px solid slategrey'
+                // }
               }}
             >
               {pageView === 'CustomDeck' ?
