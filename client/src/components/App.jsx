@@ -21,7 +21,7 @@ const socket = io();
 // const socket = io('localhost:3001');
 
 const customDecksSample = {
-  skips: {
+  skipasddfs: {
     // questions: [
     greenCard: [
       {
@@ -72,7 +72,160 @@ const customDecksSample = {
         sets: 'default red',
       },]
   },
-  skipgma: {
+  skipasds: {
+    // questions: [
+    greenCard: [
+      {
+        label: 'skiplabel1',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default green',
+      },
+      {
+        label: '2some prompt',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default green',
+      },
+      {
+        label: '3some prompt',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default green',
+      },],
+    // answers: [
+    redCard: [
+      {
+        label: '1Absurd',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default red',
+      },
+      {
+        label: '2Abundant',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default red',
+      },
+      {
+        label: '3Addictive',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default red',
+      },
+      {
+        label: '4Absurd',
+        extra: '4(ridiculous, senseless, foolish) ',
+        sets: '4default red',
+      },
+      {
+        label: '5bundant',
+        extra: '5(plentiful, ample, numerous) ',
+        sets: '5default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },]
+  },
+  skipsaaaa: {
+    // questions: [
+    greenCard: [
+      {
+        label: 'skiplabel1',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default green',
+      },
+      {
+        label: '2some prompt',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default green',
+      },
+      {
+        label: '3some prompt',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default green',
+      },],
+    // answers: [
+    redCard: [
+      {
+        label: '1Absurd',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default red',
+      },
+      {
+        label: '2Abundant',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default red',
+      },
+      {
+        label: '3Addictive',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default red',
+      },
+      {
+        label: '4Absurd',
+        extra: '4(ridiculous, senseless, foolish) ',
+        sets: '4default red',
+      },
+      {
+        label: '5bundant',
+        extra: '5(plentiful, ample, numerous) ',
+        sets: '5default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },]
+  },
+  skipssss: {
+    // questions: [
+    greenCard: [
+      {
+        label: 'skiplabel1',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default green',
+      },
+      {
+        label: '2some prompt',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default green',
+      },
+      {
+        label: '3some prompt',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default green',
+      },],
+    // answers: [
+    redCard: [
+      {
+        label: '1Absurd',
+        extra: '1(ridiculous, senseless, foolish) ',
+        sets: '1default red',
+      },
+      {
+        label: '2Abundant',
+        extra: '2(plentiful, ample, numerous) ',
+        sets: '2default red',
+      },
+      {
+        label: '3Addictive',
+        extra: '3(obsessive, consuming, captivating) ',
+        sets: '3default red',
+      },
+      {
+        label: '4Absurd',
+        extra: '4(ridiculous, senseless, foolish) ',
+        sets: '4default red',
+      },
+      {
+        label: '5bundant',
+        extra: '5(plentiful, ample, numerous) ',
+        sets: '5default red',
+      },
+      {
+        label: 'Addictive',
+        extra: '(obsessive, consuming, captivating) ',
+        sets: 'default red',
+      },]
+  },
+  skipgmaa: {
     // questions: [
     greenCard: [
       {
@@ -160,10 +313,10 @@ const dummyWinners = [
 export default function App() {
   const { signUp, currentUser, setCurrentUser } = useAuth();
   const { getUser, getDeck, getDecks } = useGame();
-  const [pageView, setPageView] = useState('SignIn');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [pageView, setPageView] = useState('Custom');
-  // const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [pageView, setPageView] = useState('SignIn');
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [pageView, setPageView] = useState('CustomDeck');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [gameState, setGameState] = useState({});
   const [defaultDeck, setDefaultDeck] = useState(customDecksSample.skip);
   const [customDecks, setCustomDecks] = useState(customDecksSample);
@@ -171,18 +324,10 @@ export default function App() {
     title: {
       // questions: [
       greenCard: [
-        {
-          label: 'adjective',
-          extra: '(synonyms) ',
-          sets: 'deck title',
-        }],
+      ],
       // answers: [
       redCard: [
-        {
-          label: 'noun',
-          extra: 'sentence',
-          sets: 'deck title',
-        }]
+      ]
     },
   });
   const [deletedCard, setDeletedCard] = useState(false);
@@ -394,7 +539,7 @@ export default function App() {
           setSelectedCustomDeck={setSelectedCustomDeck}
           setCustomDeckTitle={setCustomDeckTitle}
           pageView={pageView}
-          currentUserUID={currentUser.UID}
+          // currentUserUID={currentUser.UID}
         />
       ) : null}
       {pageView === "Custom" ? (
@@ -406,7 +551,7 @@ export default function App() {
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
           setCustomDeckTitle={setCustomDeckTitle}
-          currentUserUID={currentUser.UID}
+          // currentUserUID={currentUser.UID}
           setDeletedCard={setDeletedCard}
           setPostCard={setPostCard}
           deletedCard={deletedCard}
@@ -420,7 +565,7 @@ export default function App() {
           selectedCustomDeck={selectedCustomDeck}
           customDeckTitle={customDeckTitle}
           setCustomDeckTitle={setCustomDeckTitle}
-          currentUserUID={currentUser.UID}
+          // currentUserUID={currentUser.UID}
           setDeletedCard={setDeletedCard}
           setPostCard={setPostCard}
         />
